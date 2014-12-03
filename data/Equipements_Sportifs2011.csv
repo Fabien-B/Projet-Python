@@ -1,0 +1,390 @@
+Quartiers;Sites;Adresse;Type;Activités (nombre);Nature;L x l x h;Eclairage;Arrosage;Vest joueurs (Arbitres);Sanitaires;Douches;Capacité sécurité;Tribunes;Club House;Catégorie;Date;Acces Hand;Toilette Hand
+4.1;Amouroux;4 Impasse W. et C. Booth;City stade;;;;;;;;;;;;;;;
+4.1;Amouroux pelouse Football;4 Impasse W. et C. Booth;Terrain;Football 11et 7;Gazon;100X60;oui;oui;2+4;;;;100;oui;;;O;N
+4.1;Amouroux Stabilisé Football;4 Impasse W. et C. Booth;Terrain;Football 11et 7;Stabilisé;100 x 60;oui;oui;;;;;;;;;O;N
+4.1;Bonnefoy Raynal;25 rue de Périole;Boulodrome;;;;oui;;;;;;;;;;O;N
+4.1;Bonnefoy Sob;6 rue des Archives;Boulodrome;;;;;;;;;;;;;;O;N
+4.1;Les hauts de Bonnefoy foot à 7;Rue Giuseppe Garibaldi;Terrain;Football à 7, Basket (1);Herbe, Ciment;;;;;;;;;;;;O;N
+4.1;Amouroux;12 Rue d' Arles;Boulodrome;;;;oui;;;;;;;;;;O;N
+4.1;Lapujade;29 chemin de Lapujade;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+4.1;Rex;118 rue de Périole;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+4.1;William et Catherine Booth ;4 rue W. et C. Booth;Boulodrome;;;;oui;;;;;;;;;;O;N
+4.2;Argoulets  gymnase;52 rue Dinetard;Gymnase;Basket (1), Volley (4), Handball (1), Badmington (7);;43.90 x 24.30 x 11;;;5;;5 collective;353 personnes;183 places;;3ème;;O;O
+4.2;Argoulets Baseball;29 Rue de Rabastens;Terrain;Baseball;Gazon;;oui;;;;;;;;;;O;N
+4.2;Argoulets pelouse Football n°1;29 Rue de Rabastens;Terrain;Football 11et 7;Gazon;100x66;oui;oui;0+2;;;;;;;;O;N
+4.2;Argoulets pelouse Football n°2;Rue Louis Plana;Terrain;Football 11 et 7;Gazon;105x68;oui;oui;4+2;;;;;;;;O;N
+4.2;Argoulets pelouse Football n°3;29 Rue de Rabastens;Terrain;Football 11et 7;Gazon;100x66;oui/50%;oui;;;;;;;;;O;N
+4.2;Argoulets pelouse Rugby 1;29 Rue de Rabastens;Terrain;Rugby / Football à 7;Gazon;116x66;oui;oui;;;;;;;;;O;N
+4.2;Argoulets pelouse Rugby 2;29 Rue de Rabastens;Terrain;Rugby ;Gazon;80x55;oui;oui;;;;;;;;;O;N
+4.2;Argoulets Pierre Cahuzac;29 Rue de Rabastens;Terrain;Football / Rugby;Gazon;105x68;oui;oui;4+2;;;;396;oui;;;O;N
+4.2;Argoulets Stabilisé Football;29 Rue de Rabastens;Terrain;Football / hockey;Stabilisé;100x64;oui;oui;;;;;;;;;O;N
+4.2;Argoulets Synthétique Football Américain;Rue Louis Plana;Terrain;Football 11/ américain;Synthéthique;110X50;oui;;2+4;;;;;;;;O;N
+4.2;Complexe sportif CEAT;8 Rue d'Oran;Plateau multisports extérieur;Basket, Handball, piste 400 m;;;;;;;;;;;;;O;N
+4.2;Complexe sportif CEAT dojo;8 Rue d'Oran;Dojo;Combat;;;;;2;;;19 personnes;;;;;O;N
+4.2;Complexe Sportif CEAT pelouse Football;8 Rue d'Oran;Terrain;Football 11et 7;Gazon;100x68;oui;oui;;;;;;;;;O;N
+4.2;Soupetard;44 rue Louis Plana;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+4.2;Soupetard gymnase;11 Rue de la Solidarité;Gymnase;Basket (1), Volley (1), Handball (1);;30 x 20 x 6;;;2;;2 collective;200 personnes;;;;;O;N
+4.2;Acacia;20 Rue de l'Obélisque;Plateau multisports extérieur;mini Basket (2), Handball(2);Synthétique;;;;;;;;;;;;N;N
+4.2;Alex Jany;Rue de Gaillac;Patinoire, piscine;;;;;;;;;;;;;;O;O
+4.2;Argoulets;30 Rue de Rabastens;Boulodrome;;;;non;;;;;;;Non;;;N;N
+4.2;Carbonne;8 Rue Gongous;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+4.2;Jolimont;rue Képler;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+4.2;Képler;Rue Jean Montariol;City stade;Basket 1, Handball 1;Enrobé;;;;;;;;;;;;N;N
+4.2;La Gloire;Rue Soupetard;Plateau multisports extérieur;Basket, (1);Enrobé;;;;;;;;;;;;O;N
+4.2;La Roseraie;8 avenue du parc;Boulodrome;Lyonnaise;;;oui;;;;;;;oui;;;O;N
+4.2;Opac;Impasse Soupetard;Plateau multisports extérieur;Basket, Handball, Volley;Enrobé;;;;;;;;;;;;O;N
+4.2;Salonique;57 av de la Gloire;Boulodrome;;;;;;;;;;;oui;;;O;N
+4.2;Soncourt Bertrand gymnase;46 Chemin Cassaing;Gymnase;Basket (1), Volley (4), Handball (1), Badmington (7);;40 x 20.50 x 6,11;;;3;3;3 ind, 2 coll;480 personnes;380 places;;;;O;N
+4.3;Château de l'Hers;13 Chemin de Limayrac;Plateau multisports extérieur;Basket(3), Handball(1), piste 250 m,sautoir hauteur(1);;;;;;;;;;;;;O;N
+4.3;Château de l'hers Grand Gymnase;13 Chemin de Limayrac;Gymnase;Basket (1), Volley (1), Handball (1), pelote;;30 x 24.10 x 9;;;2;2;;720 personnes;;;5ème;;O;N
+4.3;Château de l'hers pelouse Football;13 Chemin de Limayrac;Terrain;Football 11et 7;Gazon;;;;;;;;;;;;O;N
+4.3;Château de l'hers Petit Gymnase;14 Chemin de Limayrac;Gymnase;Mini Basket( 1), Volley (1), Roller;;20 x 11.5 x 6.62;;;1;2;2 individuelle;180 personnes;;;5ème;;O;N
+4.3;Complexe de l'Hers plateau sportif;6 Bis Rue Claudius Rougenet;Plateau multisports extérieur;mini Basket(2), Handball(1);Enrobé;;;;;;;;;;;;O;N
+4.3;Complexe sportif de l'Hers pelouse Rugby synthétique;6 Rue Claudius Rougenet ;Terrain;Rugby, Football à 11;Synthétique;100x65;oui;oui;;;oui;;;oui;;;O;O
+4.3;Salle d'Armes Louis Julien;6 Bis Rue Claudius Rougenet;Salle;Escrime;;;;;;;;;;;;;;
+4.3;Stade Alain Coulon;8 Rue Claudius Rougenet;Terrain;Rugby;Gazon;100x65;;oui;4+2;;oui;;320;oui;;;O;O
+4.3;ZAC de l'Hers Stabilisé football à7;8 Rue Claudius Rougenet;Terrain;Football  7;Stabilisé;60x45;oui;;;;;;;;;;O;N
+4.3;ZAC de l'Hers Synthétique football;8 Rue Claudius Rougenet;Terrain;Football 11et 7;synthétique;105x60;oui;oui;4+1;;oui;;;;;;O;N
+4.3;Grande Plaine;10 Avenue Jean Gonord;bi-cross;;;;;;;;;;;;;;O;N
+4.3;Grande Plaine;10 Avenue Jean Gonord;Skate-Park;;;;;;;;;;;;;;O;N
+4.3;Grande Plaine pelouse Football;10 Avenue Jean Gonord;Terrain;Football 11 et 7;Gazon;105x68;oui;oui;2+4;;;;;;C;1997;N;N
+4.3;Grande Plaine Stabilisé football;10 Avenue Jean Gonord;Terrain;Football 11 et 7;Stabilisé;100x59;oui;oui;;;;;;;;;N;N
+4.3;Sergent Vigné pelouse football;22 Rue de Lille;Terrain;Football 11 et 7;;98x66;oui;;1+2;;;;;oui;5;1995;O;N
+5.1;Anatole France gymnase;21 Boulevard de la Méditerranée;Gymnase;Basket (1), Badmington;;30 x 17 x 4;;;2;2;;68 personnes;;;5ème;;O;N
+5.1;Guillaumet;30 Chemin Bitet;Plateau multisports extérieur;Basket, Handball, Football;;;;;;;;;;;;;O;N
+5.1;Guillaumet gymnase;30 Chemin Bitet;Gymnase;Volley (1), Gymnastique, Escalade;;25.6 x 10.8 x 6.2;;;1;2;8 individuelle;2710 personnes;;;4ème;;O;N
+5.1;Guillaumet pelouse football;30 Chemin Bitet;Terrain;Football à 11 et 7;Gazon;;;;;;;;;;;;O;N
+5.1;Montaudran pelouse Football;3 Impasse Gaston Génin;Terrain;Football 11 et 7;Gazon;100X60;oui;oui;1+2;;;;;;C;1998;O;N
+5.1;Ribaute pelouse Football;Chemin de ribaute;Terrain;Football;Gazon;;;;;;;;;;;;O;N
+5.1;Ribaute pelouse Rugby;Chemin de ribaute;Terrain;Rugby;Gazon;;;;;;;;;;;;O;N
+5.1;Struxiano;113 Avenue de Lespinet;Plateau multisports extérieur;Basket (2), Handball (2), Volley (3), Saut, Lancer, Piste 100 m;;;;;;;;;;;;;O;N
+5.1;Struxiano pelouse Football;113 Avenue de Lespinet;Terrain;Football;Gazon;110x66;;oui;2+4;;;;;oui;;;O;N
+5.1;Struxiano pelouse Rugby;113 Avenue de Lespinet;Terrain;Rugby;Gazon;100x60;oui;oui;;;;;;oui;;;O;N
+5.1;Struxiano Synthétique Football;113 Avenue de Lespinet;Terrain;Football 11 et 7;Synthéthique;100x66;oui;oui;2+6;;;;900;oui;C5;2006;O;N
+5.1;Struxiano tennis;113 Avenue de Lespinet;Tennis;;;;;;;;;;;;;;O;N
+5.1;De Nadaï Jean;rue émile Lécrivain;Boulodrome;;;;;;;oui;;;;oui;;;O;N
+5.1;Emilien Colombies;impasse Trutat;Boulodrome;;;;oui;;;oui;;;;oui;;;O;N
+5.1;La Butte;rue des Chardons;Boulodrome;;;;;;;;;;;;;;O;N
+5.1;La Terrasse foot à 7;Impasse Schrader;Terrain;Football à 7 mini Basket (1), skate;Herbe, Ciment;;;;;;;;;;;;O;N
+5.1;Laffont Emile;258 avenue Jean Rieux;Boulodrome;;;;;;;;;;;;;;O;N
+5.1;Parc Alalouf;Av Saint Exupéry;Plateau multisports extérieur;Basket;;;;;;;;;;;;;O;N
+5.1;Pont des Demoiselles;place Roger Arnaud;Boulodrome;;;;oui;;;oui;;;;oui;;;O;N
+5.2;Pech David pelouse football 1;82 Chemin des cotes de Pech David;Terrain;Football 11;Gazon;100X60;oui;oui;6+2;;;;;;;;O;N
+5.2;Pech David pelouse rugby 1;82 Chemin des cotes de Pech David;Terrain;Rugby;Gazon;102X70;oui;oui;6+2;;;;;;;;O;N
+5.2;Robert Barran Stade;82 Chemin des cotes de Pech David;Terrain;Football 11;Gazon;100x66;oui;oui;6+2;;;;376;;B;2007;O;N
+5.2;Bellevue patinoire;86 Chemin de la salade Ponsan;Patinoire;;;;;;;;;;;;;;O;O
+5.2;Bellevue piscine;86 Chemin de la salade Ponsan;Piscine ;;;2 x 25 m + 12,3 m + 10,70 m;;;;;;;;;;;O;O
+5.2;Bellevue salle d'activité 1er ét;86 chemin de la Salade Ponsan;Salle;Danse, tennis de table;;23.50 x 9.50;;;;;;;;;;;O;O
+5.2;Bellevue tennis;86 Chemin de la salade Ponsan;Tennis ;Tennis;greenset;;;;;;;;;;;;O;O
+5.2;Moulin Jean;7 Avenue des écoles J. Julien;Plateau multisports extérieur;Basket 4, Handball 2, Piste 250 m, lancer (1), saut (2);;;;;;;;;;;;;O;N
+5.2;Moulin Jean gymnase;7 Avenue des écoles J. Julien;Gymnase;Basket (1), mini basket (4) , Volley (1), Badmington (1), Tennis, Escalade;;30 x 20 x 8;;;;;;150 personnes;;;5ème;;O;N
+5.2;Pech David Piscine (Eté, Hiver);82 Chemin des cotes de Pech David;Piscine ;Aquagym, Plongée, Loisirs;;25 m;;;;;;;;;;;O;O
+5.2;M. Sardaing;Chemin de Narrade;Boulodrome;;;;oui;;;;;;;;;;O;N
+5.2;Pouvourville;4 Impasse de Sarrangines;City-Stade;Hand(1), mini Basket(1), Volley(1), football;Synthétique;;;;;;;;;;;;N;N
+5.2;Pouvourville Foot à 7 Synthétique;4 Impasse de Sarrangines;Terrain;Football à 7;Synthétique;65*45;oui;oui;4+1;;;;;;;;O;N
+5.2;Pouvourville Football Honneur;4 Impasse de Sarrangines;Terrain;Football à 11;Gazon;100X63;oui;oui;1+4;;;;;oui;;;O;N
+5.2;Rangueil;62 Rue de Nimes;Boulodrome;;;;oui;;;;;;;;;;O;N
+5.2;Rangueil (COSEC) gymnase;27 Chemin du canal;Salle;Gymnastique;;40 X 20 X 8;;;4;;;100 personnes ;;;3ème;;O;N
+5.2;Rangueil (COSEC) salle d'activité 1er ét;27 Chemin du canal;Salle;Gymnastique;;20 x 15 x 8;;;;;;38 personnes;;;3ème;;O;N
+5.2;Rangueil (COSEC) salle d'activité rdc;27 Chemin du canal;Salle;Gymnastique, Boxe;;20 x 16 x 6;;;;;;47 personnes;;;3ème;;O;N
+5.2;Rangueil Foot à 5;62 Rue de Nimes;Terrain;Football à 5;synthétique;;non;;;;;;;;;;N;N
+5.2;Rangueil pelouse Football;62 Rue de Nimes;Terrain;Football 11 et 7;Gazon;105x68;oui;oui;1+2;;;;;;;;O;N
+5.2;Rangueil skate park;27 Chemin du Canal;Skate-park;;;;;;;;;;;;;;O;N
+5.2;Rangueil tennis;27 Chemin du Canal;Tennis;;;;;;;;;;;;;;O;N
+5.2;Sordelo pelouse Cricket;112 Chemin des coteaux de Pech David;Terrain;Cricket;Gazon;100x64;;;5+1;;;;;;;;O;N
+5.2;Sordelo pelouse Football n°1;112 Chemin des coteaux de Pech David;Terrain;Football;Gazon;100X60;oui;oui;5+1;;;;;;C;1999;O;N
+5.2;Sordelo pelouse Rugby n°1;112 Chemin des coteaux de Pech David;Terrain;Rugby;Gazon;100x65,5;oui;oui;5+1;;;;;;;;O;N
+5.2;Sordelo Stabilisé football;112 Chemin des coteaux de Pech David;Terrain;Football 11 et 7;Stabilisé;100x78;oui;oui;5+1;;;;;;;;O;N
+5.2;Viala Léon;42 avenue de Rangueil;Boulodrome;;;;oui;;;oui;;;;oui;;;O;N
+5.2;Boule Argent R.1, R.2, R.3;27 Rue Jeanne Marvig;Boulodrome;;;;oui;;;oui;;;;;;;O;N
+5.2;Roux Etienne;rue Léon Viala;Boulodrome;;;;oui;;;oui;;;;oui;;;O;N
+5.3;Corbarrieu pelouse Rugby honneur;2 Avenue de Lattre de Tassigny;Terrain;Rugby;Gazon;120x70;oui;oui;2+6;;;;;oui;;;O;O
+5.3;Corbarrieu Synthétique football;2 Avenue de Lattre de Tassigny;Terrain;Football 11 et 7;Synthéthique;105x65.5;oui;oui;2+6;;;;900;;;;O;O
+5.3;Daste;29 Rue de Toulon;Plateau multisports extérieur;mini Basket (3), Football, Handball(1), Piste 100 m;;;;;;;;;;;;;O;N
+5.3;Daste gymnase;29 Rue de Toulon;Gymnase;Basket (1), Volley (1), Handball (1);;21 x 12 x 5.2;;;2;;;;;;4ème;;O;N
+5.3;Empalot;rue des Pélicans;Boulodrome;;;;oui;;;oui;;;;;;;O;N
+5.3;Empalot Daste Recollets;place André Daste;Boulodrome;;;;oui;;;;;;;;;;O;N
+5.3;Empalot Mail;rue de Menton;Boulodrome;;;;oui;;;;;;;;;;O;N
+5.3;Empalot Poudrerie;Rue des Goelands;City-Stade;Basket(1),Hand(1), football;Enrobé;;;;;;;;;;;;O;N
+5.3;Aviron Toulousain parc des sports;Allées Ferdinand Jourdan;Base nautique;Aviron;;;;;;;;;;;;;O;O
+5.3;Canoë;Chemin de la loge;Base nautique;Canoë-Kayak;;;;;;;;;;;;;O;N
+5.3;Nakache Piscine;7 Allées Gabriel Biènes;Piscine ;Plongée, aquagym, scolaires, loisirs;;25 m + 15,95 m;;;;;;;;;;;N;N
+5.3;Parc des Sports pelote basque;7 Allées Gabriel Biènes;Fronton;Pelote;;;;;;;;;;;;;O;N
+5.3;Parc des Sports Pelouse 1 CFA;Allées Gabriel Biénes ;Terrain;Football à 11;Gazon;105X68;oui/400;oui;4+2;;;;300;oui;E3;2003;O;O
+5.3;Parc des Sports Pelouse 2 Pro;Allées Gabriel Biénes;Terrain;Football à 11;Gazon;105X68;;oui;4+2;;;;;;;;O;O
+5.3;Parc des Sports Pelouse Gardiens;Allées Gabriel Biénes ;Terrain;Football à 7;Gazon;105X68;;;4+2;;;;;;;;O;O
+5.3;Parc des Sports Piscine Eté;3 Allées Gabriel Biènes;Piscine ;Loisirs;;150 m + 25 m ;;;;;;;;;;;O;O
+5.3;Parc des sports salle agrés 1er ét;7 Allée Gabriel Biénès;Gymnase;Gymnastique poutre;;15.97 x 9.65 x 4.42;;;1;4;4 individuelle;38 personnes;;;4ème;;O;N
+5.3;Parc des sports salle agrés RDC;7 Allée Gabriel Biénès;Gymnase;Gymnastique agrés;;24.5 x 15.95 x 7.9;;;2;2;2ind / 2 coll;96 personnes;;;5ème;;O;N
+5.3;Parc des sports salle praticable 1er ét;7 Allée Gabriel Biénès;Gymnase;Gymnastique praticable;;15.97 x 14.58 x 4.42;;;;;;58 personnes;;;4ème;;O;N
+5.3;Parc des Sports Synthétique Foot à 7 et 5;7 Allées Gabriel Biènes;Terrain;Football à 7 et à 5, mini Basket (2),Piste 206.49 m, saut, lancer.;Synthétique;;;;;;;;;;;;O;N
+5.3;Parc des Sports Synthétique n°3 football;Allées Gabriel Biénes ;Terrain;Football à 11;Synthéthique;105X68;oui/250;;4+2;;;;;;E5;2003;O;O
+5.3;Parc des Sports Synthétique n°4 football;Allées Gabriel Biénes;Terrain;Football à 11;Synthéthique;105X68;oui/250;;4+2;;;;;;;2003;O;O
+5.3;Parc des Sports Synthétique n°5 Brice Taton;Allées Gabriel Biénes;Terrain;Football à 11;Synthéthique;105X68;oui/250;;4+2;;;;;;;;O;O
+5.3;Parc des Sports Tennis;7 Allées Gabriel Biènes;Tennis;Tennis, Tennis de table (4);;;;;;;;;;;;;O;O
+5.3;Parc des Sports terrain sportif d'accès libre Beach Volley / Soccer;7 Allées Gabriel Biènes;Terrain sable;Beach-soccer, beach Volley (3);;;;;;;;;;;;;O;N
+5.3;Parc des Sports terrain sportif d'accès libre synthétique 1 et 2;7 Allées Gabriel Biènes;City-Stade;City - stade (2);;;;;;;;;;;;;O;N
+5.3;Piscine sportive Castex;3 Allées Gabriel Biènes;Piscine;Natation;; 50 m;;;;;;;;;;;O;N
+5.3;Pont Garigliano basket;7 allées Gabriel Biénès;Plateau multisports extérieur;Basket (7);Enrobé;;;;;;;;;;;;O;N
+5.3;Stadium;Allées Gabriel Biénes;Terrain;Football et Rugby;Gazon;105X68;oui/E1;oui;2+1;;;;35 775;oui;A;2004;O;O
+5.3;Grand Rond;Allée Frédéric Mistral;Boulodrome;;;;oui;;;oui;;;;;;;O;N
+5.3;Roger Pradier piscine;46 Rue des Saules;Piscine;;; 25 m;;;;;;;;;;;O;N
+;Pinel;place Pinel;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+;Saouzelong;92 Rue Albert Bedouce;City stade;;;;;;;;;;;;;;;
+3,1;Arnauné piste athlétisme;107 Avenue Frédéric Estèbe;Piste;Piste 80 m;;;;;;;;;;;;;O;N
+;Stade Arnauné ;107 Avenue Frédéric Estèbe;Terrain;Football à 11, Rugby;Gazon ;116*64;oui;oui;4+(2);oui (public);;;1723;oui;1er;;O;O
+;Arnauné synthétique foot à 7;107 Avenue Frédéric Estèbe;Terrain;Football à 7;Synthétique;65 x 22;oui;;;;;;;oui;;;O;N
+;Grand Gymnase des Minimes;107 Avenue Frédéric Estèbe;Gymnase;Basket (1), Mini basket (4), Volley (1), Handball (1), Badmington (4), Tennis (1);;40 x 26.20 x 9;;;2;;2 collective;259pers;105;;3 ème;;O;O
+;Petit Gymnase des Minimes;107 Avenue Frédéric Estèbe;Gymnase;Basket (1) Mini basket (4), Volley (1), Badmington (3), Tennis (1);;30 x 26.20 x 9;;;2;;2 collective;195 pers;;;3 ème;;O;O
+3,1;Palais de la Pétanque Claudette Dumont;42 Avenue Frédéric Estèbe;Boulodrome;;;;oui;;;oui (public);;620 pers;;oui;3 ème;;O;N
+3,1;Rauzy Michel ;52 avenue des minimes;Boulodrome;;;;oui;;;oui (public);;;;oui;5 ème;;O;N
+1,1;Barada gymnase;1 Rue Malbec;Salle;Gymnastique;;25 x 11.5 x 4.85;;;2;1;3 individuelle;50 pers;;;5 ème;;N;N
+3,4;Bayard gymnase;150 Route de Launaguet;Gymnase;Basket (1), Volley (3), Handball (1), Badmington (4), tennis (1);;30.50 x 20.50 x 7;;;2;;2 collective;50 pers;;;;;O;N
+;Bayard;150 Route de Launaguet;Plateau multisports extérieur;Basket(2), Volley(1), Handball (1), Piste 150 m;;;;;;;;;;;;;O;N
+1,2;Bazacle;Impasse du Ramier des Catalans;Plateau multisports extérieur;Basket (4);Enrobé;;;;;;;;;;;;O;N
+3,4;Borderouge;Place Antonin Froidure;Boulodrome;;;;oui;;;;;;;;;;O;N
+3,4;Borderouge;Rue Ebelot;Plateau multisports extérieur;mini Basket(1), hanball (1);;;;;;;;;;;;;N;N
+;Bourbaki;Rue du Général Hoche;City stade;;;;;;;;;;;;;;;
+3,4;Complexe Sportif Borderouge salle d'activité;3 rue Hubert Monloup;Salle polyvalente;Danse;;14 x 14;;;2;2;2 collective;51 pers;;;5 ème;;O;O
+;Complexe Sportif Borderouge dojo;3 rue Hubert Monloup;Dojo;Combat, Judo;;14 x 14;;;2;2;2 collective;49 pers;;;5 ème;;O;O
+;Complexe Sportif Borderouge;Rue Hubert Monloup;Plateau multisports extérieur;Basket (4), Handball (1);;;;;;;;;;;;;O;N
+;Entrainement Synthétique;3 rue Hubert Monloup;Terrain;Football à 11 et à 7;Synthétique;105 x 68;oui;oui;4+(2);oui (public);4 collective;;;oui;;;O;O
+;Terrain Fernand Sastre ;3 rue Hubert Monloup;Terrain;Football à 11à 7,Rugby;Gazon ;105 x 68;non;oui;4+(2);oui (public);4 collective;;100;;;;O;O
+3,4;Maunoury (Borderouge);Rue Bourges Maunoury;City stade;mini Basket (1), Handball (1);;;;;;;;;;;;;N;N
+3,1;Bourbaki;Rue Hoche;City stade;mini Basket (2), Handball (1), Tennis de table (2), Volley (1);;;;;;;;;;;;;N;N
+3,1;Boutrit Jacques;6 impasse Pierre Curie;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+1,3;Calvinhac gymnase;6 Rue Jacques Labatut;Dojo;Combat;;28 x 8 x 10;;;1;1;3 individuelle;;;;5 ème;;N;N
+3,4;Castillo Michel;5 rue Francis Lopez;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+1,1;Daurade;Quai de la Daurade;Boulodrome;;;;;;;;;;;;;;;
+3,4;Lapujade;26 route d'Albi;Gymnase;Basket,Judo,Gymnastique;;24x14;;;1;oui (public);4 collective;200;;;;;O;N
+;Cazal Lapujade pelouse Football;20 Rue d'Avranches;Terrain;Football à 11 et à 7;Gazon ;92*59;oui;oui;4+(2);oui (public);collective;;;oui;;;O;N
+;Cazal Lapujade Football Synthétique;20 Rue d'Avranches;Terrain;Football à 11 et à 7;Synthétique;97*58;oui;oui;4+(2);oui (public);collective;;;oui;;;O;N
+1,2;Chapou (Eté);1 Rue Saunière;Piscine;Loisirs, Plongée;; 25 m + 10 m;;;;oui (public);individuelle;299;;;5ème;;O;O
+1,2;Palais des Sports;3 rue Pierre Laplace;Gymnase;Basket (1), Volley (1), Handball (1), Tennis, Gymnastique;;40,23*20,11*19;;;4 +(2);oui (public);4 collective;2188 pers;1860;;1 ère;;O;O
+;Compans Caffarelli gymnase;3 rue Pierre Laplace;Gymnase;Basket (1), Volley (1), Handball (1);;44 x 26.50 x ?;;;4 +(1);oui (public);4 collective;4772 pers;4338;;1 ère;;O;N
+3,4;Croix  Daurade;5 rue Francis Lopez;Boulodrome;;;;;;;;;;;oui;;;O;N
+3,1;Duchein;33 rue Fonquerne;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+1,1;Embarthe;Rue des queteurs;City stade;Football (2), Basket (2) Tennis de table (2);;;;;;;;;;;;;N;N
+1,1;Fabre salle rdc;5 rue du Pont de Tounis;Salle rdc;Musculation;;14,70x8,50;;;2;oui;collective;31;;;5ème;;O;N
+;Fabre salle 1er ét;5 rue du Pont de Tounis;Salle 1er étage;Cardio Training;;5,30x3,30;;;2;;;;;;;;O;N
+3,1;Frédéric Estèbe gymnase;59 Rue du général Bourbaki;Gymnase;Basket (1), Volley (1), Badmington (1);;21 x 12.30 x 6;;;2;oui;2 collective;50 pers;;;5ème;;O;N
+;Frédéric Estèbe;59 Rue du général Bourbaki;Plateau multisports extérieur;Basket (1), Handball (1), piste 60 m;;;;;;;;;;;;;O;N
+3,4;Georges Ohnet gymnase;8 Rue Georges Ohnet;Gymnase;Basket (1), Volley (3), Badmington (4);;30 x 21 x 6;;;2;oui(public);2 collective;204 pers;;;;;O;N
+;Georges Ohnet salle gymnastique;8 Rue Georges Ohnet;Salle;Gynastique;;21,50*7,50;;;;;;;;;;;O;N
+;Georges Ohnet;Rue Georges Ohnet;Plateau multisports extérieur;Handball (2), Piste 50 m, Lancer;;;;;;;;;;;;;O;N
+1,2;Héracles;Square de l' Héraclès;Boulodrome;;;;;;;;;;;;;;O;N
+3,4;Izards;13 rue des Chamois;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+3,2;Jean Boiteux;103 route de blagnac;Piscine;;;;;;;;;;;;;;O;N
+3,3;Lalande gymnase;44 Chemin du Seminaire;Gymnase;Basket (1), Volley (1), Handball (1), Badmington (5), Mini hand (2);;40.70 x 21.20x8;;;2;;2 collective;200 pers;;;;;O;N
+;Lalande;44 Chemin du Seminaire;Plateau multisports extérieur;Basket (2), Volley (2), Piste 138 m, Saut, Lancer;;;;;;;;;;;;;O;N
+;Lalande pelouse Foot à 7;44 Chemin du Seminaire;Terrain;Football à 7;Gazon ;;;;;;;;;;;;O;N
+;Lalande tennis;Impasse du Séminaire;Tennis;Tennis (1);;;;;;;;;;;;;O;N
+;Lalande Collège pelouse foot à 7;Impasse du Séminaire;Terrain;Football;;60*40;;;;;;;;;;;O;N
+3,3;Lalande cimetière;Esplanade Pierre Cornac;Boulodrome;;;;;;;;;;;;;;O;N
+3,1;Le Cochonnet;Place du marché aux cochons;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+1,3;Léo Lagrange gymnase (BAT A) entresol;54 Rue des Sept Troubadours;Gymnase;Basket (1), Volley (1), Handball (1);;24.73 x 44.6 x 12;;;4;4;4 ind, 2 coll;800pers;786;;;;N;N
+;Léo Lagrange salle boxe anglaise (BAT C) 1er étage;54 Rue des Sept Troubadours;Salle;Combat;;14.58 x 22.58 x 3.97;;;1;2;2 individuelle;500pers;;;;;N;N
+;Léo Lagrange piscine (Hiver) BAT B;Place Pierre Paul Riquet;Piscine ;Aquagym, plongée, loisirs, water-polo;;50 m et 21 m;;;;;;;;;;;N;N
+;Léo Lagrange salle boxe 1er étage BAT C;54 Rue des Sept Troubadours;Salle;Combat;;12.17 x 10.35 x 3.97;;;2;4;2 individuelle;20pers;;;;;N;N
+;Léo Lagrange salle de danse 3ème étage BAT C;54 Rue des Sept Troubadours;Salle;Danse;;15.6 x 14.34 x 2.89;;;4;;;30pers;;;;;N;N
+;Léo Lagrange salle de lutte 3ème étage BAT C;54 Rue des Sept Troubadours;Salle;Combat;;17.32 x 12.42 x 3.86;;;2;4;2 individuelle;35pers;;;;;N;N
+;Léo Lagrange gymnase 4ème étage BAT C;54 Rue des Sept Troubadours;Gymnase;Volley (1), Badmington (4), basket (2);;33 x 14.68 x 7.9;;;3;4;2 individuelle;35pers;;;;;N;N
+3,1;Négreneys;Rue de Tunis;Plateau multisports extérieur;Basket (1), Handball (1), Volley (1);;;;;;;;;;;;;N;N
+3,3;Paleficat;Chemin de Paléficat;Boulodrome;;;;oui;;;;;;;oui;;;0;0
+3,3;Paul Riché;Place Paul Riché;Boulodrome;;;;oui;;;;;;;;;;O;N
+3,1;Pierre et Marie Curie gymnase;Rue de la Jeunesse;Gymnase;Basket (1), Volley (1), torrball;;21 x 12.5 x 5.4;;;1;oui;1 collective;252pers;;;5ème;;O;N
+;Pierre et Marie Curie;Rue de la Jeunesse;Plateau multisports extérieur;Handball (1);;;;;;;;;;;;;O;N
+3,2;Ponts Jumeaux skate park;31 Rue des Sports;Skate-Park;;;;;;;;;;;;;;O;N
+;Ponts Jumeaux stabilisé foot à 7;32 Rue des Sports;Terrain;football;stabilisé;;;;;;;;;;;;;
+;Ponts Jumeaux tennis;32 rue des Sports;Tennis;Tennis couvert (3), Tennis ext (3);;;;;4;oui;individuelle;97 pers;;;5ème;;O;N
+1,1;Port Garaud;Rue du Moulin du château;Boulodrome;;;;;;;;;;;;;;O;N
+;Port Garaud;Rue du Moulin du château;Plateau multisports extérieur;Basket (1);;;;;;;;;;;;;O;N
+1,1;Quêteurs;Rue des Quêteurs;Boulodrome;;;;oui;;;;;;;;;;O;N
+3,4;Raphaël Parc;Rue Raphaël;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+3,4;Renan 2;Rue Renan;bi-cross, skate-park;;;;;;;;;;;;;;O;N
+;Renan 1;Impasse Vitry;City stade;Basket (1), Handball (1), Tennis de table (2);;;;;;;;;;;;;O;N
+3,4;Rigal Georges gymnase;4 Rue Van Dick;Gymnase;Combat;;20*10*4;;;2;1;;37 pers;;;;;O;N
+;Rigal Georges pelouse Football;2 Rue Raphaël;Terrain;Football;Gazon ;100 x 63;oui;oui;4+(2);oui (public);collective;;300;oui;;;O;N
+3,1;Roland Garros;Impasse Roland Garros;Plateau multisports extérieur;Basket (1), Handball (1), tennis de table (2);;;;;;;;;;;;;O;N
+1,3;Saint Aubin;Boulevard Michelet;Boulodrome;;;;;;;;;;;;;;O;N
+1,1;Saint Sernin gymnase;1 Place Saint Sernin;Gymnase;Basket (1), Mini Basket (3), Volley (4), Handball (1);;40 x 19.98 x 7.38;;;6;18;7 ind, 4 coll;235pers;;;5ème;;N;N
+;Saint Sernin salle omnisport 1er;1 Place Saint Sernin;Gymnase;Volley (1), Tennis de table ;;20*12*9;;;;;;30pers;;;5ème;;N;N
+;Saint Sernin salle combat RDC;1 Place Saint Sernin;Salle;Combat;;13.1 x 8.8 x 3.3.8;;;;;;33pers;;;5ème;;N;N
+;Saint Sernin salle gym 1er;1 Place Saint Sernin;Salle;Gymnastique;;9.5 x 6.5 x 3.42;;;;;;15pers;;;5ème;;N;N
+;Saint Sernin salle tennis de table 1er;1 Place Saint Sernin;Salle;Volley (1), Tennis de table;;13,2*9,4*6;;;;;;15pers;;;5ème;;N;N
+;Saint Sernin salle danse RDC;1 Place Saint Sernin;Salle;Danse;;14.5 x 9 x 9;;;;;;30pers;;;5ème;;N;N
+;Saint Sernin dojo 1er;1 Place Saint Sernin;Salle;Dojo;;11.8 x 8.18 x 4;;;;;;30pers;;;5ème;;N;N
+;Saint Sernin salle musculation 2ème;1 Place Saint Sernin;Salle;Musculation;;11.92 x 8.45 x 3.88;;;1;;;30pers;;;5ème;;N;N
+;Saint Sernin salle boxe 2ème;1 Place Saint Sernin;Salle;Boxe;;9.42 x 6.50 x 3.38;;;;;;12pers;;;5ème;;N;N
+;Saint Sernin salle danse 2ème;1 Place Saint Sernin;Salle;Danse;;12.90 x 10.6 x 2.45;;;;;;30pers;;;5ème;;N;N
+3,2;Sept Deniers piscine;110 Route de Blagnac;Piscine ;;;12,5m*6 m;;;2;oui;collective;;;;;;N;N
+3,3;TASL Aviron;58 chemin de la Glacière;Base nautique;Aviron;;;;;;;;;;;;;0;0
+3,1;Toulouse Lautrec piscine;26 Impasse Barthe;Piscine;Loisirs, Aquagym;; 25 m;;;;oui;;299;;;4ème;;0;0
+;Toulouse Lautrec;Impasse Barthe;Plateau multisports extérieur;Basket (4), Handball (2), piste 200 m;;;;;;;;;;;;;O;N
+;Toulouse Lautrec pelouse Football;26 Impasse Barthe;Terrain;Football et Rugby;Gazon ;105 x 66;oui;oui;6+(3);;;;;;;;O;N
+;Toulouse Lautrec Stabilisé Football;26 Impasse Barthe;Terrain;Football à 11;Stabilisé;87 x 52;oui;;;;;;;;;;O;N
+;Toulouse Lautrec pelouse Foot à 7;26 Impasse Barthe;Terrain;Football à 7;Gazon ;64.9 x 44,8;;;;;;;;;;;O;N
+;Grand Gymnase Toulouse lautrec;26 Impasse Barthe;Gymnase;Basket (1), Volley (4), Handball (1), Badmington (6), Tennis (1), Escalade;;40.40 x 20.50 x 9;;;2;;2 collective;203 pers;;;4ème;;O;N
+;Petit Gymnase Toulouse lautrec;46 Impasse Barthe;Gymnase;Basket (1), Volley (1), Badmington (3), Escalade, Mini basket (3);;30 x 24 x 8;;;2;;2 collective;150 pers;;;5ème;;O;N
+1,2;Tracassin;119 rue des Amidonniers;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+3,4;Les Violettes pelouse Football;6 Rue des Violettes;Terrain;Football à 11 (1) et à 7 (2);Gazon ;87 x 51;oui;oui;2+(1);oui;collective;;;;;;O;N
+6,2;Alembert;30 rue Jean d' Alembert;Boulodrome;;;;oui;;;Oui;;;;;;;O;N
+6,1;Ancely;7 Allées des Causses;Piscine ;Loisirs;;25 m + 12,5 m;;;;;;;;;;;N;N
+2,3;Bagatelle;Rue de la Gironde;Boulodrome;;;;oui;;;Oui;;;;oui;;;O;N
+;Bagatelle;6 Impasse Bachaga Boualam;Gymnase;Basket (1), Mini-basket (2), Volley (2), Handball (1), Badmington (6);;44 X 22 X 7.82;;;4;11;4 ind, 4 coll;386 personnes;180;;3ème;;O;O
+;Bagatelle;Impasse du Bachaga Boualam;Tennis;Tennis;;;;;;;;;;;;;O;N
+;Bagatelle City Stade;Impasse du Bachaga Boualam;City-stade;Football, volley;Enrobé;;;;;;;;;;;;O;N
+;Bagatelle Gironde;rue de la Gironde;City-stade;Handball, Football;Synthétique;;;;;;;;;;;;O;N
+;Bagatelle Gironde;rue de la Gironde;City-stade;Handball, Football, Basket;Synthétique;;;;;;;;;;;;O;N
+;Bagatelle Halle;3 bis Impasse Bachaga Boualam;Gymnase;Mini Basket (2), Volley (1), Escalade;;26 X 14.7 X 7.4;;;1;1;1 collective;;;;4ème;;O;O
+;Bagatelle Parc;45 rue du Lot;Boulodrome;;;;oui;;;Oui;;;;oui;;;O;N
+;Vincent Serrer pelouse football;Impasse Bachaga Boualam;Terrain;Football à 11 et à 7;Gazon;100x60;non;oui;4+(2);Oui (Public);;;110;;5;2009;N;N
+;Vincent Serrer herbe foot à 7;Impasse Bachaga Boualam;Terrain;Football à 5;Gazon;46*27;non;oui;4+(2);Oui (Public);;;;;;;N;N
+2,4;Baudin;Place Baudin;Plateau multisports extérieur;Basket (1);Enrobé;;;;;;;;;;;;O;N
+2,2;Bécanne Maurice;Rue Théodore Riviere ;Gymnase;Volley (1), Basket (1);;20 X 12 X 6;;;2;2;2 ind, 2 coll;60 personnes;;;5ème;;N;N
+;Bécanne Maurice;Rue Théodore Riviere ;Dojo;Combat (Judo);;21 X 9.5;;;;;;50 personnes;;;5ème;;N;N
+6,3;Gauguin Paul;Rue Paul Gauguin;Boulodrome;;;;;;;;;;;;;;O;N
+;Gauguin Paul;Rue Paul Gauguin;City-Stade;Basket, Handball;Synthétique;;;;;;;;;;;;N;N
+;Bellefontaine;Passage Albert Camus;Boulodrome;;;;oui;;;;;;;;;;O;N
+;Dottin;Rue du Recteur Dottin;City-Stade;Basket, Handball;Synthétique;;;;;;;;;;;;N;N
+;Dottin;Rue du Recteur Dottin;Boulodrome;;;;;;;;;;;;;;N;N
+;Rouault Georges;Rue Georges Rouault;Boulodrome;;;;;;;Oui;;;;;;;O;N
+;Pergaud;Cheminement Louis Pergaud;Plateau multisports extérieur;Handball, Football;Synthétique;;;;;;;;;;;;N;N
+6,3;Bouillière;Place Edouard Bouillière;Boulodrome;;;;oui;;;;;;;;;;O;N
+6,3;Bourliaguet;Rue Aristide Maillol;City-Stade;Basket, Handball, Tennis de table (4);Synthétique;;;;;;;;;;;;O;N
+2,1;Bourrassol;Rue du château d' eau;Boulodrome;;;;oui;;;;;;;;;;O;N
+6,3;Canto Laouzetto;5 rue de la Tourasse;Piste;Piste 400 m;;;;;;;;;;;;;O;N
+;Canto Laouzetto pelouse Football;5 Rue de la Tourasse;Terrain;Football à 11 et à 7;Gazon;105x68;non;oui;4+(2);Oui (Public);;;400;oui;4;2002;N;N
+;Canto Laouzetto Synthétique Football;5 Rue de la Tourasse;Terrain;Football à 11 et à 7;Synthétique;100x64;oui;oui;2+(1);;;;;oui;5;2006;N;N
+2,4;Casselardit;Place Jean Baptiste Baudin;Boulodrome;;;;oui;;;;;;;;;;O;N
+;Cepière;Impasse Marcel Cerdan;City-stade;;;;;;;;;;;;;;;
+2,4;Fontaine;Avenue Francis de Pressensé;Boulodrome;;;;oui;;;;;;;;;;O;N
+2,3;Fontaines Lestang;Rue J.Gamelin;Boulodrome;;;;;;;;;;;;;;O;N
+6,2;Fronde;Chemin de la Fronde;Boulodrome;;;;oui;;;;;;;;;;O;N
+2,3;Garcia Victor;61 rue Négogousses;Boulodrome;Lyonnaise ;;;oui;;;;;;;;;;O;O
+6,5;Gironis;35 Rue de Gironis;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+;Gironis gymnase;35 Rue de Gironis;Gymnase;Basket (1),Mini Basket (2), Handball (1), Volley (1), Tennis (1);;40 x 20 x 8;;;6;7;5 ind, 6 coll;678 personnes;214;;3ème;;O;O
+;Gironis salle tennis de table 1er ét;35 Rue de Gironis;Salle;Tennis de Table;;25 x 14 x 5;;;;;;64 personnes;;;;;O;O
+;Gironis salle gym/combat 1er ét;35 Rue de Gironis;Salle;Gymnastique;;21 x 7 x 5;;;;;;57 personnes;;;;;O;O
+;Gironis salle danse rdc;35 Rue de Gironis;Salle;Danse;;15 x 5.8 x 2.50;;;;;;14 personnes;;;;;O;O
+;Gironis;35 Rue de Gironis;Piste;Piste 400 m;;;;;;;;;;;;;O;O
+;Gironis ;35 Rue de Gironis;Fronton;Pelote;;;;;;;;;;;;;N;N
+;Gironis  pelouse football Annexe;35 Rue de Gironis;Terrain;Football à 11;Gazon;105x68;oui;;2+(1);;;;;;;;N;N
+;Gironis  herbe Foot à 7;35 Rue de Gironis;Terrain;Football à 7;Gazon;57x86;oui;oui;4+(2);Oui (Public);;;;oui;;;N;N
+;Gironis  pelouse Foot Honneur;35 Rue de Gironis;Terrain;Football à 11 et à 7;Gazon;95x66;oui;oui;4+(2);Oui (Public);;;15;oui;5;2001;N;N
+;Gironis  pelouse Rugby Honneur;35 Rue de Gironis;Terrain;Rugby;Gazon;105x68;oui;oui;2+(1);;;;;oui;;;N;N
+;Gironis  Football Synthétique;35 Rue de Gironis;Terrain;Football à 11 et à 7;Synthétique;100X60;oui;oui;4+(2);Oui (Public);;;;oui;;;N;N
+6,3;Jardin de l'hippodrome;Impasse de l'hypodrome;Plateau multisports extérieur;Basket;Enrobé;;;;;;;;;;;;O;N
+2,4;Jardin du  Barry;rue gaston Ramon;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+2,4;La Cépière Gymnase;Rue Charles Mouly;Gymnase;Basket (1), Mini-basket (6), Volley (3), Handball (1), Tennis;;40,07 X 23,94;;;2;1;2 collective;?;;;4ème;;N;N
+;La Cépière;Rue Charles Mouly;Plateau multisports extérieur;Basket (2), , Handball (3), lancer, piste 100m et 180 m;;;;;;;;;;;;;O;N
+2,3;La Faourette gymnase;18 Rue Paul Lambert;Gymnase;Basket (1), Mini-Basket (6), Volley (4), Handball (1), Badmington (7);;44 X 26 X 7;;;8;18;8 ind, 2 coll;368 personnes;;;3ème;;O;O
+;La Faourette salle boxe;18 Rue Paul Lambert;Salle;Combat (Boxe);;16 X 16 X 2.7;;;2;;;?;;;3ème;;O;O
+;La Faourette dojo;18 Rue Paul Lambert;Salle;Combat (Judo);;15 X 15 X 2.7;;;2;;;?;;;3ème;;O;O
+;La Faourette salle musculation;18 Rue Paul Lambert;Salle;Musculation;;11 X 5 X 2.7;;;;;;?;;;3ème;;O;O
+;Stade Michel Monerris;18 Rue Paul Lambert;Terrain;Football à 11 et à 7;Gazon;100x65;oui;oui;4+(3);Oui (Public);;;214;oui;5;;O;O
+;La Faourette;18 Rue Paul Lambert;Plateau multisports extérieur;Basket(2), handball (1), saut, piste 310 m;Enrobé;;;;;;;;;;;;O;N
+;Ukraine City Stade ;Rue de l'Ukraine;City-Stade;Football, volley;Enrobé;;;;;;;;;;;;N;N
+;La Boule d' Or ;Rue de l' Ukraine;Boulodrome;Lyonnaise ;;;oui;;;Oui;;;;oui;;;O;N
+;La Boule Joyeuse;Rue de l' Ukraine;Boulodrome;;;;oui;;;Oui;;;;;;;O;N
+6,2;La Mounède pelouse Football n°1;1 Rue M.C. Perroud;Terrain;Football à 11 et à 7;Gazon;100x60;non;oui;2+(2);Oui (Public);;;;;5;1998;N;N
+;La Mounède pelouse Football n°2;1 Rue M.C. Perroud;Terrain;Football à 11 et à 7;Gazon;100x68;oui;oui;2+(2);Oui (Public);;;;;5;1998;N;N
+;La Mounède Football à 7;1 Rue M.C. Perroud;Terrain;Football à 7;Gazon;50x45;;oui;2+(2);Oui (Public);;;;;;;N;N
+;La Mounède Stabilisé Football;1 Rue M.C. Perroud;Terrain;Football à 7;Stabilisé;72x50;;oui;2+(2);Oui (Public);;;;;;;N;N
+6,2;La Ramée gymnase;66 Chemin de Larramet;Gymnase;Basket (1), Volley (1), Badmington (3), Roller;;42 x 22 x 6.00;;;;5;4 ind, 2 coll;?;380;;3ème;;N;N
+;La Ramée tennis;67 Chemin de Larramet;Tennis;;;;;;;;;;;;;;N;N
+;La Ramée pelouse Football n°1;66 Chemin de Larramet;Terrain;Football à 11 et à 7;Gazon;98x67;;oui;3+(6);Oui (Public);;;;oui;5;?;N;N
+;La Ramée pelouse Football n°2;66 Chemin de Larramet;Terrain;Football à 7;Gazon;98x67;;oui;3+(6);Oui (Public);;;;oui;;;N;N
+;La Ramée pelouse Football n°3;66 Chemin de Larramet;Terrain;Football à 11 et à 7;Gazon;100x66;;oui;2+(4);Oui (Public);;;;oui;5;;N;N
+;La Ramée Stabilisé Football;66 Chemin de Larramet;Terrain;Football à 11;Stabilisé;108X64;;oui;1+(2);Oui (Public);;;;oui;;;N;N
+;La Ramée Synthétique football;66 Chemin de Larramet;Terrain;Football à 11 et à 7;Synthétique;105x68;oui;;2+(4);Oui (Public);;;;oui;5;2002;O;O
+;La Ramée pelouse Honneur;66 Chemin de Larramet;Terrain;Rugby, Football à  11;Gazon;100x66;;oui;3+(6);Oui (Public);;;376;oui;5;?;O;O
+;La Ramée Vestiaires 4;66 Chemin de Larramet;Terrain;Football à 11;Gazon;100x66;oui;oui;1+(2);Oui (Public);;;;oui;5;2002;O;O
+6,5;La Saudrune pelouse Football n°1;21 Chemin de la Saudrune;Terrain;Football à 11 et à 7, Rugby;Gazon;100x65;oui/50%;oui;2+(1);Oui (Public);;;;oui;5;1999;N;N
+;La Saudrune pelouse Football n°2;21 Chemin de la Saudrune;Terrain;Football à 7;Gazon;60x51;;oui;2+(1);Oui (Public);;;;oui;;;N;N
+;La Saudrune pelouse Football n°2;21 Chemin de la Saudrune;Terrain;Football à 7;Gazon;60x51;;oui;2+(1);Oui (Public);;;;oui;;;N;N
+6,2;Lardenne;Place Sauvegrain;Boulodrome;;;;oui;;;Oui;;;;oui;;;O;N
+;Lardenne gymnase;Rue Rocamadour;Gymnase;Volley, Basket;;20*12*5,35;;;1;oui;5ind;;;;;;O;O
+;Lardenne Foot à 7 Petit Capitole;64bis Avenue de Lardenne;Terrain;Football à 7;Gazon;81X60;oui;non;6+(2);Oui (Public);;;;oui;;;O;O
+;Lardenne (petit Capitole);153bis Avenue de Lardenne;Gymnase;Basket (1), Mini- Basket (2), Volley (1) Badmington (3);;28 x 17 x 8.50;;;6;6;4 ind, 6 coll;548 personnes;;;3ème;;O;O
+;Lardenne pelouse Football n°1;64bis Avenue de Lardenne;Terrain;Football à 11 et à 7;Gazon;100X60;oui;oui;6+(2);Oui (Public);;;;oui;5;2002;O;O
+;Lardenne pelouse Football n°2;64bis Avenue de Lardenne;Terrain;Football à 11 et à 7;Gazon;100X60;oui;oui;6+(2);Oui (Public);;;;oui;;;O;O
+;Aurélien Feuillet;64bis Avenue de Lardenne;Terrain;Football à 11 et à 7;Gazon;100X60;oui;oui;6+(2);Oui (Public);;;;oui;5;2002;O;O
+2,3;Les Merlettes;64 allée  de Guyenne;Plateau multisports extérieur;Basket, Handball, Volley;Gazon;;;;;;;;;;;;N;N
+;Les Merlettes pelouse football;64 Allée de Guyenne;Terrain;Football à 11 et à 7;Gazon;100*65;oui;oui;2+(1);Oui (Public);;;;non;5;2009;O;O
+6,2;Les Pradettes gymnase;6 Rue Ferdinand de Lesseps;Gymnase;Basket (1), Mini- Basket (1), Volley (1), Badmington (4), Tennis (1);;36 X 21.7 X 7;;;8;4;2 ind, 2 coll;351 personnes;40;;;;N;N
+;Les Pradettes;6 Rue Ferdinand de Lesseps;Plateau multisports extérieur;Basket (1);;;;;;;;;;;;;O;N
+;Les Pradettes salle danse 1er ét;6 Rue Ferdinand de Lesseps;Salle;Danse;;14.36 X 6.77 X 2.80;;;;;;50 personnes;;;;;N;N
+;Les Pradettes dojo 1er ét;6 Rue Ferdinand de Lesseps;Salle;Combat;;14.26 X 5.68 X 2.80;;;;;;50 personnes;;;;;N;N
+;Les Pradettes pelouse Football;6 Rue Ferdinand de Lesseps;Terrain;Football à 11;Gazon;98.5x63.5;;oui;4+(2);Oui (Public);;;150;;5;2000;O;O
+;Les Pradettes Synthétique football;6 Rue Ferdinand de Lesseps;Terrain;Football à 11 et à 7;Synthétique;100*60;oui;oui;4+(2);Oui (Public);;;;;;;O;O
+;Les Pradettes pelouse Rugby;6 Rue Ferdinand de Lesseps;Terrain;Rugby, Football à 7;Gazon;98.4x65;;oui;4+(2);Oui (Public);;;;;;;O;O
+;Les Pradettes ;12 rue Ferdinand de Lesseps;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+;Viollet le Duc herbe foot à 7;Rue Viollet le duc;Terrain;Football à 7;Enherbé;;;;;;;;;;;;O;N
+6,3;Lou Bosc;Rue Françis Laulanie;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+2,1;Les Fontaines pelouse Football;89 Rue des Fontaines;Terrain;Football à 11 et à 7;Gazon;100X65;oui/335.48;oui;4+(2);;;;430;oui;3;2007;N;N
+;Maurois;Passage André Maurois;Foot à 7;;;;;;;;;;;;;;;
+6,2;Marcel Cerdan gymnase;7 Chemin de la Cépiére;Gymnase;Basket (1), Mini- Basket (2), Volley (1), Handball (1) , badmington (3), Tennis (1);;40 x 25 x 8;;;4;4;2 ind, 2 coll;200 personnes;175;;3ème;;O;O
+;Marcel Cerdan salle activité rdc;7 Chemin de la Cépiére;Salle;Combat ( boxe);;20 X 15 X 8;;;;;;75 personnes;;;3ème;;O;O
+;Marcel Cerdan salle activité 1er etage;7 Chemin de la Cépiére;Salle;Gymnastique;;25.5 x 17 x 4;;;;;;50 personnes;;;3ème;;O;O
+;Marcel Cerdan;7 Chemin de la Cépiére;Plateau multisports extérieur;Handball (1), piste 80m, saut haut(1),saut long(1) Lancer poids(6);;;;;;;;;;;;;O;O
+;Marcel Cerdan pelouse Football;7 Chemin de la Cépiére;Terrain;Football à 11 et à 7;Gazon;100X65;oui;oui;4+(2);Oui (Public);;;;;;;N;N
+;Marcel Cerdan Stabilisé football;7 Chemin de la Cépiére;Terrain;Football à 11;Stabilisé;100X65;oui;oui;4+(2);Oui (Public);;;;;;;N;N
+6,4;Marcel Sarcos pelouse football;10 Chemin de Liffard;Terrain;Football à 11 et à 7;Gazon;100X65;oui;oui;4+(2);Oui (Public);;;386;oui;3;2001;O;O
+;Marcel Sarcos ;Chemin de Liffard;Plateau multisports extérieur;Basket;;;;;;;;;;;;;O;N
+;Marcel Sarcos skate park;Ch de Liffard;Skate-Park;Roller;;;;;;;;;;;;;O;N
+;Marcel Sarcos Foot à 7;10 Chemin de Liffard;Terrain;Football à 7;Gazon;58*40;oui;oui;4+(2);Oui (Public);;;;;;;O;O
+;Marcel Sarcos Synthétique football;10 Chemin de Liffard;Terrain;Football à 11 et à 7;Synthétique;89*56;oui;oui;4+(2);Oui (Public);;;;;;;O;O
+6,3;Marmande;Chemin des Capelles;Terrain;Football à 7;Gazon;;;;;;;;;;;;O;N
+2,3;Mathieu city stade;Place André Mathieu;Multisports;Handball;Synthétique;;;;;;;;;;;;N;N
+6,3;Mirail;6 Rue Ferdinand Laulanié;Plateau multisports extérieur;Piste 120 m, Basket, Handball, Football;Terre;;;;;;;;;;;;O;O
+;Mirail tennis;6 Rue Ferdinand Laulanié;Tennis;Tennis (4);;;;;;;;;;;;;O;O
+;Mirail Stabilisé football;6 Rue Ferdinand Laulanié;Terrain;Football à  11 et 7;Stabilisé;100X65;oui;oui;4+(1);Oui (Public);;;;;;;O;O
+;Mirail Foot à 7;6 Rue Ferdinand Laulanié;Terrain;Football à 7;Gazon;54x44;;;4+(1);Oui (Public);;;;;;;O;O
+;Mirail (COSEC) gymnase;6 Rue Ferdinand Laulanié;Gymnase;Basket (1), Mini-Basket (3) Volley(3), Handball (1), Badmington (5), Tennis (1);;40 X 20 X 8;;;4;4;2 ind, 2 coll;200 personnes;;;3ème;;O;O
+;Mirail (COSEC) salle d'activité rdc;6 Rue Ferdinand Laulanié;Salle;Gymnastique;;20 x 15 x 8;;;;;;175 personnes;;;3ème;;O;O
+;Mirail (COSEC) salle d'activité 1er ét;6 Rue Ferdinand Laulanié;Salle;Danse, Combat;;25 x 15 x 4;;;;;;50 personnes;175;;3ème;;O;O
+;Mirail (Laulanié) gymnase;6 Rue Ferdinand Laulanié;Gymnase;Basket (1), Mini-Basket (2), Handball (1), Badmington (5), Escalade;;44 x 25 x 8;;;4;4;4 ind, 4 coll;230 personnes;;;3ème;;O;O
+;Mirail (Laulanié) salle combat;6 Rue Ferdinand Laulanié;Salle;Combat (Boxe);;10 x 8 x ?;;;;;;13 personnes;;;3ème;;O;N
+;Mirail (Laulanié) salle escalade;6 Rue Ferdinand Laulanié;Salle;Escalade;;23 X 7.3 X 7.20;;;;;;30 personnes;;;;;O;N
+2,4;Montané pelouse football ;5 Avenue Raymond Badiou;Terrain;Football à 11 et à 7;Gazon;100X65;oui 1/4;oui;4+2;Oui (Public);;;;;5;;N;O
+;Montané Pierre;5 Avenue Raymond Badiou;Gymnase;Basket (1), Volley (1), Handball (1), Badmington (7);;44 X 26 X 7;;;4;8;2ind, 4 coll;336 personnes;186;;3ème;;N;N
+;Montané Pierre;5 Avenue Raymond Badiou;Plateau multisports extérieur;Piste 400 m,Aire de lancer de poids(1);;;;;;;;;;;;;O;O
+2,3;Papus;Rue du Béarn;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+;Papus piscine;64 Allée de Guyenne;Piscine ;Plongée, aquagym;;25 m;;;;;;;;;;;O;N
+;Patte d'Oie;87 Rue de Cugnaux;City-Stade;;;;;;;;;;;;;;;
+2,4;Pouvillon;Impasse Pouvillon;Plateau multisports extérieur;Basket;;;;;;;;;;;;;O;N
+2,4;Pouvillon herbe foot à 7;Impasse Pouvillon;Terrain;Football à 7;Enherbé;;;;;;;;;;;;O;N
+2,1;Prairie des Filtres;Rue Laganne;Multisports;Basket;Enrobé;;;;;;;;;;;;O;N
+;Cours Dillon;Cours Dillon;Boulodrome;;;;oui;;;Oui;;;;oui;;;O;N
+;Digue Fer à Cheval;Cours Dillon;Boulodrome;;;;oui;;;Oui;;;;oui;;;O;O
+;Cazabonne;Cours Dillon;Boulodrome;;;;;;;;;;;;;;O;N
+2,1;Puig Jean François;4 Rue Coupefer;Gymnase;Basket (1), Volley (1);;31.38 X 22.50 X 8;;;2;2;2 collective;200 personnes;105;;4ème;;O;N
+2,1;Ravelin;Place du Ravelin;Boulodrome;;;;;;;;;;;;;;N;N
+2,1;Roguet;rue de Gascogne;Boulodrome;;;;;;;;;;;;;;N;N
+6,3;Reynnerie Synthétique Foot à 7;Rue Jean François lesueur;Terrain;Football à  7 à 5 et à 2, piste 200m;Synthétique;;;;;;;;;;;;O;N
+;Messager ;Rue André Messager;Plateau multisports extérieur;Basket, Handball, football;enrobé;;;;;;;;;;;;N;O
+;Messager ;Rue André Messager;City-Stade;Basket, Handball, football;Synthétique;;;;;;;;;;;;N;O
+;Reynerie gymnase;3 Rue Louise Michel;Gymnase;Volley (1), Basket (1);;;;;;;;;;;;;O;N
+;Reynerie;Rue Sarrabézolles;Boulodrome;;;;oui;;;;;;;;;;N;O
+;Jean Gilles foot à 7;Rue Jean Gilles;Terrain;Football à 7 (2)  Tennis de table (2);Enrobé et enherbé;;;;;;;;;;;;O;N
+6,1;Saint Martin du Touch;Chemin de Tournefeuille;Gymnase;Basket (1), Volley (1) Badmington (4);;32 x 20.50;;;4 + (1);7;2 ind, 2 coll;167 personnes;;;5ème;;O;N
+;Saint Martin du Touch herbe;Rue Sentenac;Terrain;Football à 7;Gazon;;;;;;;;;;;;O;N
+;Saint Martin du Touch ;Rue Sentenac;Plateau multisports extérieur;Handball, Basket;Enrobé;;;;;;;;;;;;O;N
+6,4;Jean Daniel;chemin du cimetière de l'Eglise;Boulodrome;;;;oui;;;;;;;oui;;;O;N
+2,3;Tabar;Rue de la Sarthe;Boulodrome;;;;oui;;;;;;;;;;O;N
+;Tibaous;Rue Albert Carovis;City-Stade;;;;;;;;;;;;;;;
+2,4;Parc des Sports Georges Aybram;8 Rue Ernest Dufer;Terrain;Rugby;Gazon;120*67;oui;oui;4+(2);Oui (Public);;;1045;oui;2ème;;N;O
+;TOEC pelouse Rugby Honneur;8 Rue Ernest Dufer;Terrain;Rugby;Gazon;95x66;oui;oui;4+(2);Oui (Public);;;;;;;N;O
+6,3;Valmy gymnase;Cheminemt G.et J. Bouton;Gymnase;Basket (1), Mini-Basket (3) Volley (3), Handball (1), Badmington (4), Escalade;;40 x 20;;;;3;1 ind, 2 coll;200 personnes;;;3ème;;O;O
+;Valmy salle arts martiaux;Cheminemt G.et J. Bouton;Salle;combat;; 20 X 14,70;;;;;;88 personnes;;;3ème;;O;O
+;Valmy salle danse;Cheminemt G.et J. Bouton;Salle;Danse;; 14,42 X 10,51 X 6;;;;;;50 personnes;;;;;O;O
+;Valmy dojo;Cheminemt G.et J. Bouton;Salle;Combat;; 14,42 X 10,51 X 6;;;3;6;3 ind;50 personnes;;;3ème;;O;N
+;Valmy salle musculation;Cheminemt G.et J. Bouton;Salle;Musculation;;7,71 X 7,60 X 4;;;;;;19 personnes;;;3ème;;O;N
+;Valmy;Cheminemt G.et J. Bouton;Plateau multisports extérieur;Handball (2);;;;;;;;;;;;;O;N
+;Valmy ;Cheminemt G.et J. Bouton;Plateau multisports extérieur;Basket (3);;;;;;;;;;;;;O;N
+;Valmy ;Cheminemt G.et J. Bouton;Plateau multisports extérieur;piste 220m,Lancer de poids(1);;;;;;;;;;;;;O;N
+;Valmy tennis;Cheminemt G.et J. Bouton;Tennis;Tennis (4);;;;;;;;;;;;;O;N
+;Valmy skate park;Cheminemt G.et J. Bouton;Skate-Park;Roller;;;;;;;;;;;;;O;N
+6,3;Vergers;Impasse des Vergers;Multisports;Basket 1, mini basket 2;Enrobé;;;;;;;;;;;;O;N
+6,3;Vergers;Impasse des Vergers;Multisports;Basket, Handball, football;Enrobé;;;;;;;;;;;;O;N
