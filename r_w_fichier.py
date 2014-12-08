@@ -79,7 +79,12 @@ def set_from_file_size(content):
 
 
 def set_from_file_eclairage(content):
-    print(content)
+    if content.lower().__contains__("oui"):
+        return 1
+    if content.lower().__contains__("non"):
+        return 0
+    else:
+        return None
 
 
 
@@ -88,7 +93,12 @@ def set_from_file_eclairage(content):
 
 
 def set_from_file_arrosage(content):
-    print(content)
+    if content.lower().__contains__("oui"):
+        return 1
+    if content.lower().__contains__("non"):
+        return 0
+    else:
+        return None
 
 
 
