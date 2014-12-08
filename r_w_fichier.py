@@ -30,8 +30,9 @@ def fill_equipment(sh,nEq,eq_current):
     eq_current.toilettesHand=set_from_file_toilettesHand(sh.cell_value(nEq,18))
 
 
-def set_from_file_quartier(content):    #TODO: écrire toutes les fonctions d'importation
-    print(content)
+def set_from_file_quartier(content):
+    content = str(content)
+    return content.replace(',', '.')
 
 
 
@@ -39,7 +40,9 @@ def set_from_file_quartier(content):    #TODO: écrire toutes les fonctions d'im
 
 
 
-def set_from_file_type(content):
+
+
+def set_from_file_type(content):            #TODO: écrire toutes les fonctions d'importation
     print(content)
 
 
@@ -58,4 +61,121 @@ def set_from_file_activities(content):
 
 
 def set_from_file_revetement(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_size(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_eclairage(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_arrosage(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_vestiaire(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_sanitaires(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_douches(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_capaMax(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_tribunes(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_clubHouse(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_categorie(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_date(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_accesHand(content):
+    print(content)
+
+
+
+
+
+
+
+def set_from_file_toilettesHand(content):
     print(content)
