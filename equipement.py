@@ -10,7 +10,7 @@ class Equipment():
         self.eclairage=None         # 0 ou 1
         self.arrosage=None          #0 ou 1
         self.vestiaire=[]           # [nb pr joueurs, pr arbitres]
-        self.sanitaires=None
+        self.sanitaires=None        #1 <=> oui mais nombre inconnu, un nombre: le nombre...
         self.douches=[]             # [nb individuelles, nb collectives]
         self.capaMax=0              #0<=> non applicable / pas de données
         self.tribunes=0             # nb de places: 0<=> N/A / no data

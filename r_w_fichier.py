@@ -59,9 +59,13 @@ def set_from_file_activities(content):
 
 
 
-
 def set_from_file_revetement(content):
-    print(content)
+    contentList=content.split()
+    revetList=[]
+    for revet in contentList:
+        revetList.append(revet.strip(','))
+    return revetList
+
 
 
 
@@ -70,7 +74,26 @@ def set_from_file_revetement(content):
 
 
 def set_from_file_size(content):
-    print(content)
+    terrainList=content.replace('et','+').split('+')
+    terrainSizes=[]
+    for terrain in terrainList:
+        terrain=terrain.replace('*','x')
+        terrain=terrain.replace('X','x')
+        sizeStr=terrain.split('x')
+        size=[]
+        for axis in sizeStr:
+            longAxe=axis.strip('m ?')
+            if longAxe != '':
+                longAxe=longAxe.replace(',','.')
+                try:
+                    longAxe=float(longAxe)
+                except ValueError:
+                    print(longAxe)
+                size.append(longAxe)
+        terrainSizes.append(tuple(size))
+    return terrainSizes
+
+
 
 
 
@@ -107,7 +130,20 @@ def set_from_file_arrosage(content):
 
 
 def set_from_file_vestiaire(content):
-    print(content)
+    nbJA=str(content).split('(')
+    nbVestiaires=[]
+    for chaine in nbJA:
+        chaine=chaine.strip(' )+')
+        chaine=chaine.split('+')
+        nbVest=0
+        for nb in chaine:
+            if nb != '':
+                nbVest += int(float(nb))
+        nbVestiaires.append(nbVest)
+    if len(nbVestiaires) == 1:
+        nbVestiaires.append(0)
+    nbVestiaires=tuple(nbVestiaires)
+    return nbVestiaires
 
 
 
@@ -116,7 +152,13 @@ def set_from_file_vestiaire(content):
 
 
 def set_from_file_sanitaires(content):
-    print(content)
+    content = str(content).lower()
+    if content == '':
+        return None
+    if content.__contains__('oui'):
+        return 1
+    else:
+        return int(float(content))
 
 
 
@@ -125,7 +167,24 @@ def set_from_file_sanitaires(content):
 
 
 def set_from_file_douches(content):
-    print(content)
+    content = content.replace('/',',')
+    content = content.split(',')
+    nb=[None,None]
+    for indCo in content:
+        if indCo.__contains__('ind'):
+            indCo = ''.join(filter(lambda x: x.isdigit(), str(indCo)))
+            if indCo.isdigit():
+                nb[0]=int(indCo)
+            else:
+                nb[0]=1
+        if indCo.__contains__('col'):
+            indCo = ''.join(filter(lambda x: x.isdigit(), str(indCo)))
+            if indCo.isdigit():
+                nb[1]=int(indCo)
+            else:
+                nb[0]=1
+        if indCo.__contains__('oui'):
+            nb[1]=1     #s'il n'est pas précisé si elles sont collectives ou individuelles, on choisit collectives
 
 
 
