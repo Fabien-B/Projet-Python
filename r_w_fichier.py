@@ -193,10 +193,11 @@ def set_from_file_douches(content):
 
 
 def set_from_file_capaMax(content):
-    if content == '' or content == '?':
+    digits = ''.join(filter(lambda x: x.isdigit(), str(content)))
+    if digits == '':
         return 0
     else:
-        return ''.join(filter(lambda x: x.isdigit(), str(content)))
+        return int(digits)
 
 
 
@@ -205,10 +206,11 @@ def set_from_file_capaMax(content):
 
 
 def set_from_file_tribunes(content):
-    if content == '' or content == '?':
+    digits = ''.join(filter(lambda x: x.isdigit(), str(content)))
+    if digits == '':
         return 0
     else:
-        return ''.join(filter(lambda x: x.isdigit(), str(content)))
+        return int(digits)
 
 
 
@@ -217,9 +219,9 @@ def set_from_file_tribunes(content):
 
 
 def set_from_file_clubHouse(content):
-    if content.lower == 'oui':
+    if str(content).lower().__contains__('oui'):
         return 1
-    elif content.lower == 'non':
+    elif str(content).lower().__contains__('non'):
         return 0
     else:
         return None
