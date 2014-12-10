@@ -19,4 +19,5 @@ class Equipment():
         self.date=0                 # 0<=> N/A / no data
         self.accesHand=None         #0/1
         self.toilettesHand=None     #0/1
+        self.coords = None          #(latitude, longitude)
 
