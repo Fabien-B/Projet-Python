@@ -44,3 +44,9 @@ class Cache:
             return True
         else:
             return False
+
+    def isalive(self, fle):
+        if os.path.exists(self.path+str(fle)):
+            return True
+        else:
+            return False
