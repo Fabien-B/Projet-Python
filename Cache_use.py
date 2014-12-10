@@ -2,6 +2,7 @@ __author__ = 'guilhem'
 
 import pickle
 import os
+import sys
 
 class Cache:
     def __init__(self, path):
@@ -14,28 +15,34 @@ class Cache:
             with open(str(self.path)+str(fle), 'w+b') as f:
                 pickle.dump(obj, f)
                 return
+        except FileNotFoundError:
+            print('Error : This file does not exist.')
         except:
-            pass
+            print('Unexpected error', sys.exc_info()[0])
+            raise
 
 
     def rescue(self, fle):
         try:
-            with open(str(self.path)+str(fle), 'r+b') as f:
+            with open(str(self.path)+str(fle), 'rb') as f:
                 return pickle.load(f)
+        except FileNotFoundError:
+            print('Error : This file does not exist.')
         except:
-            print('ET MERDE')
+            print('Unexpected error', sys.exc_info()[0])
+            raise
 
     def erase(self, fle):
         try:
             os.remove(str(self.path)+str(fle))
+        except FileNotFoundError:
+            print('Error : This file does not exist.')
         except:
-            print('ET MERDE')
+            print('Unexpected error', sys.exc_info()[0])
+            raise
 
-
-
-my_cache = Cache('cache/')
-a = [12, 24, 62]
-my_cache.save(a, 'plop2.c')
-b = my_cache.rescue('plop2.c')
-print(b)
-my_cache.erase('plop2.c')
+    def isempty(self):
+        if not os.path.exists(self.path) or not os.listdir(self.path):
+            return True
+        else:
+            return False
