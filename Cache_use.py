@@ -36,24 +36,5 @@ class Cache:
         except FileNotFoundError:
             print('Error : This file does not exist.')
         except:
-<<<<<<< HEAD
             print('Unexpected error', sys.exc_info()[0])
             raise
-
-    def isempty(self):
-        if not os.path.exists(self.path) or not os.listdir(self.path):
-            return True
-        else:
-            return False
-=======
-            print('ET MERDE')
-
-
-
-my_cache = Cache('cache/')
-a = [12, 24, 62]
-my_cache.save(a, 'plop2.c')
-b = my_cache.rescue('plop2.c')
-print(b)
-my_cache.erase('plop2.c')
->>>>>>> bc68dcaa0795e4920cde70781c2dd1df6b884de9
