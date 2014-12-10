@@ -38,3 +38,9 @@ class Cache:
         except:
             print('Unexpected error', sys.exc_info()[0])
             raise
+
+    def isempty(self):
+        if not os.path.exists(self.path) or not os.listdir(self.path):
+            return True
+        else:
+            return False
