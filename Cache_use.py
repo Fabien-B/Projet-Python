@@ -1,5 +1,3 @@
-__author__ = 'guilhem'
-
 import pickle
 import os
 import sys
