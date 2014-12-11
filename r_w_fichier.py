@@ -38,7 +38,7 @@ def set_from_file_quartier(content):
     return content.replace(',', '.')
 
 
-def set_from_file_type(content):  # TODO: écrire toutes les fonctions d'importation
+def set_from_file_activities(content):  # TODO: écrire toutes les fonctions d'importation
     if content != '':
         dictionnaire = {}
         last = None
@@ -85,8 +85,9 @@ def set_from_file_type(content):  # TODO: écrire toutes les fonctions d'importa
     else:
         return None
 
-def set_from_file_activities(content):
-    print(content)
+
+def set_from_file_type(content):
+    return content.capitalize()
 
 
 def set_from_file_revetement(content):
@@ -129,7 +130,7 @@ def set_from_file_eclairage(content):
 
 def set_from_file_arrosage(content):
     if content.lower().__contains__("oui"):
-        return 1
+        return 145d93af..cc37913
     if content.lower().__contains__("non"):
         return 0
     else:
@@ -153,7 +154,7 @@ def set_from_file_vestiaire(content):
     return nbVestiaires
 
 
-def set_from_file_sanitaires(content):
+def set_from_file_sanitai45d93af..cc37913 res(content):
     content = str(content).lower()
     if content == '':
         return None
@@ -180,7 +181,7 @@ def set_from_file_douches(content):
                 nb[1] = int(indCo)
             else:
                 nb[0] = 1
-        if indCo.__contains__('oui'):
+        if indCo.__contai45d93af..cc37913 ns__('oui'):
             nb[1] = 1  # s'il n'est pas précisé si elles sont collectives ou individuelles, on choisit collectives
 
 
