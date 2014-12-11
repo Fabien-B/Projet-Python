@@ -43,7 +43,50 @@ def set_from_file_quartier(content):
 
 
 def set_from_file_type(content):            #TODO: écrire toutes les fonctions d'importation
-    print(content)
+	import re
+	string = content
+	dictionnaire = {}
+	last = None
+	liste = string.replace('/',',').replace(' et ',' + ').replace('-',' ').replace('  ',' ').split(',')
+	for equip in liste:
+		equip = equip.split('+')
+		if len(equip) == 1:
+			equip = equip[0].replace(')','').split('(')
+			equip[0] = equip[0].strip(' )(').lower().capitalize()
+			if len(equip) == 1 or not equip[1].isnumeric():
+				dictionnaire[equip[0].strip(' )(')]=1
+			else:
+				dictionnaire[equip[0].strip(' )(')]=int(equip[1])
+		else:
+			for (i, temp) in enumerate(equip):
+				num =re.sub(r'\D', "", temp)
+				if num:
+					if i<1:
+						temp = temp.strip(' )(').replace(')','').split('(')
+						temp[0] = temp[0].strip(' )(').lower().capitalize()
+						if len(temp) == 1 or not temp[1].isnumeric():
+							dictionnaire[temp[0].strip(' )(')]=1
+						else:
+							dictionnaire[temp[0].strip(' )(')]=int(temp[1])
+						last = temp[0]
+					else:
+						temp = temp.strip(' )(').replace(')','').split('(')
+						temp[0] = temp[0].strip(' )(').lower().capitalize()
+						num1 = re.sub(r'\D', "", last)
+						num2 = re.sub(r'\D', "", temp[0])			
+						last = last.replace(str(num1),str(num2))
+						if len(temp) == 1 or not temp[1].isnumeric():
+							dictionnaire[last.strip(' )(')]=1
+						else:
+							dictionnaire[last.strip(' )(')]=int(temp[1])
+				else:
+					temp = temp.strip(' )(').replace(')','').split('(')
+					temp[0] = temp[0].strip(' )(').lower().capitalize()
+					if len(temp) == 1 or not temp[1].isnumeric():
+						dictionnaire[temp[0].strip(' )(')]=1
+					else:
+						dictionnaire[temp[0].strip(' )(')]=int(temp[1])	    
+	return dictionnaire
 
 
 
