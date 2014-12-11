@@ -1,4 +1,4 @@
-from geopy.geocoders import Nominatim
+from pygeocoder import Geocoder
 
 
 class GPScoord():
@@ -6,7 +6,7 @@ class GPScoord():
         '''
         Set the locator and initialize the number of succes and the number of tries
         '''
-        self.geolocator = Nominatim()
+        self.geolocator = Geocoder()
         self.succes = 0
         self.timestried = 0
 
@@ -16,11 +16,11 @@ class GPScoord():
         '''
         try:
             self.timestried += 1
-            loc = self.geolocator.geocode(str(eqpmt.adresse)+',Toulouse')
+            loc = self.geolocator.geocode(str(eqpmt.adresse)+', Toulouse, France')
             if loc == None:
                 print('GPS coordinates are missing for', eqpmt.name)
             else:
-                eqpmt.coords = (loc.latitude, loc.longitude)
+                eqpmt.coords = loc[0].coordinates
                 self.succes +=1
                 self.timestried = 0
         except:
