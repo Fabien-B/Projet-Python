@@ -18,7 +18,7 @@ def fill_equipment(sh, nEq, eq_current):
     eq_current.type = set_from_file_type(sh.cell_value(nEq, 3))
     eq_current.activities = set_from_file_activities(sh.cell_value(nEq, 4))
     eq_current.revetement = set_from_file_revetement(sh.cell_value(nEq, 5))
-    eq_current.size = set_from_file_size(sh.cell_value(nEq, 6))
+    eq_current.size=set_from_file_size(sh.cell_value(nEq, 6))
     eq_current.eclairage = set_from_file_eclairage(sh.cell_value(nEq, 7))
     eq_current.arrosage = set_from_file_arrosage(sh.cell_value(nEq, 8))
     eq_current.vestiaire = set_from_file_vestiaire(sh.cell_value(nEq, 9))
@@ -38,7 +38,7 @@ def set_from_file_quartier(content):
     return content.replace(',', '.')
 
 
-def set_from_file_type(content):  # TODO: écrire toutes les fonctions d'importation
+def set_from_file_activities(content):  # TODO: écrire toutes les fonctions d'importation
     if content != '':
         dictionnaire = {}
         last = None
@@ -85,13 +85,14 @@ def set_from_file_type(content):  # TODO: écrire toutes les fonctions d'importa
     else:
         return None
 
-def set_from_file_activities(content):
-    print(content)
+
+def set_from_file_type(content):
+    return content.capitalize()
 
 
 def set_from_file_revetement(content):
-    contentList = content.split()
-    revetList = []
+    contentList=content.split()
+    revetList=[]
     for revet in contentList:
         revetList.append(revet.strip(','))
     return revetList
@@ -101,14 +102,14 @@ def set_from_file_size(content):
     terrainList = content.replace('et', '+').split('+')
     terrainSizes = []
     for terrain in terrainList:
-        terrain = terrain.replace('*', 'x')
-        terrain = terrain.replace('X', 'x')
-        sizeStr = terrain.split('x')
-        size = []
+        terrain=terrain.replace('*','x')
+        terrain=terrain.replace('X','x')
+        sizeStr=terrain.split('x')
+        size=[]
         for axis in sizeStr:
-            longAxe = axis.strip('m ?')
+            longAxe=axis.strip('m ?')
             if longAxe != '':
-                longAxe = longAxe.replace(',', '.')
+                longAxe = longAxe.replace(',','.')
                 try:
                     longAxe = float(longAxe)
                 except ValueError:
@@ -137,12 +138,12 @@ def set_from_file_arrosage(content):
 
 
 def set_from_file_vestiaire(content):
-    nbJA = str(content).split('(')
+    nbJA=str(content).split('(')
     nbVestiaires = []
     for chaine in nbJA:
         chaine = chaine.strip(' )+')
         chaine = chaine.split('+')
-        nbVest = 0
+        nbVest=0
         for nb in chaine:
             if nb != '':
                 nbVest += int(float(nb))
@@ -164,7 +165,7 @@ def set_from_file_sanitaires(content):
 
 
 def set_from_file_douches(content):
-    content = content.replace('/', ',')
+    content = content.replace('/',',')
     content = content.split(',')
     nb = [None, None]
     for indCo in content:
@@ -181,7 +182,7 @@ def set_from_file_douches(content):
             else:
                 nb[0] = 1
         if indCo.__contains__('oui'):
-            nb[1] = 1  # s'il n'est pas précisé si elles sont collectives ou individuelles, on choisit collectives
+            nb[1] = 1     #s'il n'est pas précisé si elles sont collectives ou individuelles, on choisit collectives
 
 
 def set_from_file_capaMax(content):
