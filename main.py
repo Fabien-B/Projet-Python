@@ -9,10 +9,10 @@ my_locator = Get_GPS.GPScoord()
 if not my_cache.isalive('equipmentList.cache'):
     equipmentList=[]
     r_w_fichier.import_file(FILENAME, equipmentList)
-    my_locator.findall(equipmentList)
-    print(my_locator.succes,'addresses found.')
     my_cache.save(equipmentList, 'equipmentList.cache')
     print('First use')
 else:
     equipmentList = my_cache.rescue('equipmentList.cache')
-    print('From cache')
+    print('Equipment loaded from cache')
+equipmentList = my_locator.findall(equipmentList)
+my_cache.save(equipmentList, 'equipmentList.cache')
