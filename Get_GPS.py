@@ -5,11 +5,12 @@ class GPScoord():
     """
     Class used for getting the GPS coordinates
     """
-    def __init__(self):
+    def __init__(self, cache):
         """
         Set the locator and initialize the number of successes and the number of tries
         """
         self.geolocator = pygeocoder.Geocoder()
+        self.cache = cache
         self.success = 0
         self.timestried = 0
 
@@ -54,6 +55,7 @@ class GPScoord():
                     eqpmtlist[i].coords = self.find(eqpmtlist[i])
             else:
                 self.success +=1
+            self.cache.save(eqpmtlist, 'equipmentList.cache')
         return eqpmtlist
 
 
