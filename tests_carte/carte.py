@@ -5,7 +5,7 @@ import design
 TILEDIM = 256
 lcas=(44.98332, 1.71525,17)
 
-BOURRIN = 1
+BOURRIN = 0
 
 class Carte(design.Ui_MainWindow):
     updated = QtCore.pyqtSignal(QtCore.QRect)
@@ -36,7 +36,7 @@ class Carte(design.Ui_MainWindow):
         self.test1.clicked.connect(lambda f: self.graphicsView.centerOn(8269*256+100, 5894*256) )
         self.pushButton.clicked.connect(lambda f: self.zoom(1.5))
         self.pushButtonZoomm.clicked.connect(lambda f: self.zoom(1/1.5))
-        self.pushButtonPoint.clicked.connect(lambda f: self.draw_point(43.56736,1.47770))
+        self.pushButtonPoint.clicked.connect(lambda f: self.draw_point(44.98347,1.71482))
 
         self.m_tilePixmaps = {}
 
@@ -49,6 +49,7 @@ class Carte(design.Ui_MainWindow):
         posY=Y*TILEDIM + resy*TILEDIM
         self.graphicsView.centerOn(8269*256+100, 5894*256)
         #self.zoom(1/2)
+
 
 
     # une tuile fait 256 X 256 pixels
@@ -75,13 +76,16 @@ class Carte(design.Ui_MainWindow):
         bih=int(-nbh/2)
         for i in range(biw,nbw+biw):
             for j in range(bih,bih+nbh):
-                path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X+i, Y+j)
-                url = QtCore.QUrl(path)
-                request = QtNetwork.QNetworkRequest()
-                request.setUrl(url)
-                request.setRawHeader('User-Agent', 'Une belle tuile')
-                request.setAttribute(QtNetwork.QNetworkRequest.User, (X+i,Y+j,self.ZOOM,i,j))
-                self.manager.get(request)
+                self.add_tile(X+i,Y+j)
+
+    def add_tile(self,X,Y):
+        path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
+        url = QtCore.QUrl(path)
+        request = QtNetwork.QNetworkRequest()
+        request.setUrl(url)
+        request.setRawHeader('User-Agent', 'Une belle tuile')
+        request.setAttribute(QtNetwork.QNetworkRequest.User, (X,Y,self.ZOOM))
+        self.manager.get(request)
 
     def gererDonnees(self, reply):
         img = QtGui.QImage()
@@ -91,7 +95,6 @@ class Carte(design.Ui_MainWindow):
             if img.load(reply, None):
                 self.m_tilePixmaps[tu] = QtGui.QPixmap.fromImage(img)
                 tuile=self.scene.addPixmap(self.m_tilePixmaps[tu])
-                #self.scene.addEllipse(tu[0]*TILEDIM, tu[1]*TILEDIM,50,50)
                 tuile.setPos(tu[0]*TILEDIM,tu[1]*TILEDIM)
         reply.deleteLater()
     
@@ -123,5 +126,17 @@ class myQGraphicsView(QtGui.QGraphicsView):
         else:
             self.scale(1/1.5,1/1.5)
         self.translate(1,1)
+
+    def mouseMoveEvent(self, e):
+        super().mouseMoveEvent(e)
+        pos = self.mapToScene(e.x(),e.y())
+        X=int(pos.x()/256)
+        Y=int(pos.y()/256)
+        for i in range(X-1,X+2):
+            for j in range(Y-1,Y+2):
+                print(i,j)
+        print("\n\n")
+
+
 
 
