@@ -4,6 +4,7 @@ import Get_GPS
 from PyQt4 import QtGui
 import sys
 import ihm
+import carte
 
 FILENAME = 'data/ES2011.xls'
 my_cache = Cache_use.Cache('.cache/')
@@ -18,11 +19,6 @@ else:
     equipmentList = my_cache.rescue('equipmentList.cache')
     print('Equipment loaded from cache')
 equipmentList = my_locator.findall(equipmentList)
-
-
-
-
-
 
 
 
