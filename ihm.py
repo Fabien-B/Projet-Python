@@ -11,12 +11,17 @@ class Ihm(Ui_MainWindow):
 
     def __init__(self):
         super(Ihm, self).__init__()
+        self.equipmentDict={}
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
 
+    def set_equipements(self,eqList):
+        for eq in eqList:
+            self.equipmentDict[eq] = None   #Mettre en valeur les Qellipses affichée, ou None si l'équipement n'est pas affiché.
+
     def built(self):
         self.build_map()
-        print('coucou')
+        self.update_affichage_equipements()
 
     def build_map(self):
         self.graphicsView = carte.myQGraphicsView(self.centralwidget)
@@ -30,5 +35,9 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.setRenderHint(QtGui.QPainter.Antialiasing)
         self.graphicsView.FinishInit()
         self.graphicsView.download(self.latitude,self.longitude)
-#pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
-#pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon), lat et lon étant la latitude et la longitude du point
+    #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
+    #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon), lat et lon étant la latitude et la longitude du point.
+    # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
+
+    def update_affichage_equipements(self):
+        pass #TODO  : afficher les équipements
