@@ -18,14 +18,9 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-def itemClicked(item):
-    print(item.text())
-    if item.checkState() == Qt.Checked:
-        item.setCheckState(Qt.Unchecked)
-    else:
-        item.setCheckState(Qt.Checked)
 
 class Ui_MainWindow(object):
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(1000, 650)
@@ -59,6 +54,10 @@ class Ui_MainWindow(object):
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         self.horizontalLayout_2.addWidget(self.pushButton_2)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.lineEdit_1 = QtGui.QLineEdit(self.widget)
+        self.lineEdit_1.setObjectName(_fromUtf8("lineEdit"))
+        self.lineEdit_1.returnPressed.connect(self.linecontent)
+        self.verticalLayout.addWidget(self.lineEdit_1)
         self.scrollArea_2 = QtGui.QScrollArea(self.widget)
         self.scrollArea_2.setMouseTracking(True)
         self.scrollArea_2.setAutoFillBackground(True)
@@ -68,15 +67,8 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(False)
         self.scrollArea_2.setObjectName(_fromUtf8("scrollArea_2"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 255, 440))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
-        self.lw = QtGui.QListWidget(self.scrollAreaWidgetContents_2)
-        self.lw.setMinimumSize(330, 445)
-        self.lw.itemClicked.connect(itemClicked)
-        for (i, name) in enumerate(filtres.sets):
-            lwItem = QtGui.QListWidgetItem(name, self.lw)
-            lwItem.setFlags(Qt.ItemIsEnabled)
-            lwItem.setCheckState(Qt.Unchecked)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea_2)
         self.toolBox.addItem(self.toolBoxPage1, _fromUtf8(""))
@@ -118,10 +110,8 @@ class Ui_MainWindow(object):
         self.Quitter.setObjectName(_fromUtf8("Quitter"))
         self.menuFichier.addAction(self.Quitter)
         self.menubar.addAction(self.menuFichier.menuAction())
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
@@ -132,5 +122,6 @@ class Ui_MainWindow(object):
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
         self.Quitter.setText(_translate("MainWindow", "Quitter", None))
         self.Quitter.setToolTip(_translate("MainWindow", "Quitter", None))
+
 
 

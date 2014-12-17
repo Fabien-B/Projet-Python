@@ -42,7 +42,7 @@ def set_from_file_activities(content):  # TODO: écrire toutes les fonctions d'i
     if content != '':
         dictionnaire = {}
         last = None
-        liste = content.replace('/', ',').replace(' et ', ' + ').replace('-', ' ').replace('  ', ' ').split(',')
+        liste = content.replace('/', ',').replace(' et ', ' + ').replace('-', ' ').replace('  ', ' ').replace('0m', '0 m').split(',')
         for equip in liste:
             equip = equip.split('+')
             if len(equip) == 1:
