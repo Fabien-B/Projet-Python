@@ -1,4 +1,8 @@
 from PyQt4 import QtCore, QtGui
+import sys
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import filtres
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -14,6 +18,12 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
+def itemClicked(item):
+    print(item.text())
+    if item.checkState() == Qt.Checked:
+        item.setCheckState(Qt.Unchecked)
+    else:
+        item.setCheckState(Qt.Checked)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -54,15 +64,19 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setAutoFillBackground(True)
         self.scrollArea_2.setFrameShape(QtGui.QFrame.WinPanel)
         self.scrollArea_2.setFrameShadow(QtGui.QFrame.Sunken)
-        self.scrollArea_2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.scrollArea_2.setWidgetResizable(True)
+        self.scrollArea_2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.scrollArea_2.setWidgetResizable(False)
         self.scrollArea_2.setObjectName(_fromUtf8("scrollArea_2"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, 440))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 255, 440))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
-        self.checkBox_2 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
-        self.checkBox_2.setGeometry(QtCore.QRect(10, 10, 100, 20))
-        self.checkBox_2.setObjectName(_fromUtf8("checkBox_2"))
+        self.lw = QtGui.QListWidget(self.scrollAreaWidgetContents_2)
+        self.lw.setMinimumSize(330, 445)
+        self.lw.itemClicked.connect(itemClicked)
+        for (i, name) in enumerate(filtres.sets):
+            lwItem = QtGui.QListWidgetItem(name, self.lw)
+            lwItem.setFlags(Qt.ItemIsEnabled)
+            lwItem.setCheckState(Qt.Unchecked)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea_2)
         self.toolBox.addItem(self.toolBoxPage1, _fromUtf8(""))
@@ -113,7 +127,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.pushButton.setText(_translate("MainWindow", "PushButton", None))
         self.pushButton_2.setText(_translate("MainWindow", "PushButton", None))
-        self.checkBox_2.setText(_translate("MainWindow", "CheckBox", None))
         self.checkBox.setText(_translate("MainWindow", "CheckBox Page 2", None))
         self.label.setText(_translate("MainWindow", "Rechercher", None))
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
