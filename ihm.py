@@ -1,6 +1,5 @@
 from PyQt4.QtCore import pyqtSlot
 from PyQt4.QtGui import QWidget, QListWidgetItem
-
 from window import Ui_MainWindow
 import carte
 from PyQt4 import QtCore, QtGui, QtNetwork
@@ -39,5 +38,13 @@ class Ihm(Ui_MainWindow):
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
-    def update_affichage_equipements(self):
-        pass #TODO  : afficher les équipements
+    def update_affichage_equipements(self, eqList):
+        dico = {}
+        for eq in eqList:
+            dico[eq] = [eq.coords] #Associe les équipements à leurs coordonnées réelles
+        for points in dico:
+            ellipse = self.graphicsView.draw_point(points[1][0], points[1][1])  #Dessine le point pour chaque équipement, et le conserve dans le dictionnaire
+            points[1].append(ellipse)
+            self.equipmentDict[points[1]] = 1
+            # points[1].append(self.graphicsView.get_gps_from_map(ellipse.coords[0], ellipse.coords[1])) Pour ajouter a la liste les coords du point dans le scene
+
