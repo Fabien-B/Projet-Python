@@ -20,7 +20,7 @@ if not my_cache.isalive('equipmentList.cache'):
 else:
     equipmentList = my_cache.rescue('equipmentList.cache')
     print('Equipment loaded from cache')
-#equipmentList = my_locator.findall(equipmentList)
+equipmentList = my_locator.findall(equipmentList)
 
 for equip in equipmentList:
     filtres.create_set(equip)
