@@ -1,5 +1,5 @@
 import pygeocoder
-
+import random
 
 class GPScoord():
     """
@@ -57,5 +57,18 @@ class GPScoord():
                 self.success +=1
             self.cache.save(eqpmtlist, 'equipmentList.cache')
         return eqpmtlist
+
+    def get_random(self, eqpmtlist):
+         for i in range(len(eqpmtlist)):
+            if eqpmtlist[i].coords == None:
+                if eqpmtlist[i].adresse == eqpmtlist[i-1].adresse:
+                    eqpmtlist[i].coords = eqpmtlist[i-1].coords
+                    self.success += 1
+                else:
+                    eqpmtlist[i].coords = (random.randint(43571,43649)/1000,random.randint(1405, 1504)/1000)
+            else:
+                self.success +=1
+            self.cache.save(eqpmtlist, 'equipmentList.cache')
+         return eqpmtlist
 
 

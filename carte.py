@@ -22,6 +22,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.manager.setCache(cache)
         self.manager.finished.connect(self.gererDonnees)
         self.m_tilePixmaps = {}
+        self.ihm = None
 
     def wheelEvent(self,e):
         """Zoom sur la carte """
@@ -31,28 +32,29 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.zoom(1/1.1)
         #TODO centrage correct sur le pointeur
         self.update_tiles()
+        self.ihm.changeaff() #todo supprimer cette ligne quand le filtrage sera opérationnel
 
     def mouseMoveEvent(self, e):
         """ met à jour les tuiles à afficher quand on déplace la carte"""
         super().mouseMoveEvent(e)
         self.update_tiles()
 
+
     def mouseDoubleClickEvent(self, e):
-        """juste un exemple: affiche un point la ou on double click."""
-        pos=self.mapToScene(e.x() ,e.y())
-        (lat,lon) = self.get_gps_from_map(pos.x(),pos.y())
-        self.draw_point(lat,lon)
+        """actualise l'affichage des équipements, à supprimer quand ce sera fais autrement"""
+        self.ihm.update_affichage_equipements()
 
     def zoom(self,factor):
         """zoom du facteur 'factor'"""
         self.scale(factor,factor)
 
-    def draw_point(self,lat,lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red):
+    def draw_point(self,lat,lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10):
         """ dessine un point (une ellipse) à la postion donnée et renvoie ce point (QEllipse)"""
         (X,Y,resX,resY)=self.get_tile_nbs(lat,lon)
         posX=(X + resX)*TILEDIM
         posY=(Y + resY)*TILEDIM
         point = self.maScene.addEllipse(posX-10, posY-10,20,20,PEN,BRUSH)
+        point.setZValue(Zvalue)
         return point
 
     def centerOnPosition(self,lat,lon):

@@ -51,21 +51,34 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.graphicsView.setRenderHint(QtGui.QPainter.Antialiasing)
         self.graphicsView.FinishInit()
+        self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude,self.longitude)
         self.update_checkbox('')
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
-    def update_affichage_equipements(self, eqList):
-        dico = {}
-        for eq in eqList:
-            dico[eq] = [eq.coords] #Associe les équipements à leurs coordonnées réelles
-        for points in dico:
-            ellipse = self.graphicsView.draw_point(points[1][0], points[1][1])  #Dessine le point pour chaque équipement, et le conserve dans le dictionnaire
-            points[1].append(ellipse)
-            self.equipmentDict[points[1]] = 1
+    def update_affichage_equipements(self):
+        for (equip, point) in self.equipmentDict.items():
+            if equip.affiche == 1:# and point == None:
+                self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1])
+            if equip.affiche == 0 and point != None:
+                self.scene.removeItem(point)
+                self.equipmentDict[equip]=None
+                self.scene.update()
+        # dico = {}
+        # for eq in eqList:
+        #     dico[eq] = [eq.coords] #Associe les équipements à leurs coordonnées réelles
+        # for points in dico:
+        #     ellipse = self.graphicsView.draw_point(points[1][0], points[1][1])  #Dessine le point pour chaque équipement, et le conserve dans le dictionnaire
+        #     points[1].append(ellipse)
+        #     self.equipmentDict[points[1]] = 1
             # points[1].append(self.graphicsView.get_gps_from_map(ellipse.coords[0], ellipse.coords[1])) Pour ajouter a la liste les coords du point dans le scene
+
+    def changeaff(self):
+        for (equip, point) in self.equipmentDict.items():
+            equip.affiche = not equip.affiche
+
 
     def addcheckbox(self, search):
         self.lw = QtGui.QListWidget(self.scrollAreaWidgetContents_2)
