@@ -44,7 +44,7 @@ class Ihm(Ui_MainWindow):
 
     def update_affichage_equipements(self):
         for (equip, point) in self.equipmentDict.items():
-            if equip.affiche == 1:# and point == None:
+            if equip.affiche == 1 and point == None:
                 self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1])
             if equip.affiche == 0 and point != None:
                 self.scene.removeItem(point)

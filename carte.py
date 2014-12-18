@@ -32,17 +32,17 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.zoom(1/1.1)
         #TODO centrage correct sur le pointeur
         self.update_tiles()
-        self.ihm.changeaff() #todo supprimer cette ligne quand le filtrage sera opérationnel
 
     def mouseMoveEvent(self, e):
         """ met à jour les tuiles à afficher quand on déplace la carte"""
         super().mouseMoveEvent(e)
         self.update_tiles()
 
-
     def mouseDoubleClickEvent(self, e):
         """actualise l'affichage des équipements, à supprimer quand ce sera fais autrement"""
         self.ihm.update_affichage_equipements()
+        self.ihm.changeaff()   #TODO : Juste pour le test à supprimer plus tard !
+
 
     def zoom(self,factor):
         """zoom du facteur 'factor'"""
