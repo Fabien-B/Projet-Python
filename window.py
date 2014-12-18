@@ -19,8 +19,16 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 
-class Ui_MainWindow(object):
+def itemClicked(item):
+    print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
+    if item.checkState() == Qt.Checked:
+        item.setCheckState(Qt.Unchecked)
+    else:
+        item.setCheckState(Qt.Checked)
 
+
+
+class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(1000, 650)
@@ -56,7 +64,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.lineEdit_1 = QtGui.QLineEdit(self.widget)
         self.lineEdit_1.setObjectName(_fromUtf8("lineEdit"))
-        self.lineEdit_1.returnPressed.connect(self.linecontent)
+        self.lineEdit_1.returnPressed.connect(self.update_checkbox)
         self.verticalLayout.addWidget(self.lineEdit_1)
         self.scrollArea_2 = QtGui.QScrollArea(self.widget)
         self.scrollArea_2.setMouseTracking(True)
@@ -67,6 +75,9 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(False)
         self.scrollArea_2.setObjectName(_fromUtf8("scrollArea_2"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
+        self.lw = QtGui.QListWidget(self.scrollAreaWidgetContents_2)
+        self.lw.setMinimumSize(330, 5000)
+        self.lw.itemClicked.connect(itemClicked)
         self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
