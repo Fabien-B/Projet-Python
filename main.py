@@ -20,6 +20,7 @@ if not my_cache.isalive('equipmentList.cache'):
 else:
     equipmentList = my_cache.rescue('equipmentList.cache')
     print('Equipment loaded from cache')
+
 equipmentList = my_locator.get_random(equipmentList)
 #equipmentList = my_locator.findall(equipmentList)
 
