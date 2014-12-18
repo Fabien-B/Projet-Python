@@ -20,4 +20,9 @@ class Equipment():
         self.accesHand=None         #0/1
         self.toilettesHand=None     #0/1
         self.coords = None          #(latitude, longitude)
+        self.affiche = 1            # 0 si l'équiement ne doit pas êttre affiché, 1 s'il doit l'être.
+        # Les filtreas doivent modifier cette valeur, et appeler appli.update_affichage_equipements() pour mettre,à jour la carte.
 
+    def __repr__(self):
+        text = '  '.join([self.name,self.type,str(self.affiche),str(self.coords)])
+        return text
