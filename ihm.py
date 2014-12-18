@@ -1,21 +1,10 @@
 from PyQt4.QtCore import pyqtSlot, Qt
 from PyQt4.QtGui import QWidget, QListWidgetItem
 from window import Ui_MainWindow
+import window
 import carte
 import filtres
 from PyQt4 import QtCore, QtGui, QtNetwork
-
-
-def itemClicked(item):
-    print(item.text())
-    if item.checkState() == Qt.Checked:
-        item.setCheckState(Qt.Unchecked)
-    else:
-        item.setCheckState(Qt.Checked)
-
-
-def search_in_acti(text):
-    print('txt', text)
 
 
 class Ihm(Ui_MainWindow):
@@ -25,12 +14,6 @@ class Ihm(Ui_MainWindow):
         self.equipmentDict={}
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
-
-    def linecontent(self):
-        txt = self.lineEdit_1.text()
-        print(txt)
-        Ihm.update_checkbox(self, txt)
-
 
     def set_equipements(self,eqList):
         for eq in eqList:
@@ -53,7 +36,7 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.FinishInit()
         self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude,self.longitude)
-        self.update_checkbox('')
+        self.update_checkbox()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
@@ -66,14 +49,11 @@ class Ihm(Ui_MainWindow):
                 self.scene.removeItem(point)
                 self.equipmentDict[equip]=None
                 self.scene.update()
-        # dico = {}
-        # for eq in eqList:
-        #     dico[eq] = [eq.coords] #Associe les équipements à leurs coordonnées réelles
-        # for points in dico:
-        #     ellipse = self.graphicsView.draw_point(points[1][0], points[1][1])  #Dessine le point pour chaque équipement, et le conserve dans le dictionnaire
-        #     points[1].append(ellipse)
-        #     self.equipmentDict[points[1]] = 1
-            # points[1].append(self.graphicsView.get_gps_from_map(ellipse.coords[0], ellipse.coords[1])) Pour ajouter a la liste les coords du point dans le scene
+
+    def update_checkbox(self):
+        txt = self.lineEdit_1.text()
+        print(txt)
+        self.addcheckbox(txt)
 
     def changeaff(self):
         for (equip, point) in self.equipmentDict.items():
@@ -81,13 +61,13 @@ class Ihm(Ui_MainWindow):
 
 
     def addcheckbox(self, search):
-        self.lw = QtGui.QListWidget(self.scrollAreaWidgetContents_2)
-        self.lw.setMinimumSize(330, 5000)
-        self.lw.itemClicked.connect(itemClicked)
-        print(filtres.sets.intersection(search))
-        print(self.lw)
+        self.lw.clear()
+        liste = []
+        for key in filtres.sets:
+            if search.capitalize() in key:
+                liste.append(key)
         if search != ['']:
-            for name in sorted(filtres.sets.intersection(search)):
+            for name in sorted(filtres.sets.intersection(liste)):
                 lwItem = QtGui.QListWidgetItem(name, self.lw)
                 lwItem.setFlags(Qt.ItemIsEnabled)
                 lwItem.setCheckState(Qt.Unchecked)
@@ -97,8 +77,6 @@ class Ihm(Ui_MainWindow):
                 lwItem.setFlags(Qt.ItemIsEnabled)
                 lwItem.setCheckState(Qt.Unchecked)
 
-    def update_checkbox(self, text):
-        shearch =[]
-        shearch.append(text)
-        print(shearch)
-        self.addcheckbox(shearch)
+
+
+
