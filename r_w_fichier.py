@@ -38,7 +38,7 @@ def set_from_file_quartier(content):
     return content.replace(',', '.')
 
 
-def set_from_file_activities(content):  # TODO: écrire toutes les fonctions d'importation
+def set_from_file_activities(content):
     if content != '':
         dictionnaire = {}
         last = None

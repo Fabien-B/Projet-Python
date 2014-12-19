@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui, QtNetwork
 import math
+import poi
 import os
 
 TILEDIM = 256
@@ -48,13 +49,14 @@ class myQGraphicsView(QtGui.QGraphicsView):
         """zoom du facteur 'factor'"""
         self.scale(factor,factor)
 
-    def draw_point(self,lat,lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10):
-        """ dessine un point (une ellipse) à la postion donnée et renvoie ce point (QEllipse)"""
+
+    def draw_point(self,lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend=''):
+        """affiche un point aux coordonnées lat, lon."""
         (X,Y,resX,resY)=self.get_tile_nbs(lat,lon)
         posX=(X + resX)*TILEDIM
         posY=(Y + resY)*TILEDIM
-        point = self.maScene.addEllipse(posX-10, posY-10,20,20,PEN,BRUSH)
-        point.setZValue(Zvalue)
+        point = poi.point(posX,posY, legend=legend)
+        self.maScene.addItem(point)
         return point
 
     def centerOnPosition(self,lat,lon):
