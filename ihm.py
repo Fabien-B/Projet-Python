@@ -39,14 +39,14 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.download(self.latitude,self.longitude)
         self.update_checkbox()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
-    #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon), lat et lon étant la latitude et la longitude du point.
+    #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
     def update_affichage_equipements(self):
         for (equip, point) in self.equipmentDict.items():
-            if equip.affiche == 1 and point == None:
-                self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1])
-            if equip.affiche == 0 and point != None:
+            if equip.affiche and point == None:
+                self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name)
+            if not equip.affiche and point != None:
                 self.scene.removeItem(point)
                 self.equipmentDict[equip]=None
                 self.scene.update()
