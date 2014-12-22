@@ -3,6 +3,7 @@ from PyQt4.QtGui import QWidget, QListWidgetItem
 from window import Ui_MainWindow
 import carte
 import filtres
+import No_More_Horse_Riding as nmhr
 from PyQt4 import QtCore, QtGui, QtNetwork
 
 
@@ -45,11 +46,13 @@ class Ihm(Ui_MainWindow):
     def update_affichage_equipements(self):
         for (equip, point) in self.equipmentDict.items():
             if equip.affiche and point == None:
-                self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name)
+                self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
             if not equip.affiche and point != None:
                 self.scene.removeItem(point)
                 self.equipmentDict[equip]=None
                 self.scene.update()
+        # nmhr.repulse(self.equipmentDict, self.scene)
+        # self.scene.update()
 
     def update_checkbox(self):
         txt = self.lineEdit_1.text()

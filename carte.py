@@ -50,12 +50,12 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.scale(factor, factor)
 
 
-    def draw_point(self, lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend=''):
+    def draw_point(self, lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend='', equipment=None):
         """affiche un point aux coordonnées lat, lon."""
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
-        point = poi.point(posX,posY, legend=legend)
+        point = poi.point(posX,posY, legend=legend, equipment=equipment)
         self.maScene.addItem(point)
         return point
 
