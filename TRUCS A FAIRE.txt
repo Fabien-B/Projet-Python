@@ -4,23 +4,16 @@ Multisports
 Salle polyvalente
 Bi-cross
 Piste
-Patinoire
 Bi-cross, skate-park
-Foot à 7
 Base nautique
 Terrain
 Terrain sable
 Tennis 
 Plateau multisports extérieur
-Fronton
 Salle
 Gymnase
-Piscine 
-Dojo
 Patinoire, piscine
 City-stade
-Piscine
-Skate-park
 Salle rdc
 
 placer ces icones dans le dossier 'icones'.
