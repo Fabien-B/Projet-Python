@@ -1,0 +1,32 @@
+1- Trouver des icones pour les types suivants: (instructions plus bas)
+Salle 1er étage
+Multisports
+Salle polyvalente
+Bi-cross
+Piste
+Patinoire
+Bi-cross, skate-park
+Foot à 7
+Base nautique
+Terrain
+Terrain sable
+Tennis 
+Plateau multisports extérieur
+Fronton
+Salle
+Gymnase
+Piscine 
+Dojo
+Patinoire, piscine
+City-stade
+Piscine
+Skate-park
+Salle rdc
+
+placer ces icones dans le dossier 'icones'.
+Au format png, deux icones par type: une de 50X50 px, l'autre de 25x25 px.
+La première sera nommée: type_L.png, l'autre: type.png . avec 'type' en minuscule.
+exemple: 
+multisports_L.png    et    multisports.png
+On peut utiliser la même image pour des types différents quand les types sont proches. (regardez l'exemple 'terrain' et 'foot à 7')
+supprimer les lignes correspondantes dans ce fichier quand on a ajouté des icones (par exemple, boulodrome et tennis n'y sont plus)

@@ -46,7 +46,8 @@ class Ihm(Ui_MainWindow):
     def update_affichage_equipements(self):
         for (equip, point) in self.equipmentDict.items():
             if equip.affiche and point == None:
-                self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
+                #self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
+                self.equipmentDict[equip] = self.graphicsView.draw_equipment(equip)
             if not equip.affiche and point != None:
                 self.scene.removeItem(point)
                 self.equipmentDict[equip]=None

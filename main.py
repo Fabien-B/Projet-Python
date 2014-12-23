@@ -28,7 +28,6 @@ equipmentList = my_locator.findall(equipmentList)
 for equip in equipmentList:
     filtres.create_set(equip)
 
-
 def affiche():
     app = QtGui.QApplication(sys.argv)
     fenetre = QtGui.QMainWindow()

@@ -50,12 +50,22 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.scale(factor, factor)
 
 
-    def draw_point(self, lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend='', equipment=None):
+    def draw_point(self, lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend=''):
         """affiche un point aux coordonnées lat, lon."""
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
         point = poi.point(posX,posY, legend=legend, equipment=equipment)
+        self.maScene.addItem(point)
+        return point
+
+    def draw_equipment(self,equipment, Zvalue = 10):
+        lat = equipment.coords[0]
+        lon = equipment.coords[1]
+        (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
+        posX = (X + resX)*TILEDIM
+        posY = (Y + resY)*TILEDIM
+        point = poi.equipement_point(equipment,posX,posY,Zvalue)
         self.maScene.addItem(point)
         return point
 
@@ -107,7 +117,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def add_tile(self, X, Y):
         """charge une tuile depuis le dique si elle existe, ou va la télécharger"""
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
-        print(X,Y)
+        #print(X,Y)
         if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
             if not os.path.exists(name):
                 path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)

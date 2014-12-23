@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui, QtNetwork
 import carte
+import os
 
 class POI(QtGui.QGraphicsItemGroup):
     def __init__(self, Zvalue = 10):
@@ -28,5 +29,26 @@ class point(POI):
 
 
 class equipement_point(POI):
-    def __init__(self,equipement):
-        pass #TODO on affichera ici l'icone correspondant à l'équipement
+    def __init__(self,equipement,x,y, Zvalue = 10):
+        super(equipement_point,self).__init__(Zvalue)
+        self.equipment = equipement
+        #print(equipement.type)
+
+        path = 'icones/' + equipement.type.lower() + '.png'
+        if os.path.exists(path):
+            self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
+            self.icone.setPos(x,y)
+            self.icone.setToolTip(equipement.name)
+            self.addToGroup(self.icone)
+        else:
+            PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
+            self.ellipse = QtGui.QGraphicsEllipseItem()
+            self.ellipse.setPen(PEN)
+            self.ellipse.setBrush(QtCore.Qt.darkGreen)
+            self.ellipse.setRect(x, y, 20, 20)
+            self.ellipse.setToolTip(equipement.name)
+            self.addToGroup(self.ellipse)
+
+    def mousePressEvent(self, QGraphicsSceneMouseEvent):
+        QGraphicsSceneMouseEvent.accept()
+        print(self.equipment.name, self.equipment.coords)
