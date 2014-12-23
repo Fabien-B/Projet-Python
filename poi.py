@@ -17,7 +17,8 @@ class point(POI):
         self.ellipse = QtGui.QGraphicsEllipseItem()
         self.ellipse.setPen(PEN)
         self.ellipse.setBrush(BRUSH)
-        self.ellipse.setRect(x, y, 20, 20)
+        self.ellipse.setRect(0, 0, 20, 20)
+        self.ellipse.setPos(x, y)
         self.ellipse.setToolTip(legend)
         self.addToGroup(self.ellipse)
 
@@ -45,10 +46,11 @@ class equipement_point(POI):
             self.ellipse = QtGui.QGraphicsEllipseItem()
             self.ellipse.setPen(PEN)
             self.ellipse.setBrush(QtCore.Qt.darkGreen)
-            self.ellipse.setRect(x, y, 20, 20)
+            self.ellipse.setRect(0, 0, 20, 20)
+            self.ellipse.setPos(x, y)
             self.ellipse.setToolTip(equipement.name)
             self.addToGroup(self.ellipse)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
-        print(self.equipment.name, self.equipment.coords)
+        print(self.equipment.name, self.equipment.coords, self.icone.pos().x())

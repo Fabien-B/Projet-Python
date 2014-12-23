@@ -29,13 +29,16 @@ for equip in equipmentList:
     filtres.create_set(equip)
 
 def affiche():
-    app = QtGui.QApplication(sys.argv)
     fenetre = QtGui.QMainWindow()
     appli = ihm.Ihm()
     appli.setupUi(fenetre)
     appli.built()
     appli.set_equipements(equipmentList)
     fenetre.show()
-    app.exec_()
+    return app.exec_()
 
-affiche()
+
+if __name__ == '__main__':
+
+    app = QtGui.QApplication(sys.argv)
+    sys.exit(affiche())
