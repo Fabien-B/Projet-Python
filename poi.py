@@ -51,6 +51,20 @@ class equipement_point(POI):
             self.ellipse.setToolTip(equipement.name)
             self.addToGroup(self.ellipse)
 
+
+    def Pos(self):
+        try:
+            return(self.icone.pos().x(), self.icone.pos().y())
+        except AttributeError:
+            return(self.ellipse.pos().x(), self.ellipse.pos().y())
+
+    def SetPos(self, x, y):
+        try:
+            self.icone.setPos(x, y)
+        except AttributeError:
+            self.ellipse.setPos(x, y)
+
+
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         print(self.equipment.name, self.equipment.coords, self.icone.pos().x())
