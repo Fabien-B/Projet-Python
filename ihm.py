@@ -23,6 +23,7 @@ class Ihm(Ui_MainWindow):
 
     def built(self):
         self.build_map()
+        self.lineEdit.returnPressed.connect(self.TA_FONCTION)
 #        self.update_affichage_equipements()
 
     def build_map(self):
@@ -92,9 +93,7 @@ class Ihm(Ui_MainWindow):
         print(self.checkstate)
         self.update_checkbox()
 
-
-
-
-
-
+    def TA_FONCTION(self):
+        txt = self.lineEdit.text()
+        print(txt)
 

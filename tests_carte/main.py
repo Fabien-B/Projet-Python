@@ -1,12 +1,12 @@
 __author__ = 'fabien'
-import cartesimple
+import carte
 import sys
 from PyQt4 import QtCore, QtGui, QtNetwork
 
 app = QtGui.QApplication(sys.argv)
 fenetre = QtGui.QMainWindow()
 
-ca = cartesimple.Carte()
+ca = carte.Carte()
 ca.setupUi(fenetre)
 ca.build()
 fenetre.show()

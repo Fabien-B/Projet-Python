@@ -16,16 +16,16 @@ class GPScoord():
 
 
 
-    def find(self,eqpmt):
+    def find(self,adresse, name='unknow Name'):
         """
         Try 20 times to get the GPS coordinates from the geolocator with addresses
         """
         try:
             self.timestried += 1
-            print('Getting coordinates for', eqpmt.name)
-            loc = self.geolocator.geocode(str(eqpmt.adresse)+', Toulouse, France')
+            print('Getting coordinates for', name)
+            loc = self.geolocator.geocode(str(adresse)+', Toulouse, France')
             if loc == None:
-                print('GPS coordinates are missing for', eqpmt.name)
+                print('GPS coordinates are missing for', name)
                 return None
             else:
                 self.success +=1
@@ -35,11 +35,12 @@ class GPScoord():
         except:
             if self.timestried <= 20:
                 print('Error : retrying')
-                self.find(eqpmt)
+                self.find(adresse,name)
             else:
-                print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', eqpmt.name)
+                print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', name)
                 self.timestried = 0
                 return None
+
 
     def findall(self, eqpmtlist):
         """
@@ -52,7 +53,7 @@ class GPScoord():
                     eqpmtlist[i].coords = eqpmtlist[i-1].coords
                     self.success += 1
                 else:
-                    eqpmtlist[i].coords = self.find(eqpmtlist[i])
+                    eqpmtlist[i].coords = self.find(eqpmtlist[i].adresse,eqpmtlist[i].name)
             else:
                 self.success +=1
             self.cache.save(eqpmtlist, 'equipmentList.cache')

@@ -35,21 +35,22 @@ class equipement_point(POI):
         self.equipment = equipement
         #print(equipement.type)
 
-        path = 'icones/' + equipement.type.lower() + '.png'
+        path = 'icones/' + equipement.type.lower() + '_L.png'
         if os.path.exists(path):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
             self.icone.setPos(x,y)
             self.icone.setToolTip(equipement.name)
+            self.icone.scale(1/2,1/2)
             self.addToGroup(self.icone)
         else:
             PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
-            self.ellipse = QtGui.QGraphicsEllipseItem()
-            self.ellipse.setPen(PEN)
-            self.ellipse.setBrush(QtCore.Qt.darkGreen)
-            self.ellipse.setRect(0, 0, 20, 20)
-            self.ellipse.setPos(x, y)
-            self.ellipse.setToolTip(equipement.name)
-            self.addToGroup(self.ellipse)
+            self.icone = QtGui.QGraphicsEllipseItem()
+            self.icone.setPen(PEN)
+            self.icone.setBrush(QtCore.Qt.darkGreen)
+            self.icone.setRect(0, 0, 20, 20)
+            self.icone.setPos(x, y)
+            self.icone.setToolTip(equipement.name)
+            self.addToGroup(self.icone)
 
 
     def Pos(self):

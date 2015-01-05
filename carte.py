@@ -9,6 +9,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def __init__(self, parent):
         super(myQGraphicsView, self).__init__(parent)
         self.ZOOM = 14 #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
+        self.cur_zoom = 1
         self.x = 0
         self.y = 0
 
@@ -28,9 +29,11 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def wheelEvent(self, e):
         """Zoom sur la carte """
         if e.delta() > 0 :
-            self.zoom(1.1)
+            if self.cur_zoom < 4:
+                self.zoom(1.1)
         else:
-            self.zoom(1/1.1)
+            if self.cur_zoom > 1/4:
+                self.zoom(1/1.1)
         #TODO centrage correct sur le pointeur
         self.update_tiles()
 
@@ -47,6 +50,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
+        self.cur_zoom *= factor
         self.scale(factor, factor)
 
 
@@ -55,13 +59,18 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
-        point = poi.point(posX,posY, legend=legend, equipment=equipment)
+        point = poi.point(posX,posY, PEN, BRUSH, legend=legend)
         self.maScene.addItem(point)
         return point
 
     def draw_equipment(self,equipment, Zvalue = 10):
-        lat = equipment.coords[0]
-        lon = equipment.coords[1]
+        try:
+            lat = equipment.coords[0]
+            lon = equipment.coords[1]
+        except TypeError:
+            lat=0
+            lon=0
+            print("Erreur d'importation coordonnées")
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
