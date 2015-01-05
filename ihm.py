@@ -1,11 +1,10 @@
 from PyQt4.QtCore import pyqtSlot, Qt
 from PyQt4.QtGui import QWidget, QListWidgetItem
+from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import carte
 import filtres
 import No_More_Horse_Riding as nmhr
-from PyQt4 import QtCore, QtGui, QtNetwork
-
 
 
 class Ihm(Ui_MainWindow):
@@ -23,6 +22,9 @@ class Ihm(Ui_MainWindow):
 
     def built(self):
         self.build_map()
+        self.pushButton.clicked.connect(self.selectall)
+        self.lineEdit_1.textEdited.connect(self.update_checkbox)
+        self.lw.itemClicked.connect(self.itemClicked)
 #        self.update_affichage_equipements()
 
     def build_map(self):
@@ -91,6 +93,14 @@ class Ihm(Ui_MainWindow):
         self.checkstate = not self.checkstate
         print(self.checkstate)
         self.update_checkbox()
+
+    def itemClicked(self, item):
+        print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
+        if item.checkState() == Qt.Checked:
+            item.setCheckState(Qt.Unchecked)
+        else:
+            item.setCheckState(Qt.Checked)
+
 
 
 
