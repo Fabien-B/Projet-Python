@@ -22,9 +22,11 @@ class Ihm(Ui_MainWindow):
 
     def built(self):
         self.build_map()
+
         self.pushButton.clicked.connect(self.selectall)
         self.lineEdit_1.textEdited.connect(self.update_checkbox)
         self.lw.itemClicked.connect(self.itemClicked)
+        self.lineEdit.returnPressed.connect(self.TA_FONCTION)
 #        self.update_affichage_equipements()
 
     def build_map(self):
@@ -101,10 +103,9 @@ class Ihm(Ui_MainWindow):
         else:
             item.setCheckState(Qt.Checked)
 
-
-
-
-
+    def TA_FONCTION(self):
+        txt = self.lineEdit.text()
+        print(txt)
 
 
 
