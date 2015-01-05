@@ -4,6 +4,7 @@ from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import carte
 import filtres
+import main
 import No_More_Horse_Riding as nmhr
 
 
@@ -26,7 +27,7 @@ class Ihm(Ui_MainWindow):
         self.pushButton.clicked.connect(self.selectall)
         self.lineEdit_1.textEdited.connect(self.update_checkbox)
         self.lw.itemClicked.connect(self.itemClicked)
-        self.lineEdit.returnPressed.connect(self.TA_FONCTION)
+        self.lineEdit.returnPressed.connect(self.affiche_addresse)
 #        self.update_affichage_equipements()
 
     def build_map(self):
@@ -103,8 +104,11 @@ class Ihm(Ui_MainWindow):
         else:
             item.setCheckState(Qt.Checked)
 
-    def TA_FONCTION(self):
+    def affiche_addresse(self):
+        # affiche un point à l'addresse que l'utilisateur entre
         txt = self.lineEdit.text()
+        coords = main.my_locator.find(txt)
+        self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt)
         print(txt)
 
 
