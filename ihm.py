@@ -5,6 +5,7 @@ from window import Ui_MainWindow
 import carte
 import filtres
 import main
+import poi
 import No_More_Horse_Riding as nmhr
 
 
@@ -54,10 +55,13 @@ class Ihm(Ui_MainWindow):
                 #self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
                 self.equipmentDict[equip] = self.graphicsView.draw_equipment(equip)
             if not equip.affiche and point != None:
+                if type(point) is poi.Equipment_Group:
+                    for equipoint in point.equipointlist:
+                        self.equipmentDict[equipoint.equipment] = None
                 self.scene.removeItem(point)
-                self.equipmentDict[equip]=None
+                self.equipmentDict[equip] = None
                 self.scene.update()
-        # nmhr.repulse(self.equipmentDict, self.scene)
+        # self.equipmentDict = nmhr.cluster(self.equipmentDict, self.scene)
         # self.scene.update()
 
     def update_checkbox(self):

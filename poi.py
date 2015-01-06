@@ -22,6 +22,13 @@ class point(POI):
         self.ellipse.setToolTip(legend)
         self.addToGroup(self.ellipse)
 
+
+    def Pos(self):
+        return(self.ellipse.pos().x(), self.ellipse.pos().y())
+
+    def SetPos(self, x, y):
+        self.ellipse.setPos(x, y)
+
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         print(self.equipment.name, self.equipment.coords)
@@ -64,3 +71,35 @@ class equipement_point(POI):
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         print(self.equipment.name, self.equipment.coords, self.icone.pos().x())
+
+class Equipment_Group(point):
+    click = QtCore.pyqtSignal()
+
+    def __init__(self, scene, x, y):
+        super(Equipment_Group, self).__init__(x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 8, legend='', equipment = None)
+        self.scene = scene
+        self.equipointlist = []
+        self.equipmentItemGroup = QtGui.QGraphicsItemGroup()
+        self.text = None
+
+    def size(self):
+        return len(self.equipointlist)
+
+    def tooltiper(self):
+        names = [point.equipment.name for point in self.equipointlist]
+        self.setToolTip('\n'.join(names))
+
+    def digitalize(self):
+        self.text = QtGui.QGraphicsSimpleTextItem()
+        self.text.setZValue(12)
+        self.text.setBrush(QtCore.Qt.black)
+        self.text.setText(str(self.size()))
+        font = QtGui.QFont('Courier', 12, QtGui.QFont.Bold)
+        self.text.setFont(font)
+        textposx = self.Pos()[0]+self.boundingRect().width()/2-self.text.boundingRect().width()/2
+        textposy = self.Pos()[1]+self.boundingRect().height()/2-self.text.boundingRect().height()/2
+        self.text.setPos(textposx, textposy)
+        self.addToGroup(self.text)
+
+    def mousePressEvent(self, QGraphicsSceneMouseEvent):
+        print('plop')
