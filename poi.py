@@ -8,18 +8,20 @@ class POI(QtGui.QGraphicsItemGroup):
         self.setZValue(Zvalue)
 
 class point(POI):
-    def __init__(self, x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None):
+    def __init__(self, x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None, lat=0, lon=0):
         super(point,self).__init__(Zvalue)
         self.PEN = PEN
         self.BRUSH = BRUSH
         self.equipment = equipment
+        self.legend = legend
+        self.coords = (lat,lon)
 
         self.ellipse = QtGui.QGraphicsEllipseItem()
         self.ellipse.setPen(PEN)
         self.ellipse.setBrush(BRUSH)
         self.ellipse.setRect(0, 0, 20, 20)
         self.ellipse.setPos(x, y)
-        self.ellipse.setToolTip(legend)
+        self.ellipse.setToolTip(self.legend)
         self.addToGroup(self.ellipse)
 
 
@@ -31,7 +33,10 @@ class point(POI):
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
-        print(self.equipment.name, self.equipment.coords)
+        if self.equipment != None:
+            print(self.equipment.name, self.equipment.coords)
+        else:
+            print(self.legend, self.coords)
 
 
 

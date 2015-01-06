@@ -6,6 +6,7 @@ import carte
 import filtres
 import main
 import poi
+import tisseo
 import No_More_Horse_Riding as nmhr
 
 
@@ -113,6 +114,8 @@ class Ihm(Ui_MainWindow):
         txt = self.lineEdit.text()
         coords = main.my_locator.find(txt)
         self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt)
+        (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0],coords[1])
+        self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret)
         print(txt)
 
 
