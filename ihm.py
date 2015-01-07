@@ -20,6 +20,8 @@ class Ihm(Ui_MainWindow):
         self.checkstate = False
         self.checkBoxs = []
         self.boxChecked =[]
+        self.arret = None
+        self.ptRecherche = None
 
     def set_equipements(self,eqList):
         for eq in eqList:
@@ -129,10 +131,16 @@ class Ihm(Ui_MainWindow):
     def affiche_addresse(self):
         # affiche un point à l'addresse que l'utilisateur entre
         txt = self.lineEdit.text()
-        coords = main.my_locator.find(txt)
-        self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt)
+        if self.ptRecherche != None:
+            self.scene.removeItem(self.ptRecherche)
+        coords = main.my_locator.find(txt,txt)
+        print(coords)
+        self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
+
+        if self.arret != None:
+            self.scene.removeItem(self.arret)
         (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0],coords[1])
-        self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret)
+        self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
         print(txt)
 
 
