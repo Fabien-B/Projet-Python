@@ -152,7 +152,7 @@ class Ihm(Ui_MainWindow):
         print(coords)
         self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
 
-        if self.arret != None:
+        if self.existearret != None:
             self.scene.removeItem(self.arret)
         (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0],coords[1])
         self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
