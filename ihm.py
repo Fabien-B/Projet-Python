@@ -48,7 +48,7 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.FinishInit()
         self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude,self.longitude)
-        self.addcheckbox()
+        #self.addcheckbox()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.

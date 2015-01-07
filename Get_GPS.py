@@ -1,14 +1,17 @@
 import pygeocoder
 import random
+from PyQt4 import QtCore
 
-class GPScoord():
+class GPScoord(QtCore.QObject):
     """
     Class used for getting the GPS coordinates
     """
+
     def __init__(self, cache):
         """
         Set the locator and initialize the number of successes and the number of tries
         """
+        QtCore.QObject.__init__(self)
         self.geolocator = pygeocoder.Geocoder()
         self.cache = cache
         self.success = 0
@@ -16,7 +19,7 @@ class GPScoord():
 
 
 
-    def find(self,adresse, name='unknow Name'):
+    def find(self,adresse, name='unknow Name', i=0,j=0):
         """
         Try 20 times to get the GPS coordinates from the geolocator with addresses
         """
@@ -30,6 +33,7 @@ class GPScoord():
             else:
                 self.success +=1
                 self.timestried = 0
+                self.emit(QtCore.SIGNAL("address_found(const QString & text,int,int)"), name,i,j)    #signal pour notifier en barre d'état
                 return loc[0].coordinates
 
         except:
@@ -59,17 +63,17 @@ class GPScoord():
             self.cache.save(eqpmtlist, 'equipmentList.cache')
         return eqpmtlist
 
-    def get_random(self, eqpmtlist):
-         for i in range(len(eqpmtlist)):
-            if eqpmtlist[i].coords == None:
-                if eqpmtlist[i].adresse == eqpmtlist[i-1].adresse:
-                    eqpmtlist[i].coords = eqpmtlist[i-1].coords
-                    self.success += 1
-                else:
-                    eqpmtlist[i].coords = (random.randint(43571,43649)/1000,random.randint(1405, 1504)/1000)
-            else:
-                self.success +=1
-            self.cache.save(eqpmtlist, 'equipmentList.cache')
-         return eqpmtlist
+    # def get_random(self, eqpmtlist):
+    #      for i in range(len(eqpmtlist)):
+    #         if eqpmtlist[i].coords == None:
+    #             if eqpmtlist[i].adresse == eqpmtlist[i-1].adresse:
+    #                 eqpmtlist[i].coords = eqpmtlist[i-1].coords
+    #                 self.success += 1
+    #             else:
+    #                 eqpmtlist[i].coords = (random.randint(43571,43649)/1000,random.randint(1405, 1504)/1000)
+    #         else:
+    #             self.success +=1
+    #         self.cache.save(eqpmtlist, 'equipmentList.cache')
+    #      return eqpmtlist
 
 

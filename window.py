@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
         self.lw = QtGui.QListWidget(self.scrollAreaWidgetContents_2)
         self.lw.setMinimumSize(330, 5000)
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
+#        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea_2)
