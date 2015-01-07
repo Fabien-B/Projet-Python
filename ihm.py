@@ -4,15 +4,15 @@ from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import carte
 import filtres
-import main
 import poi
 import tisseo
+import Sceneclicked
 import No_More_Horse_Riding as nmhr
 
 
 class Ihm(Ui_MainWindow):
 
-    def __init__(self):
+    def __init__(self, locator):
         super(Ihm, self).__init__()
         self.equipmentDict = {}
         self.latitude = 43.564995   #latitude et longitudes de départ
@@ -24,6 +24,8 @@ class Ihm(Ui_MainWindow):
         self.ptRecherche = None
         self.equipmentSet = set()
         self.pointAff = []
+        self.locator = locator
+        self.nocover = nmhr.No_Covering(self)
 
     def set_equipements(self, eqList):
         for eq in eqList:
@@ -49,7 +51,7 @@ class Ihm(Ui_MainWindow):
         self.graphicsView = carte.myQGraphicsView(self.centralwidget)
         self.graphicsView.setGeometry(QtCore.QRect(290, 10, 700, 610))
         self.graphicsView.setObjectName("graphicsView")
-        self.scene = QtGui.QGraphicsScene()
+        self.scene = Sceneclicked.SceneClickable()
         self.graphicsView.setScene(self.scene)
         self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag) # allow drag and drop of the view
         self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
@@ -59,6 +61,7 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude,self.longitude)
         self.addcheckbox()
+        self.connections()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
@@ -89,7 +92,6 @@ class Ihm(Ui_MainWindow):
             #    self.scene.removeItem(point)
             #    self.equipmentDict[equip] = None
         # self.equipmentDict = nmhr.cluster(self.equipmentDict, self.scene)
-        # self.scene.update()
 
     def update_checkbox(self, checkstate):
         txt = self.lineEdit_1.text()
@@ -146,7 +148,7 @@ class Ihm(Ui_MainWindow):
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
-        coords = main.my_locator.find(txt,txt)
+        coords = self.locator.find(txt,txt)
         print(coords)
         self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
 
@@ -156,5 +158,9 @@ class Ihm(Ui_MainWindow):
         self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
         print(txt)
 
+    def connections(self):
+        self.scene.clusterisclicked.connect(self.nocover.explode)
+        self.scene.equipointisclicked.connect(self.eclic)
 
-
+    def eclic(self, equipoint):
+        print(equipoint.equipment.name, 'has been clicked and the information has traveled with the speed of \nlight thanks to a SIGNAL')
