@@ -75,7 +75,8 @@ class equipement_point(POI):
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
-        print(self.equipment.name, self.equipment.coords, self.icone.pos().x())
+        scene = self.scene()
+        scene.equipclicked(self)
 
 class Equipment_Group(point):
     click = QtCore.pyqtSignal()
@@ -107,4 +108,5 @@ class Equipment_Group(point):
         self.addToGroup(self.text)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
-        print('plop')
+        QGraphicsSceneMouseEvent.accept()
+        self.scene.clusterclicked(self)

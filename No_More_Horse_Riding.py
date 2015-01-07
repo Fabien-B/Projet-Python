@@ -1,32 +1,42 @@
 from PyQt4 import QtCore, QtGui
 import math
 import poi
-tries = 0
+
+class No_Covering():
+    def __init__(self, ihm):
+        self.ihm = ihm
+        self.scene = None
 
 
-def cluster(equipList, scene):
-    equipListClustered = equipList
-    clusterlist = []
-    packed = []
-    icons = list(set(list(equipList.values())) - set([None]))
-    for elicon1 in icons:
-        collidingitems = elicon1.collidingItems()
-        colliding = list(set(collidingitems) & set(icons) - set(packed))
-        if colliding:
-            posx = [i.Pos()[0] for i in colliding] + [elicon1.Pos()[0]]
-            posy = [i.Pos()[1] for i in colliding] + [elicon1.Pos()[1]]
-            equicluster = poi.Equipment_Group(scene, sum(posx)/len(posx), sum(posy)/len(posy))
-            equicluster.equipointlist = colliding + [elicon1]
-            for point in equicluster.equipointlist:
-                equicluster.equipmentItemGroup.addToGroup(point)
-                packed.append(point)
-                equipListClustered[point.equipment] = equicluster
-            equicluster.tooltiper()
-            equicluster.digitalize()
-            scene.addItem(equicluster)
-    for equicluster in clusterlist:
-        scene.destroyGroup(equicluster.equipmentItemGroup)
-    return equipListClustered
+    def cluster(self, equipList):
+        self.scene = self.ihm.scene
+        equipListClustered = equipList
+        clusterlist = []
+        packed = []
+        icons = list(set(list(equipList.values())) - set([None]))
+        for elicon1 in icons:
+            collidingitems = elicon1.collidingItems()
+            colliding = list(set(collidingitems) & set(icons) - set(packed))
+            if colliding:
+                posx = [i.Pos()[0] for i in colliding] + [elicon1.Pos()[0]]
+                posy = [i.Pos()[1] for i in colliding] + [elicon1.Pos()[1]]
+                equicluster = poi.Equipment_Group(self.scene, sum(posx)/len(posx), sum(posy)/len(posy))
+                equicluster.equipointlist = colliding + [elicon1]
+                for point in equicluster.equipointlist:
+                    equicluster.equipmentItemGroup.addToGroup(point)
+                    packed.append(point)
+                    equipListClustered[point.equipment] = equicluster
+                equicluster.tooltiper()
+                equicluster.digitalize()
+                self.scene.addItem(equicluster)
+        for equicluster in clusterlist:
+            self.scene.destroyGroup(equicluster.equipmentItemGroup)
+        return equipListClustered
+
+
+    def explode(self, the_cluster):
+        self.scene.removeItem(the_cluster)
+
 
 
 
