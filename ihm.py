@@ -14,7 +14,7 @@ class Ihm(Ui_MainWindow):
 
     def __init__(self):
         super(Ihm, self).__init__()
-        self.equipmentDict={}
+        self.equipmentDict = {}
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
         self.checkstate = False
@@ -22,10 +22,20 @@ class Ihm(Ui_MainWindow):
         self.boxChecked =[]
         self.arret = None
         self.ptRecherche = None
+        self.equipmentSet = set()
+        self.pointAff = []
 
-    def set_equipements(self,eqList):
+    def set_equipements(self, eqList):
         for eq in eqList:
             self.equipmentDict[eq] = None   #Mettre en valeur les Qellipses affichée, ou None si l'équipement n'est pas affiché.
+
+    def update_equipements(self, newSet, bool):
+        if bool:
+            self.equipmentSet.update(newSet)
+        else:
+            self.equipmentSet.difference_update(newSet)
+        self.update_affichage_equipements()
+        return self.equipmentSet  #TODO a supprimer après le return (ou pas)
 
     def built(self):
         self.build_map()
@@ -54,29 +64,30 @@ class Ihm(Ui_MainWindow):
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
     def update_affichage_equipements(self):
-        actiChecked = set()
-        for box in self.boxChecked:
-            print(box.text())
-        for box in self.boxChecked:
-            actiChecked.add(box.text())
-        print(actiChecked)
-        for (equip, point) in self.equipmentDict.items():
-            currentEquipActi = set()
-            if equip.activities != None:
-                for key in dict.keys(equip.activities):
-                    currentEquipActi.add(key)
-            #print('hop',currentEquipActi.intersection(actiChecked),currentEquipActi,actiChecked)
-            if currentEquipActi.intersection(actiChecked) != set():
-                if equip.affiche and point == None:
-                    #self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
-                    self.equipmentDict[equip] = self.graphicsView.draw_equipment(equip)
-                if not equip.affiche and point != None:
-                    if type(point) is poi.Equipment_Group:
-                        for equipoint in point.equipointlist:
-                            self.equipmentDict[equipoint.equipment] = None
-                    self.scene.removeItem(point)
-                    self.equipmentDict[equip] = None
-                    self.scene.update()
+        for item in self.pointAff:
+            self.scene.removeItem(item)
+        for equip in self.equipmentSet:
+            self.pointAff.append(self.graphicsView.draw_equipment(equip))
+            self.scene.update()
+
+        #actiChecked = set()
+        #for box in self.boxChecked:
+        #    actiChecked.add(box.text())
+        #for (equip, point) in self.equipmentDict.items():
+        #    currentEquipActi = set()
+        #    if equip.activities != None:
+        #        for key in dict.keys(equip.activities):
+        #            currentEquipActi.add(key)
+        #    if currentEquipActi.intersection(actiChecked) != set():
+            #if equip.affiche and point == None:
+                #self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
+            #self.equipmentDict[equip] = self.graphicsView.draw_equipment(equip)
+            #if not equip.affiche and point != None:
+            #    if type(point) is poi.Equipment_Group:
+            #        for equipoint in point.equipointlist:
+            #            self.equipmentDict[equipoint.equipment] = None
+            #    self.scene.removeItem(point)
+            #    self.equipmentDict[equip] = None
         # self.equipmentDict = nmhr.cluster(self.equipmentDict, self.scene)
         # self.scene.update()
 
@@ -123,9 +134,11 @@ class Ihm(Ui_MainWindow):
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
             self.boxChecked.remove(item)
+            self.update_equipements(filtres.filtrer_set_par_acti(item.text()), False)
         else:
             item.setCheckState(Qt.Checked)
             self.boxChecked.append(item)
+            self.update_equipements(filtres.filtrer_set_par_acti(item.text()), True)
         self.update_affichage_equipements()
 
     def affiche_addresse(self):

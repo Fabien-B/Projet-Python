@@ -25,8 +25,9 @@ equipmentList = my_locator.findall(equipmentList)
 # equipmentList = my_locator.get_random(equipmentList)
 
 
-for equip in equipmentList:
-    filtres.create_set(equip)
+filtres.create_set(equipmentList)
+filtres.equip_set(equipmentList)
+
 
 def affiche():
     fenetre = QtGui.QMainWindow()
