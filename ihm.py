@@ -7,6 +7,7 @@ import filtres
 import main
 import poi
 import tisseo
+import Get_GPS
 import No_More_Horse_Riding as nmhr
 
 
@@ -22,6 +23,7 @@ class Ihm(Ui_MainWindow):
         self.boxChecked =[]
         self.arret = None
         self.ptRecherche = None
+        self.locator = Get_GPS.GPScoord(None)
 
     def set_equipements(self,eqList):
         for eq in eqList:
@@ -133,15 +135,21 @@ class Ihm(Ui_MainWindow):
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
-        coords = main.my_locator.find(txt,txt)
-        print(coords)
-        self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
+        coords = self.locator.find(txt,txt)
 
         if self.arret != None:
             self.scene.removeItem(self.arret)
-        (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0],coords[1])
-        self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
-        print(txt)
+        if coords != None:
+            self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
+            (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0],coords[1])
+            self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
+        else:
+            print("adresse non trouvée")
+
+    def notif_chrgmt_equip(self, infos):
+        print('\n\n')
+        print(infos[0],infos[1])
+        print('\n\n')
 
 
 

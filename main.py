@@ -6,36 +6,42 @@ from PyQt4 import QtGui
 import sys
 import ihm
 import filtres
+import time
+import threading
 
 FILENAME = 'data/ES2011.xls'
 
-def notif_chrgmt_equip(name,i,j):
-    print('\n\n')
-    print(name,i,j)
-    print('\n\n')
+
+class Importeur(QtCore.QObject):
+
+    def __init__(self,appli):
+        QtCore.QObject.__init__(self)
+        self.appli=appli
+        self.my_cache = Cache_use.Cache('.cache/')
+        self.my_locator = Get_GPS.GPScoord(self.my_cache)
 
 
-def get_equipment():
-    if not my_cache.isalive('equipmentList.cache'):
-        equipmentList = []
-        r_w_fichier.import_file(FILENAME, equipmentList)
-        my_cache.save(equipmentList, 'equipmentList.cache')
-        print('First use')
-    else:
-        equipmentList = my_cache.rescue('equipmentList.cache')
-        print('Equipment loaded from cache')
+    def charging(self,equipmentList):
+        self.appli.set_equipements(equipmentList)
+        for equip in equipmentList:
+            filtres.create_set(equip)
+        self.appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
+        self.appli.addcheckbox()
 
-    equipmentList = my_locator.findall(equipmentList)
+    def get_equipment(self):
+        if not self.my_cache.isalive('equipmentList.cache'):
+            equipmentList = []
+            r_w_fichier.import_file(FILENAME, equipmentList)
+            self.my_cache.save(equipmentList, 'equipmentList.cache')
+            print('First use')
+        else:
+            equipmentList = self.my_cache.rescue('equipmentList.cache')
+            print('Equipment loaded from cache')
 
-    # for equip in equipmentList:
-    #     filtres.create_set(equip)
-
-    return equipmentList
-
-my_cache = Cache_use.Cache('.cache/')
-my_locator = Get_GPS.GPScoord(my_cache)
-
-QtCore.QObject.connect(my_locator, QtCore.SIGNAL("address_found(const QString & text,int,int)"), notif_chrgmt_equip)
+        #equipmentList = self.my_locator.findall(equipmentList)
+        equipmentList = self.my_locator.get_random(equipmentList)
+        if equipmentList != None:
+            self.charging(equipmentList)
 
 
 
@@ -46,16 +52,20 @@ def run():
     appli.setupUi(fenetre)
     appli.built()
     fenetre.show()
-    equipmentList = get_equipment()
-    appli.set_equipements(equipmentList)
-    for equip in equipmentList:
-        filtres.create_set(equip)
-        appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
-    appli.addcheckbox()
-    return app.exec_()
+
+    monIporteur=Importeur(appli)
+    monIporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
+    threadImportation = threading.Thread(None,monIporteur.get_equipment)
+    threadImportation.start()
+    return (app.exec_(),monIporteur.my_locator)
+
+
 
 
 if __name__ == '__main__':
 
     app = QtGui.QApplication(sys.argv)
-    sys.exit(run())
+    threadImportation = None
+    (retour, locator) = run()
+    locator.odre_arret()
+    sys.exit()
