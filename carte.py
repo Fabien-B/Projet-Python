@@ -63,18 +63,18 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.maScene.addItem(point)
         return point
 
-    def draw_equipment(self,equipment, Zvalue = 10):
+    def draw_equipment(self, equipment, Zvalue = 10):
         try:
             lat = equipment.coords[0]
             lon = equipment.coords[1]
         except TypeError:
-            lat=0
-            lon=0
-            print("Erreur d'importation coordonnées")
-        (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
+            lat = 0
+            lon = 0
+            print("Erreur d'importation coordonnées ")
+        (X, Y, resX, resY) = self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
-        point = poi.equipement_point(equipment,posX,posY,Zvalue)
+        point = poi.equipement_point(equipment, posX, posY, Zvalue)
         self.maScene.addItem(point)
         return point
 

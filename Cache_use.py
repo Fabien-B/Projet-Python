@@ -2,7 +2,7 @@ import pickle
 import os
 import sys
 
-class Cache:
+class Cache():
     def __init__(self, path):
         self.path = path
         if not os.path.exists(path):

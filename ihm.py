@@ -4,10 +4,10 @@ from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import carte
 import filtres
-import main
 import poi
 import tisseo
 import Get_GPS
+import Sceneclicked
 import No_More_Horse_Riding as nmhr
 
 
@@ -15,7 +15,7 @@ class Ihm(Ui_MainWindow):
 
     def __init__(self):
         super(Ihm, self).__init__()
-        self.equipmentDict={}
+        self.equipmentDict = {}
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
         self.checkstate = False
@@ -24,10 +24,21 @@ class Ihm(Ui_MainWindow):
         self.arret = None
         self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None)
+        self.equipmentSet = set()
+        self.pointAff = []
+        self.nocover = nmhr.No_Covering(self)
 
-    def set_equipements(self,eqList):
+    def set_equipements(self, eqList):
         for eq in eqList:
             self.equipmentDict[eq] = None   #Mettre en valeur les Qellipses affichée, ou None si l'équipement n'est pas affiché.
+
+    def update_equipements(self, newSet, bool):
+        if bool:
+            self.equipmentSet.update(newSet)
+        else:
+            self.equipmentSet.difference_update(newSet)
+        self.update_affichage_equipements()
+        return self.equipmentSet  #TODO a supprimer après le return (ou pas)
 
     def built(self):
         self.build_map()
@@ -41,7 +52,7 @@ class Ihm(Ui_MainWindow):
         self.graphicsView = carte.myQGraphicsView(self.centralwidget)
         self.graphicsView.setGeometry(QtCore.QRect(290, 10, 700, 610))
         self.graphicsView.setObjectName("graphicsView")
-        self.scene = QtGui.QGraphicsScene()
+        self.scene = Sceneclicked.SceneClickable()
         self.graphicsView.setScene(self.scene)
         self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag) # allow drag and drop of the view
         self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
@@ -51,36 +62,38 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude,self.longitude)
         #self.addcheckbox()
+        self.connections()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
     def update_affichage_equipements(self):
-        actiChecked = set()
-        for box in self.boxChecked:
-            print(box.text())
-        for box in self.boxChecked:
-            actiChecked.add(box.text())
-        print(actiChecked)
-        for (equip, point) in self.equipmentDict.items():
-            currentEquipActi = set()
-            if equip.activities != None:
-                for key in dict.keys(equip.activities):
-                    currentEquipActi.add(key)
-            #print('hop',currentEquipActi.intersection(actiChecked),currentEquipActi,actiChecked)
-            if currentEquipActi.intersection(actiChecked) != set():
-                if equip.affiche and point == None:
-                    #self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
-                    self.equipmentDict[equip] = self.graphicsView.draw_equipment(equip)
-                if not equip.affiche and point != None:
-                    if type(point) is poi.Equipment_Group:
-                        for equipoint in point.equipointlist:
-                            self.equipmentDict[equipoint.equipment] = None
-                    self.scene.removeItem(point)
-                    self.equipmentDict[equip] = None
-                    self.scene.update()
+        for point in self.pointAff:
+            if point in self.scene.items():
+                self.scene.removeItem(point)
+        for equip in self.equipmentSet:
+            self.pointAff.append(self.graphicsView.draw_equipment(equip))
+            self.scene.update()
+
+        #actiChecked = set()
+        #for box in self.boxChecked:
+        #    actiChecked.add(box.text())
+        #for (equip, point) in self.equipmentDict.items():
+        #    currentEquipActi = set()
+        #    if equip.activities != None:
+        #        for key in dict.keys(equip.activities):
+        #            currentEquipActi.add(key)
+        #    if currentEquipActi.intersection(actiChecked) != set():
+            #if equip.affiche and point == None:
+                #self.equipmentDict[equip] = self.graphicsView.draw_point(equip.coords[0],equip.coords[1], legend=equip.name, equipment = equip)
+            #self.equipmentDict[equip] = self.graphicsView.draw_equipment(equip)
+            #if not equip.affiche and point != None:
+            #    if type(point) is poi.Equipment_Group:
+            #        for equipoint in point.equipointlist:
+            #            self.equipmentDict[equipoint.equipment] = None
+            #    self.scene.removeItem(point)
+            #    self.equipmentDict[equip] = None
         # self.equipmentDict = nmhr.cluster(self.equipmentDict, self.scene)
-        # self.scene.update()
 
     def update_checkbox(self, checkstate):
         txt = self.lineEdit_1.text()
@@ -121,13 +134,15 @@ class Ihm(Ui_MainWindow):
         self.update_checkbox(True)
 
     def itemClicked(self, item):
-        print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
+        #print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
             self.boxChecked.remove(item)
+            self.update_equipements(filtres.filtrer_set_par_acti(item.text()), False)
         else:
             item.setCheckState(Qt.Checked)
             self.boxChecked.append(item)
+            self.update_equipements(filtres.filtrer_set_par_acti(item.text()), True)
         self.update_affichage_equipements()
 
     def affiche_addresse(self):
@@ -136,8 +151,10 @@ class Ihm(Ui_MainWindow):
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
         coords = self.locator.find(txt,txt)
+        print(coords)
+        self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
 
-        if self.arret != None:
+        if self.existearret != None:
             self.scene.removeItem(self.arret)
         if coords != None:
             self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
@@ -151,5 +168,9 @@ class Ihm(Ui_MainWindow):
         print(infos[0],infos[1])
         print('\n\n')
 
+    def connections(self):
+        self.scene.clusterisclicked.connect(self.nocover.explode)
+        self.scene.equipointisclicked.connect(self.eclic)
 
-
+    def eclic(self, equipoint):
+        print(equipoint.equipment.name, 'has been clicked and the information has traveled with the speed of \nlight thanks to a SIGNAL')

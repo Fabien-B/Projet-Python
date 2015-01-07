@@ -22,11 +22,14 @@ class Importeur(QtCore.QObject):
 
 
     def charging(self,equipmentList):
+        filtres.create_set(equipmentList)
+        filtres.equip_set(equipmentList)
         self.appli.set_equipements(equipmentList)
         for equip in equipmentList:
             filtres.create_set(equip)
         self.appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
         self.appli.addcheckbox()
+
 
     def get_equipment(self):
         if not self.my_cache.isalive('equipmentList.cache'):
