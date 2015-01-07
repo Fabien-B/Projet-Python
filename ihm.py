@@ -4,7 +4,6 @@ from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import carte
 import filtres
-import main
 import poi
 import tisseo
 import No_More_Horse_Riding as nmhr
@@ -12,7 +11,7 @@ import No_More_Horse_Riding as nmhr
 
 class Ihm(Ui_MainWindow):
 
-    def __init__(self):
+    def __init__(self, locator):
         super(Ihm, self).__init__()
         self.equipmentDict={}
         self.latitude = 43.564995   #latitude et longitudes de départ
@@ -22,6 +21,7 @@ class Ihm(Ui_MainWindow):
         self.boxChecked =[]
         self.arret = None
         self.ptRecherche = None
+        self.locator = locator
 
     def set_equipements(self,eqList):
         for eq in eqList:
@@ -133,7 +133,7 @@ class Ihm(Ui_MainWindow):
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
-        coords = main.my_locator.find(txt,txt)
+        coords = self.locator.find(txt,txt)
         print(coords)
         self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
 

@@ -22,7 +22,6 @@ else:
     print('Equipment loaded from cache')
 
 equipmentList = my_locator.findall(equipmentList)
-# equipmentList = my_locator.get_random(equipmentList)
 
 
 for equip in equipmentList:
@@ -30,7 +29,7 @@ for equip in equipmentList:
 
 def affiche():
     fenetre = QtGui.QMainWindow()
-    appli = ihm.Ihm()
+    appli = ihm.Ihm(my_locator)
     appli.setupUi(fenetre)
     appli.built()
     appli.set_equipements(equipmentList)
