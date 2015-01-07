@@ -67,8 +67,9 @@ class Ihm(Ui_MainWindow):
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
     def update_affichage_equipements(self):
-        for item in self.pointAff:
-            self.scene.removeItem(item)
+        for point in self.pointAff:
+            if point in self.scene.items():
+                self.scene.removeItem(point)
         for equip in self.equipmentSet:
             self.pointAff.append(self.graphicsView.draw_equipment(equip))
             self.scene.update()
@@ -132,7 +133,7 @@ class Ihm(Ui_MainWindow):
         self.update_checkbox(True)
 
     def itemClicked(self, item):
-        print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
+        #print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
             self.boxChecked.remove(item)

@@ -13,7 +13,6 @@ def create_set(equiplist):
 def equip_set(equiplist):
     for equip in equiplist:
         allEquipSet.add(equip)
-    print(allEquipSet)
 
 
 def filtrer_set_par_acti(actiName):

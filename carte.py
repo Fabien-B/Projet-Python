@@ -70,7 +70,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         except TypeError:
             lat = 0
             lon = 0
-            print("Erreur d'importation coordonnées")
+            print("Erreur d'importation coordonnées ")
         (X, Y, resX, resY) = self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
