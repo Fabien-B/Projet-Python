@@ -146,15 +146,15 @@ class Ihm(Ui_MainWindow):
         self.update_affichage_equipements()
 
     def affiche_addresse(self):
-        # affiche un point à l'addresse que l'utilisateur entre
+        """ affiche un point à l'addresse que l'utilisateur entre"""
+        self.statusbar.showMessage("Recherche ...") #TODO n'a pas l'air de marcher ...
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
         coords = self.locator.find(txt,txt)
         print(coords)
-        self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
 
-        if self.existearret != None:
+        if self.arret != None:
             self.scene.removeItem(self.arret)
         if coords != None:
             self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
@@ -162,11 +162,16 @@ class Ihm(Ui_MainWindow):
             self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
         else:
             print("adresse non trouvée")
+            self.statusbar.showMessage("adresse non trouvée")
+
 
     def notif_chrgmt_equip(self, infos):
-        print('\n\n')
-        print(infos[0],infos[1])
-        print('\n\n')
+        if infos[0]=='échec':
+            self.statusbar.showMessage("Échec: {}       {}/{}".format(infos[1],infos[2],infos[3]),2000)
+        if infos[0]=='cache':
+            self.statusbar.showMessage('Chargement depuis le cache',2000)
+        else:
+            self.statusbar.showMessage("Adresse trouvée: {}       {}/{}".format(infos[0],infos[1],infos[2]),2000)
 
     def connections(self):
         self.scene.clusterisclicked.connect(self.nocover.explode)

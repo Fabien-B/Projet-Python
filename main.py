@@ -13,7 +13,7 @@ FILENAME = 'data/ES2011.xls'
 
 
 class Importeur(QtCore.QObject):
-
+    cache_charging_signal = QtCore.pyqtSignal(list)
     def __init__(self,appli):
         QtCore.QObject.__init__(self)
         self.appli=appli
@@ -25,8 +25,8 @@ class Importeur(QtCore.QObject):
         filtres.create_set(equipmentList)
         filtres.equip_set(equipmentList)
         self.appli.set_equipements(equipmentList)
-        for equip in equipmentList:
-            filtres.create_set(equip)
+        # for equip in equipmentList:
+        #     filtres.create_set(equip)
         self.appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
         self.appli.addcheckbox()
 
@@ -38,6 +38,7 @@ class Importeur(QtCore.QObject):
             self.my_cache.save(equipmentList, 'equipmentList.cache')
             print('First use')
         else:
+            self.cache_charging_signal.emit(['cache'])
             equipmentList = self.my_cache.rescue('equipmentList.cache')
             print('Equipment loaded from cache')
 
@@ -56,11 +57,12 @@ def run():
     appli.built()
     fenetre.show()
 
-    monIporteur=Importeur(appli)
-    monIporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
-    threadImportation = threading.Thread(None,monIporteur.get_equipment)
+    monImporteur=Importeur(appli)
+    monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
+    monImporteur.cache_charging_signal.connect(appli.notif_chrgmt_equip)
+    threadImportation = threading.Thread(None,monImporteur.get_equipment)
     threadImportation.start()
-    return (app.exec_(),monIporteur.my_locator)
+    return (app.exec_(),monImporteur.my_locator)
 
 
 

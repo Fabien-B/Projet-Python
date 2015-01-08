@@ -36,16 +36,16 @@ class GPScoord(QtCore.QObject):
             else:
                 self.success +=1
                 self.timestried = 0
-                #self.emit(QtCore.SIGNAL("address_found(const QString & text,int,int)"), name,i,j)    #signal pour notifier en barre d'état
                 self.succesSignal.emit([name,i,j])
                 return loc[0].coordinates
 
         except:
             if self.timestried <= 20:
                 print('Error : retrying')
-                self.find(adresse,name)
+                self.find(adresse,name,i,j)
             else:
                 print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', name)
+                self.succesSignal.emit(["échec",name,i,j])
                 self.timestried = 0
                 return None
 
@@ -61,7 +61,7 @@ class GPScoord(QtCore.QObject):
                     eqpmtlist[i].coords = eqpmtlist[i-1].coords
                     self.success += 1
                 else:
-                    eqpmtlist[i].coords = self.find(eqpmtlist[i].adresse,eqpmtlist[i].name)
+                    eqpmtlist[i].coords = self.find(eqpmtlist[i].adresse,eqpmtlist[i].name,i,len(eqpmtlist))
             else:
                 self.success +=1
             self.cache.save(eqpmtlist, 'equipmentList.cache')
@@ -79,6 +79,7 @@ class GPScoord(QtCore.QObject):
                     eqpmtlist[i].coords = (random.randint(43571,43649)/1000,random.randint(1405, 1504)/1000)
                     time.sleep(0.05)
                     print('get random for {}'.format(eqpmtlist[i].name))
+                    self.succesSignal.emit([eqpmtlist[i].name,i,len(eqpmtlist)])
             else:
                 self.success +=1
             self.cache.save(eqpmtlist, 'equipmentList.cache')
