@@ -52,7 +52,7 @@ class equipement_point(POI):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
             self.icone.setPos(x,y)
             self.icone.setToolTip(equipement.name)
-            self.icone.scale(1/2,1/2)
+            self.icone.scale(2/3, 2/3)
             self.addToGroup(self.icone)
         else:
             PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
