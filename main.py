@@ -36,8 +36,8 @@ class Importeur(QtCore.QObject):
             equipmentList = self.my_cache.rescue('equipmentList.cache')
             print('Equipment loaded from cache')
 
-        #equipmentList = self.my_locator.findall(equipmentList)
-        equipmentList = self.my_locator.get_random(equipmentList)
+        equipmentList = self.my_locator.findall(equipmentList)
+        #equipmentList = self.my_locator.get_random(equipmentList)
         if equipmentList != None:
             self.charging(equipmentList)
 
