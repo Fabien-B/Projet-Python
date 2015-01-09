@@ -19,7 +19,6 @@ class Ihm(Ui_MainWindow):
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
         self.checkBoxs = []
-        self.boxChecked =[]
         self.arret = None
         self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None)
@@ -79,11 +78,9 @@ class Ihm(Ui_MainWindow):
             for checkbox in self.checkBoxs:
                 if checkbox.isHidden() is False and check is True:
                     checkbox.setCheckState(Qt.Checked)
-                    self.boxChecked.append(checkbox)
                     self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(checkbox.text()))
                 if checkbox.isHidden() is False and check is False:
                     checkbox.setCheckState(Qt.Unchecked)
-                    self.boxChecked.remove(checkbox)
                     self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(checkbox.text()))
         self.update_affichage_equipements()
 
@@ -99,7 +96,6 @@ class Ihm(Ui_MainWindow):
         #print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
-            self.boxChecked.remove(item)
             eqASupprimer = self.monFiltre.filtrer_set_par_acti(item.text())
             for checkbox in self.checkBoxs:
                 if checkbox.checkState() == Qt.Checked:
@@ -107,7 +103,6 @@ class Ihm(Ui_MainWindow):
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.boxChecked.append(item)
             self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(item.text()))
         self.update_affichage_equipements()
 
@@ -155,7 +150,10 @@ class Ihm(Ui_MainWindow):
 
         self.typeLineEdit.setText(equipoint.equipment.type)
 
-        # self.activitiesListWidget.currentTextChanged(equipoint.equipment.activities)      #TODO: gérer le widget
+        self.activitiesListWidget.clear()
+        for activ in equipoint.equipment.activities:
+            activityStr = activ + '(' + str(equipoint.equipment.activities[activ]) + ')'
+            QtGui.QListWidgetItem(activityStr, self.activitiesListWidget)
 
         if equipoint.equipment.revetement != []:
             revetement = ''
