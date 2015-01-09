@@ -73,8 +73,6 @@ class equipement_point(POI):
         scene = self.scene()
         if self.icone.isUnderMouse():
             scene.equipclicked(self)
-        else:
-            scene.removeItem(self)
 
 
 class Equipment_Group(point):
