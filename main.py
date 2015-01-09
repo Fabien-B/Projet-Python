@@ -23,6 +23,7 @@ class Importeur(QtCore.QObject):
         self.appli.monFiltre.create_set(equipmentList)
         self.appli.monFiltre.equip_set(equipmentList)
         self.appli.addcheckbox()
+        self.appli.splitter.adjustSize()
 
 
     def get_equipment(self):

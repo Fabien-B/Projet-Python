@@ -108,8 +108,10 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def download(self, lat, lon):
         """télécharge toutes le tuiles autour d'une position donnée (en fonction des dimensions de la graphicsView) """
         (X, Y, resx, resy) = self.get_tile_nbs(lat, lon)
-        nbw = int(self.width() / TILEDIM) + 1
-        nbh = int(self.height() / TILEDIM) + 1
+        #nbw = int(self.width() / TILEDIM) + 1
+        #nbh = int(self.height() / TILEDIM) + 1
+        nbw = 5
+        nbh = 5
         biw = int(-nbw / 2)
         bih = int(-nbh / 2)
         for i in range(biw, nbw + biw):
@@ -119,7 +121,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def add_tile(self, X, Y):
         """charge une tuile depuis le dique si elle existe, ou va la télécharger"""
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
-        #print(X,Y)
         if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
             if not os.path.exists(name):
                 path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
