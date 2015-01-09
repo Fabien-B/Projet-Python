@@ -42,17 +42,10 @@ class myQGraphicsView(QtGui.QGraphicsView):
         super().mouseMoveEvent(e)
         self.update_tiles()
 
-    def mouseDoubleClickEvent(self, e):
-        """actualise l'affichage des équipements, à supprimer quand ce sera fais autrement"""
-        self.ihm.update_affichage_equipements()
-        self.ihm.changeaff()   #TODO : Juste pour le test à supprimer plus tard !
-
-
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
         self.cur_zoom *= factor
         self.scale(factor, factor)
-
 
     def draw_point(self, lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend=''):
         """affiche un point aux coordonnées lat, lon."""
