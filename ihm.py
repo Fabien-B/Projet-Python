@@ -13,8 +13,9 @@ import No_More_Horse_Riding as nmhr
 
 class Ihm(Ui_MainWindow):
 
-    def __init__(self):
+    def __init__(self,MainWindow):
         super(Ihm, self).__init__()
+        self.MainWindow = MainWindow
         self.equipmentDict = {}
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
@@ -27,7 +28,6 @@ class Ihm(Ui_MainWindow):
         self.equipmentSet = set()
         self.pointAff = []
         self.nocover = nmhr.No_Covering(self)
-
     def set_equipements(self, eqList):
         for eq in eqList:
             self.equipmentDict[eq] = None   #Mettre en valeur les Qellipses affichée, ou None si l'équipement n'est pas affiché.
@@ -42,16 +42,15 @@ class Ihm(Ui_MainWindow):
 
     def built(self):
         self.build_map()
-        self.pushButton.clicked.connect(self.selectall)
-        self.lineEdit_1.textEdited.connect(self.update_checkbox)
-        self.lw.itemClicked.connect(self.itemClicked)
+        self.Quitter.triggered.connect(quit)
+        self.actionInspecteur.triggered.connect(self.dockWidget_2.show)
+        self.ButtonDSelectAll.clicked.connect(self.selectall)
+        self.lineEdit.textEdited.connect(self.update_checkbox)
+        self.listActivities.itemClicked.connect(self.itemClicked)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
 #        self.update_affichage_equipements()
 
     def build_map(self):
-        self.graphicsView = carte.myQGraphicsView(self.centralwidget)
-        self.graphicsView.setGeometry(QtCore.QRect(290, 10, 700, 610))
-        self.graphicsView.setObjectName("graphicsView")
         self.scene = Sceneclicked.SceneClickable()
         self.graphicsView.setScene(self.scene)
         self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag) # allow drag and drop of the view
@@ -96,7 +95,7 @@ class Ihm(Ui_MainWindow):
         # self.equipmentDict = nmhr.cluster(self.equipmentDict, self.scene)
 
     def update_checkbox(self, checkstate):
-        txt = self.lineEdit_1.text()
+        txt = self.lineEdit.text()
         print(txt)
         liste = []
         for key in filtres.sets:
@@ -123,9 +122,9 @@ class Ihm(Ui_MainWindow):
             equip.affiche = not equip.affiche
 
     def addcheckbox(self):
-        self.lw.clear()
+        self.listActivities.clear()
         for name in sorted(filtres.sets):
-            lwItem = QtGui.QListWidgetItem(name, self.lw)
+            lwItem = QtGui.QListWidgetItem(name, self.listActivities)
             lwItem.setFlags(Qt.ItemIsEnabled)
             lwItem.setCheckState(Qt.Unchecked)
             self.checkBoxs.append(lwItem)

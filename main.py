@@ -27,7 +27,7 @@ class Importeur(QtCore.QObject):
         self.appli.set_equipements(equipmentList)
         # for equip in equipmentList:
         #     filtres.create_set(equip)
-        self.appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
+        #self.appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
         self.appli.addcheckbox()
 
 
@@ -52,7 +52,7 @@ class Importeur(QtCore.QObject):
 
 def run():
     fenetre = QtGui.QMainWindow()
-    appli = ihm.Ihm()
+    appli = ihm.Ihm(fenetre)
     appli.setupUi(fenetre)
     appli.built()
     fenetre.show()
