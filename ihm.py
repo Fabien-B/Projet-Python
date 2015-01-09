@@ -217,3 +217,5 @@ class Ihm(Ui_MainWindow):
             self.sanitairesLineEdit_9.setText(str(equipoint.equipment.categorie))
 
         self.sanitairesLineEdit_6.setText(str(equipoint.equipment.coords))
+
+        self.dockWidget_2.show()
