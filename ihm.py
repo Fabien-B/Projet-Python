@@ -80,9 +80,11 @@ class Ihm(Ui_MainWindow):
                 if checkbox.isHidden() is False and check is True:
                     checkbox.setCheckState(Qt.Checked)
                     self.boxChecked.append(checkbox)
+                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(checkbox.text()))
                 if checkbox.isHidden() is False and check is False:
                     checkbox.setCheckState(Qt.Unchecked)
                     self.boxChecked.remove(checkbox)
+                    self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(checkbox.text()))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
@@ -98,7 +100,11 @@ class Ihm(Ui_MainWindow):
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
             self.boxChecked.remove(item)
-            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(item.text()))
+            eqASupprimer = self.monFiltre.filtrer_set_par_acti(item.text())
+            for checkbox in self.checkBoxs:
+                if checkbox.checkState() == Qt.Checked:
+                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti(checkbox.text())
+            self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
             self.boxChecked.append(item)
