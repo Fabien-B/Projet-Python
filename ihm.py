@@ -120,11 +120,14 @@ class Ihm(Ui_MainWindow):
             self.scene.removeItem(self.arret)
         if coords != None:
             self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
-            (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0],coords[1])
-            self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
+            #self.get_stopArea(coords[0], coords[1])
         else:
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")
+
+    def get_stopArea(self,lat,lon):
+        (nomArret, latArret, lonArret) = tisseo.get_closest_sa(lat,lon)
+        self.arret = self.graphicsView.draw_point(latArret,lonArret, QtGui.QPen(QtCore.Qt.blue, 3), QtCore.Qt.red, 20, nomArret) #TODO faire un truc plus joli (avec une icone)
 
 
     def notif_chrgmt_equip(self, infos):
