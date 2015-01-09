@@ -183,6 +183,7 @@ def set_from_file_douches(content):
                 nb[0] = 1
         if indCo.__contains__('oui'):
             nb[1] = 1     #s'il n'est pas précisé si elles sont collectives ou individuelles, on choisit collectives
+    return nb
 
 
 def set_from_file_capaMax(content):

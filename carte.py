@@ -68,9 +68,17 @@ class myQGraphicsView(QtGui.QGraphicsView):
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
         if lat < 43.7 and lat > 43.5 and lon < 1.6 and lon > 1.3:
-            point = poi.equipement_point(equipment, posX, posY, Zvalue)
+            point = poi.equipement_point(posX, posY, equipment, Zvalue)
             self.maScene.addItem(point)
             return point
+
+    def draw_img_point(self,lat,lon, img,legend=''):
+        (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
+        posX = (X + resX)*TILEDIM
+        posY = (Y + resY)*TILEDIM
+        point = poi.equipement_point(posX, posY, img=img, legend=legend)
+        self.maScene.addItem(point)
+        return point
 
     def centerOnPosition(self, lat, lon):
         """centre la carte sur la position définie par une latitude et une longitude"""
