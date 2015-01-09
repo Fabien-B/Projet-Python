@@ -23,14 +23,13 @@ class No_Covering():
                 equicluster = poi.Equipment_Group(self.scene, sum(posx)/len(posx), sum(posy)/len(posy))
                 equicluster.equipointlist = colliding + [elicon1]
                 for point in equicluster.equipointlist:
-                    equicluster.equipmentItemGroup.addToGroup(point)
                     packed.append(point)
                     equipListClustered.append(equicluster)
+                    self.scene.removeItem(point)
                 equicluster.tooltiper()
                 equicluster.digitalize()
+                clusterlist.append(equicluster)
                 self.scene.addItem(equicluster)
-        for equicluster in clusterlist:
-            self.scene.destroyGroup(equicluster.equipmentItemGroup)
         return equipListClustered
 
 
@@ -40,23 +39,29 @@ class No_Covering():
             rayon = the_cluster.equipointlist[0].boundingRect().height()*size/2
             deltaangle = math.radians(360/size)
             list_angle = [i*deltaangle for i in range(size)]
-            self.drawbackground(the_cluster, rayon)
+            bg = self.drawbackground(the_cluster, rayon)
             for i in range(size):
-                self.scene.addItem(the_cluster.equipointlist[i])
                 pos = (the_cluster.Pos()[0] + rayon/2*math.sin(list_angle[i]), the_cluster.Pos()[1] + rayon/2*math.cos(list_angle[i]))
-                print(the_cluster.equipointlist[i].Pos())
-                print(pos)
-                the_cluster.equipointlist[i].SetPos(*pos)
+                point = poi.equipement_point(the_cluster.equipointlist[i].equipment, pos[0], pos[1])
+                bg.equippointlist.append(point)
+                self.scene.addItem(point)
+                self.ihm.pointAff.append(point)
             the_cluster.exploded = not the_cluster.exploded
+            self.ihm.pointAff.append(bg)
             self.scene.removeItem(the_cluster)
 
     def drawbackground(self, the_cluster, rayon):
-            bg = poi.BackGroundCluster(rayon, the_cluster)
-            self.scene.addItem(bg.background)
+        bg = poi.BackGroundCluster(rayon, the_cluster, self.scene)
+        return bg
+
 
     def regroup(self, background):
-        print("We have to reform the cluster", background.the_cluster)
-
+        print('regroup')
+        for point in background.equippointlist:
+            self.scene.removeItem(point)
+        self.scene.addItem(background.the_cluster)
+        background.the_cluster.exploded = None
+        self.scene.removeItem(background)
 
 
 

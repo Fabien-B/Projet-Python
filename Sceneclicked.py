@@ -19,5 +19,4 @@ class SceneClickable(QtGui.QGraphicsScene):
 
     def bgclicked(self, background):
         self.backgroundclicked.emit(background)
-        print('scene')
 

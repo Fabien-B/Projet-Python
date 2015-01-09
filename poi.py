@@ -67,18 +67,22 @@ class equipement_point(POI):
 
 
 
+
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         scene = self.scene()
-        scene.equipclicked(self)
+        if self.icone.isUnderMouse():
+            scene.equipclicked(self)
+        else:
+            scene.removeItem(self)
+
 
 class Equipment_Group(point):
 
     def __init__(self, scene, x, y):
-        super(Equipment_Group, self).__init__(x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 8, legend='', equipment = None)
-        self.scene = scene
+        super(Equipment_Group, self).__init__(x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 11, legend='', equipment = None)
+        self.thescene = scene
         self.equipointlist = []
-        self.equipmentItemGroup = QtGui.QGraphicsItemGroup()
         self.text = None
         self.exploded = None
 
@@ -102,22 +106,22 @@ class Equipment_Group(point):
         self.addToGroup(self.text)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
-        QGraphicsSceneMouseEvent.accept()
-        self.scene.clusterclicked(self)
+        if self.ellipse.isUnderMouse():
+            QGraphicsSceneMouseEvent.accept()
+            self.thescene.clusterclicked(self)
 
-class BackGroundCluster(QtGui.QGraphicsItemGroup):
-    def __init__(self, rayon, the_cluster):
-        super(BackGroundCluster, self).__init__()
+class BackGroundCluster(QtGui.QGraphicsEllipseItem):
+
+    def __init__(self, rayon, the_cluster, scene):
+        super(BackGroundCluster, self).__init__(0, 0, rayon+30, rayon+30)
+        self.thescene = scene
+        self.equippointlist = []
         self.the_cluster = the_cluster
-        PEN = QtGui.QPen(QtCore.Qt.gray)
-        self.background = QtGui.QGraphicsEllipseItem()
-        self.background.setPen(PEN)
-        self.background.setBrush(QtCore.Qt.gray)
-        self.background.setRect(0, 0, rayon+30, rayon+30)
-        self.background.setPos(the_cluster.Pos()[0]+12 - (rayon+30)/2, the_cluster.Pos()[1]+12 -(rayon+30)/2)
-        self.background.setZValue(8)
+        self.setPos(the_cluster.Pos()[0]+12 - (rayon+30)/2, the_cluster.Pos()[1]+12 -(rayon+30)/2)
+        self.setZValue(7)
+        self.thescene.addItem(self)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
-        self.scene.bgclicked(self)
+        self.thescene.bgclicked(self)
         print('bg')
