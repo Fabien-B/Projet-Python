@@ -31,12 +31,6 @@ class point(POI):
     def SetPos(self, x, y):
         self.ellipse.setPos(x, y)
 
-    def mousePressEvent(self, QGraphicsSceneMouseEvent):
-        QGraphicsSceneMouseEvent.accept()
-        if self.equipment != None:
-            print(self.equipment.name, self.equipment.coords)
-        else:
-            print(self.legend, self.coords)
 
 
 
@@ -79,7 +73,6 @@ class equipement_point(POI):
         scene.equipclicked(self)
 
 class Equipment_Group(point):
-    click = QtCore.pyqtSignal()
 
     def __init__(self, scene, x, y):
         super(Equipment_Group, self).__init__(x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 8, legend='', equipment = None)
@@ -87,6 +80,7 @@ class Equipment_Group(point):
         self.equipointlist = []
         self.equipmentItemGroup = QtGui.QGraphicsItemGroup()
         self.text = None
+        self.exploded = None
 
     def size(self):
         return len(self.equipointlist)
@@ -110,3 +104,20 @@ class Equipment_Group(point):
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         self.scene.clusterclicked(self)
+
+class BackGroundCluster(QtGui.QGraphicsItemGroup):
+    def __init__(self, rayon, the_cluster):
+        super(BackGroundCluster, self).__init__()
+        self.the_cluster = the_cluster
+        PEN = QtGui.QPen(QtCore.Qt.gray)
+        self.background = QtGui.QGraphicsEllipseItem()
+        self.background.setPen(PEN)
+        self.background.setBrush(QtCore.Qt.gray)
+        self.background.setRect(0, 0, rayon+30, rayon+30)
+        self.background.setPos(the_cluster.Pos()[0]+12 - (rayon+30)/2, the_cluster.Pos()[1]+12 -(rayon+30)/2)
+        self.background.setZValue(8)
+
+    def mousePressEvent(self, QGraphicsSceneMouseEvent):
+        QGraphicsSceneMouseEvent.accept()
+        self.scene.bgclicked(self)
+        print('bg')

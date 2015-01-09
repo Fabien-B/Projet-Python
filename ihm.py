@@ -61,6 +61,7 @@ class Ihm(Ui_MainWindow):
         for equip in self.equipmentSet:
             self.pointAff.append(self.graphicsView.draw_equipment(equip))
             self.scene.update()
+        self.nocover.cluster(self.pointAff)
 
     def update_checkbox(self, checkstate = False):
         txt = self.lineEditFiltresActivities.text()
@@ -136,6 +137,7 @@ class Ihm(Ui_MainWindow):
     def connections(self):
         self.scene.clusterisclicked.connect(self.nocover.explode)
         self.scene.equipointisclicked.connect(self.eclic)
+        self.scene.backgroundclicked.connect(self.nocover.regroup)
 
     def eclic(self, equipoint):
         print(equipoint.equipment.name, 'has been clicked and the information has traveled with the speed of \nlight thanks to a SIGNAL')
