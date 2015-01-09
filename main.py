@@ -5,8 +5,6 @@ import Get_GPS
 from PyQt4 import QtGui
 import sys
 import ihm
-import filtres
-import time
 import threading
 
 FILENAME = 'data/ES2011.xls'
@@ -22,12 +20,8 @@ class Importeur(QtCore.QObject):
 
 
     def charging(self,equipmentList):
-        filtres.create_set(equipmentList)
-        filtres.equip_set(equipmentList)
-        self.appli.set_equipements(equipmentList)
-        # for equip in equipmentList:
-        #     filtres.create_set(equip)
-        #self.appli.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 240, len(filtres.sets)*22))
+        self.appli.monFiltre.create_set(equipmentList)
+        self.appli.monFiltre.equip_set(equipmentList)
         self.appli.addcheckbox()
 
 

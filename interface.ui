@@ -60,6 +60,9 @@
             </layout>
            </item>
            <item>
+            <widget class="QLineEdit" name="lineEditFiltresActivities"/>
+           </item>
+           <item>
             <widget class="QListWidget" name="listActivities"/>
            </item>
           </layout>
@@ -71,8 +74,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>248</width>
+          <height>470</height>
          </rect>
         </property>
         <attribute name="label">
@@ -97,8 +100,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
-          <height>130</height>
+          <width>277</width>
+          <height>457</height>
          </rect>
         </property>
         <attribute name="label">
@@ -120,18 +123,24 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QPushButton" name="pushButton_7">
-             <property name="text">
-              <string>Trouver l'arrêt le plus proche</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_4"/>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="text">
+            <string>Trouver l'arrêt le plus proche</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
