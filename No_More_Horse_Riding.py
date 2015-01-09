@@ -13,7 +13,7 @@ class No_Covering():
         equipListClustered = equipList
         clusterlist = []
         packed = []
-        icons = list(set(list(equipList.values())) - set([None]))
+        icons = list(set(equipList) - set([None]))
         for elicon1 in icons:
             collidingitems = elicon1.collidingItems()
             colliding = list(set(collidingitems) & set(icons) - set(packed))
@@ -25,7 +25,7 @@ class No_Covering():
                 for point in equicluster.equipointlist:
                     equicluster.equipmentItemGroup.addToGroup(point)
                     packed.append(point)
-                    equipListClustered[point.equipment] = equicluster
+                    equipListClustered.append(equicluster)
                 equicluster.tooltiper()
                 equicluster.digitalize()
                 self.scene.addItem(equicluster)
@@ -35,10 +35,27 @@ class No_Covering():
 
 
     def explode(self, the_cluster):
-        self.scene.removeItem(the_cluster)
+        if the_cluster.exploded == None:
+            size = the_cluster.size()
+            rayon = the_cluster.equipointlist[0].boundingRect().height()*size/2
+            deltaangle = math.radians(360/size)
+            list_angle = [i*deltaangle for i in range(size)]
+            self.drawbackground(the_cluster, rayon)
+            for i in range(size):
+                self.scene.addItem(the_cluster.equipointlist[i])
+                pos = (the_cluster.Pos()[0] + rayon/2*math.sin(list_angle[i]), the_cluster.Pos()[1] + rayon/2*math.cos(list_angle[i]))
+                print(the_cluster.equipointlist[i].Pos())
+                print(pos)
+                the_cluster.equipointlist[i].SetPos(*pos)
+            the_cluster.exploded = not the_cluster.exploded
+            self.scene.removeItem(the_cluster)
 
+    def drawbackground(self, the_cluster, rayon):
+            bg = poi.BackGroundCluster(rayon, the_cluster)
+            self.scene.addItem(bg.background)
 
-
+    def regroup(self, background):
+        print("We have to reform the cluster", background.the_cluster)
 
 
 
