@@ -47,7 +47,7 @@ class equipement_point(POI):
         self.equipment = equipement
         #print(equipement.type)
 
-        path = 'icones/' + equipement.type.lower() + '_L.png'
+        path = 'icones/' + equipement.type.lower() + '.png'
         if os.path.exists(path):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
             self.icone.setPos(x,y)
