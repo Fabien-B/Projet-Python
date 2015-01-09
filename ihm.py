@@ -152,12 +152,8 @@ class Ihm(Ui_MainWindow):
 
     def connections(self):
         self.scene.clusterisclicked.connect(self.nocover.explode)
-        self.scene.equipointisclicked.connect(self.eclic)
         self.scene.backgroundclicked.connect(self.nocover.regroup)
         self.scene.equipointisclicked.connect(self.fill_inspector)
-
-    def eclic(self, equipoint):
-        print(equipoint.equipment.name, 'has been clicked and the information has traveled with the speed of \nlight thanks to a SIGNAL')
 
     def afficher_inspecteur(self):
         if self.dockWidget_2.isVisible():

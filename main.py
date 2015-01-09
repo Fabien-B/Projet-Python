@@ -31,11 +31,9 @@ class Importeur(QtCore.QObject):
             equipmentList = []
             r_w_fichier.import_file(FILENAME, equipmentList)
             self.my_cache.save(equipmentList, 'equipmentList.cache')
-            print('First use')
         else:
             self.cache_charging_signal.emit(['cache'])
             equipmentList = self.my_cache.rescue('equipmentList.cache')
-            print('Equipment loaded from cache')
 
         equipmentList = self.my_locator.findall(equipmentList)
         #equipmentList = self.my_locator.get_random(equipmentList)

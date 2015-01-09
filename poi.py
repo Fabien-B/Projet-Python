@@ -124,4 +124,3 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         self.thescene.bgclicked(self)
-        print('bg')
