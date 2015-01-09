@@ -171,8 +171,15 @@
     </property>
     <addaction name="actionInspecteur"/>
    </widget>
+   <widget class="QMenu" name="menuOutils">
+    <property name="title">
+     <string>Outils</string>
+    </property>
+    <addaction name="actionProxy"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAffichage"/>
+   <addaction name="menuOutils"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_2">
@@ -208,7 +215,14 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="nomLineEdit"/>
+              <widget class="QLineEdit" name="nomLineEdit">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -222,7 +236,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="typeLineEdit"/>
+              <widget class="QLineEdit" name="typeLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -250,7 +268,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="revetementLineEdit"/>
+              <widget class="QLineEdit" name="revetementLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -264,7 +286,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="eclairageLineEdit"/>
+              <widget class="QLineEdit" name="eclairageLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -278,7 +304,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="vestiairesLineEdit"/>
+              <widget class="QLineEdit" name="vestiairesLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -292,7 +322,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_5"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_5">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -306,7 +340,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="douchesLineEdit"/>
+              <widget class="QLineEdit" name="douchesLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -320,7 +358,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_4"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_4">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -334,7 +376,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_3"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_3">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -348,7 +394,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_2"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_2">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -362,7 +412,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -376,7 +430,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_7"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_7">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -390,7 +448,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_11"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_11">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -404,7 +466,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_10"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_10">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -418,7 +484,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_9"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_9">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -432,7 +502,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="sanitairesLineEdit_6"/>
+              <widget class="QLineEdit" name="sanitairesLineEdit_6">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -452,11 +526,17 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Quitter</string>
    </property>
    <property name="toolTip">
     <string>Quitter</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -466,8 +546,19 @@
    </property>
   </action>
   <action name="actionInspecteur">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Inspecteur</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionProxy">
+   <property name="text">
+    <string>Paramètres de proxy</string>
    </property>
   </action>
  </widget>
