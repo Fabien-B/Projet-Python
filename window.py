@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Fri Jan  9 02:20:31 2015
+# Created: Fri Jan  9 09:03:19 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -51,20 +51,23 @@ class Ui_MainWindow(object):
         self.ButtonDSelectAll.setObjectName(_fromUtf8("ButtonDSelectAll"))
         self.horizontalLayout_2.addWidget(self.ButtonDSelectAll)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.lineEditFiltresActivities = QtGui.QLineEdit(self.toolBoxPage1)
+        self.lineEditFiltresActivities.setObjectName(_fromUtf8("lineEditFiltresActivities"))
+        self.verticalLayout.addWidget(self.lineEditFiltresActivities)
         self.listActivities = QtGui.QListWidget(self.toolBoxPage1)
         self.listActivities.setObjectName(_fromUtf8("listActivities"))
         self.verticalLayout.addWidget(self.listActivities)
         self.horizontalLayout_9.addLayout(self.verticalLayout)
         self.toolBox.addItem(self.toolBoxPage1, _fromUtf8(""))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 248, 470))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.checkBox = QtGui.QCheckBox(self.toolBoxPage2)
         self.checkBox.setGeometry(QtCore.QRect(10, 20, 97, 22))
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 279, 130))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 457))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -77,15 +80,11 @@ class Ui_MainWindow(object):
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.horizontalLayout.addWidget(self.lineEdit)
         self.verticalLayout_6.addLayout(self.horizontalLayout)
-        self.verticalLayout_5 = QtGui.QVBoxLayout()
-        self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
         self.pushButton_7 = QtGui.QPushButton(self.toolBoxPage3)
         self.pushButton_7.setObjectName(_fromUtf8("pushButton_7"))
-        self.verticalLayout_5.addWidget(self.pushButton_7)
-        self.lineEdit_4 = QtGui.QLineEdit(self.toolBoxPage3)
-        self.lineEdit_4.setObjectName(_fromUtf8("lineEdit_4"))
-        self.verticalLayout_5.addWidget(self.lineEdit_4)
-        self.verticalLayout_6.addLayout(self.verticalLayout_5)
+        self.verticalLayout_6.addWidget(self.pushButton_7)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_6.addItem(spacerItem)
         self.toolBox.addItem(self.toolBoxPage3, _fromUtf8(""))
         self.graphicsView = myQGraphicsView(self.splitter)
         self.graphicsView.setObjectName(_fromUtf8("graphicsView"))

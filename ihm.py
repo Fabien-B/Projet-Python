@@ -41,11 +41,12 @@ class Ihm(Ui_MainWindow):
         return self.equipmentSet  #TODO a supprimer après le return (ou pas)
 
     def built(self):
+        self.dockWidget_2.hide()
         self.build_map()
         self.Quitter.triggered.connect(quit)
         self.actionInspecteur.triggered.connect(self.dockWidget_2.show)
-        self.ButtonDSelectAll.clicked.connect(self.selectall)
-        self.lineEdit.textEdited.connect(self.update_checkbox)
+        self.ButtonDSelectAll.clicked.connect(lambda f : self.update_checkbox(True))
+        self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
         self.listActivities.itemClicked.connect(self.itemClicked)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
 #        self.update_affichage_equipements()
@@ -60,7 +61,6 @@ class Ihm(Ui_MainWindow):
         self.graphicsView.FinishInit()
         self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude,self.longitude)
-        #self.addcheckbox()
         self.connections()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
@@ -94,8 +94,8 @@ class Ihm(Ui_MainWindow):
             #    self.equipmentDict[equip] = None
         # self.equipmentDict = nmhr.cluster(self.equipmentDict, self.scene)
 
-    def update_checkbox(self, checkstate):
-        txt = self.lineEdit.text()
+    def update_checkbox(self, checkstate = False):
+        txt = self.lineEditFiltresActivities.text()
         print(txt)
         liste = []
         for key in filtres.sets:
@@ -128,9 +128,6 @@ class Ihm(Ui_MainWindow):
             lwItem.setFlags(Qt.ItemIsEnabled)
             lwItem.setCheckState(Qt.Unchecked)
             self.checkBoxs.append(lwItem)
-
-    def selectall(self):
-        self.update_checkbox(True)
 
     def itemClicked(self, item):
         #print('item: ', item, ', state :', item.checkState(), ', acti :', item.text())
