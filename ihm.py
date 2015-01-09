@@ -142,6 +142,86 @@ class Ihm(Ui_MainWindow):
     def connections(self):
         self.scene.clusterisclicked.connect(self.nocover.explode)
         self.scene.equipointisclicked.connect(self.eclic)
+        self.scene.equipointisclicked.connect(self.fill_inspector)
 
     def eclic(self, equipoint):
         print(equipoint.equipment.name, 'has been clicked and the information has traveled with the speed of \nlight thanks to a SIGNAL')
+
+    def fill_inspector(self, equipoint):
+        """Met à jour l'inspecteur de droite contenant les informations sur l'équipement cliqué"""
+
+
+        self.nomLineEdit.setText(equipoint.equipment.name)
+
+        self.typeLineEdit.setText(equipoint.equipment.type)
+
+        # self.activitiesListWidget.currentTextChanged(equipoint.equipment.activities)      #TODO: gérer le widget
+
+        if equipoint.equipment.revetement != []:
+            revetement = ''
+            for i in range(0, len(equipoint.equipment.revetement)):
+                revetement += str(equipoint.equipment.revetement[i])
+            self.revetementLineEdit.setText(revetement)
+
+        if equipoint.equipment.eclairage == 1:
+            self.eclairageLineEdit.setText('Oui')
+        else:
+            self.eclairageLineEdit.setText('Non')
+
+        self.vestiairesLineEdit.setText('Joueurs : ' + str(equipoint.equipment.vestiaire[0]) + ' Arbitres : ' + str(equipoint.equipment.vestiaire[1]))
+
+        if equipoint.equipment.sanitaires == None:
+            self.sanitairesLineEdit_5.setText('Non renseigné')
+        elif equipoint.equipment.sanitaires != 'non':
+            self.sanitairesLineEdit_5.setText('Oui')
+
+        if equipoint.equipment.douches == None:     #TODO: n'a pas l'air de marcher, renvoie toujours non renseigné
+            self.douchesLineEdit.setText('Non renseigné')
+        else:
+            self.douchesLineEdit.setText(str(equipoint.equipment.douches))
+            # self.douchesLineEdit.setText('Individuelles : ' + equipoint.equipment.douches[0] + ' Collectives : ' + equipoint.equipment.douches[1])
+
+        if equipoint.equipment.accesHand == 1:
+            self.sanitairesLineEdit_4.setText('Oui')
+        elif equipoint.equipment.accesHand == 0:
+            self.sanitairesLineEdit_4.setText('Non')
+        else:
+            self.sanitairesLineEdit_4.setText('Non renseigné')
+
+        if equipoint.equipment.toilettesHand == 1:
+            self.sanitairesLineEdit_3.setText('Oui')
+        elif equipoint.equipment.toilettesHand == 0:
+            self.sanitairesLineEdit_3.setText('Non')
+        else:
+            self.sanitairesLineEdit_3.setText('Non renseigné')
+
+        if equipoint.equipment.tribunes == 0:
+            self.sanitairesLineEdit_2.setText('Non renseigné')
+        else:
+            self.sanitairesLineEdit_2.setText(str(equipoint.equipment.tribunes))
+
+        if equipoint.equipment.clubHouse == None:
+            self.sanitairesLineEdit.setText('Non')
+        else:
+            self.sanitairesLineEdit.setText('Oui')
+
+        if equipoint.equipment.size == [()]:
+            self.sanitairesLineEdit_7.setText('Non renseigné')
+        else:
+            self.sanitairesLineEdit_7.setText(str(equipoint.equipment.size))
+
+        if equipoint.equipment.capaMax == 0:
+            self.sanitairesLineEdit_11.setText('Non renseigné')
+        else:
+            self.sanitairesLineEdit_11.setText(str(equipoint.equipment.capaMax))
+
+        self.sanitairesLineEdit_10.setText(str(equipoint.equipment.adresse))
+
+        if equipoint.equipment.categorie == 0:
+            self.sanitairesLineEdit_9.setText('Non renseigné')
+        else:
+            self.sanitairesLineEdit_9.setText(str(equipoint.equipment.categorie))
+
+        self.sanitairesLineEdit_6.setText(str(equipoint.equipment.coords))
+
+        self.dockWidget_2.show()
