@@ -89,10 +89,10 @@ class Ihm(Ui_MainWindow):
             for checkbox in self.checkBoxs:
                 if checkbox.isHidden() is False and check is True:
                     checkbox.setCheckState(Qt.Checked)
-                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(checkbox.text()))
+                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
                 if checkbox.isHidden() is False and check is False:
                     checkbox.setCheckState(Qt.Unchecked)
-                    self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(checkbox.text()))
+                    self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
@@ -106,14 +106,14 @@ class Ihm(Ui_MainWindow):
     def itemClicked(self, item):
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
-            eqASupprimer = self.monFiltre.filtrer_set_par_acti(item.text())
+            eqASupprimer = self.monFiltre.filtrer_set_par_acti([item.text()])
             for checkbox in self.checkBoxs:
                 if checkbox.checkState() == Qt.Checked:
-                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti(checkbox.text())
+                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti([checkbox.text()])
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(item.text()))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()]))
         self.update_affichage_equipements()
 
     def affiche_addresse(self):
