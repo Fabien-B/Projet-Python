@@ -40,15 +40,18 @@ class equipement_point(POI):
         super(equipement_point,self).__init__(Zvalue)
         self.equipment = equipement
         if equipement != None:
-            path = 'icones/' + equipement.type.lower() + '.png'
+            nameImg = equipement.type.lower().split()[0]
+            path = 'icones/' + nameImg + '.png'
             legend = equipement.name
         else:
             path = 'icones/' + img + '.png'
         if os.path.exists(path):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
-            self.icone.setPos(x,y)
+            #self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
             self.icone.setToolTip(legend)
-            self.icone.scale(2/3, 2/3)
+            #self.icone.scale(2/3, 2/3)
+            self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
+            #self.icone.setPos(x,y)
             self.addToGroup(self.icone)
         else:
             PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
@@ -56,7 +59,7 @@ class equipement_point(POI):
             self.icone.setPen(PEN)
             self.icone.setBrush(QtCore.Qt.darkGreen)
             self.icone.setRect(0, 0, 20, 20)
-            self.icone.setPos(x, y)
+            self.icone.setPos(x-10, y-10)
             self.icone.setToolTip(equipement.name)
             self.addToGroup(self.icone)
 

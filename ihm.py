@@ -5,6 +5,7 @@ from window import Ui_MainWindow
 import carte
 import filtres
 import poi
+import os
 import tisseo
 import Get_GPS
 import Sceneclicked
@@ -39,6 +40,8 @@ class Ihm(Ui_MainWindow):
         self.Quitter.triggered.connect(quit)
         self.actionInspecteur.triggered.connect(self.afficher_inspecteur)
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
+        self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
+        self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
         self.ButtonDSelectAll.clicked.connect(lambda : self.update_checkbox(True))
         self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
         self.listActivities.itemClicked.connect(self.itemClicked)
@@ -255,3 +258,13 @@ class Ihm(Ui_MainWindow):
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
         #dialogParams.lineEditPassword.setText(self.password)
+
+    def vider_cache_donnes(self):
+        if os.path.exists('.cache/equipmentList.cache'):
+            os.remove('.cache/equipmentList.cache')
+
+    def vider_cache_carte(self):
+        if os.path.exists('.cache_Images'):
+            for fichier in os.listdir('.cache_Images/'):
+                path = '.cache_Images/' + fichier
+                os.remove(path)

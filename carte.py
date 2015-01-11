@@ -12,6 +12,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.cur_zoom = 1
         self.x = 0
         self.y = 0
+        self.setTransformationAnchor(2)
 
     def FinishInit(self):
         """fini l'initialisation """
@@ -34,7 +35,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         else:
             if self.cur_zoom > 1/4:
                 self.zoom(1/1.1)
-        #TODO centrage correct sur le pointeur
         self.update_tiles()
 
     def mouseMoveEvent(self, e):
@@ -119,8 +119,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resx, resy) = self.get_tile_nbs(lat, lon)
         #nbw = int(self.width() / TILEDIM) + 1
         #nbh = int(self.height() / TILEDIM) + 1
-        nbw = 5
-        nbh = 5
+        nbw = 10
+        nbh = 10
         biw = int(-nbw / 2)
         bih = int(-nbh / 2)
         for i in range(biw, nbw + biw):
