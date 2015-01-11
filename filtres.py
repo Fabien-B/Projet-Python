@@ -16,10 +16,22 @@ class Filtre():
             self.allEquipSet.add(equip)
 
 
-    def filtrer_set_par_acti(self,actiName):
+    def filtrer_set_par_acti(self,actiNames,accesHand = False):
         tempSet = set()
         for equip in self.allEquipSet:
-            if actiName in equip.activities:
+            ActiEquipSet = set(equip.activities.keys())
+            ActiRequestSet = set(actiNames)
+            if ActiRequestSet & ActiEquipSet != set():
+                tempSet.add(equip)
+        if accesHand:
+            print('Acces Hand')
+            return self.filtrer_acces_hand(tempSet)
+        return tempSet
+
+    def filtrer_acces_hand(self,equipSet):
+        tempSet = set()
+        for equip in equipSet:
+            if not equip.accesHand:  #TODO supprimer le 'not' pour que ce soit juste (plus facile pour débugger)
                 tempSet.add(equip)
         return tempSet
 
