@@ -2,10 +2,12 @@ from PyQt4 import QtCore, QtGui, QtNetwork
 import carte
 import os
 
+
 class POI(QtGui.QGraphicsItemGroup):
     def __init__(self, Zvalue = 10):
         super(POI, self).__init__()
         self.setZValue(Zvalue)
+
 
 class point(POI):
     def __init__(self, x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None, lat=0, lon=0):
@@ -32,9 +34,6 @@ class point(POI):
         self.ellipse.setPos(x, y)
 
 
-
-
-
 class equipement_point(POI):
     def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend=''):
         super(equipement_point,self).__init__(Zvalue)
@@ -49,9 +48,12 @@ class equipement_point(POI):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
             #self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
             self.icone.setToolTip(legend)
-            #self.icone.scale(2/3, 2/3)
-            self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
-            #self.icone.setPos(x,y)
+            if path == 'icones/vous_etes_ici.png':
+                self.icone.scale(1/8, 1/8)
+            else:
+                self.icone.scale(2/3, 2/3)
+            self.icone.setPos(x,y)
+            #self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
             self.addToGroup(self.icone)
         else:
             PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
@@ -63,15 +65,11 @@ class equipement_point(POI):
             self.icone.setToolTip(equipement.name)
             self.addToGroup(self.icone)
 
-
     def Pos(self):
         return(self.icone.pos().x(), self.icone.pos().y())
 
     def SetPos(self, x, y):
         self.icone.setPos(x, y)
-
-
-
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
