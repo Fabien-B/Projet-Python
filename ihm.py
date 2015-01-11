@@ -89,7 +89,7 @@ class Ihm(Ui_MainWindow):
             for checkbox in self.checkBoxs:
                 if checkbox.isHidden() is False and check is True:
                     checkbox.setCheckState(Qt.Checked)
-                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
+                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()],self.HandAccessCheckBox.checkState()))
                 if checkbox.isHidden() is False and check is False:
                     checkbox.setCheckState(Qt.Unchecked)
                     self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
@@ -113,7 +113,7 @@ class Ihm(Ui_MainWindow):
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()]))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()],self.HandAccessCheckBox.checkState()))
         self.update_affichage_equipements()
 
     def affiche_addresse(self):
@@ -169,7 +169,6 @@ class Ihm(Ui_MainWindow):
 
         if equipoint.equipment == None:
             return
-        print('douches: ', equipoint.equipment.douches)
         self.nomLineEdit.setText(equipoint.equipment.name)
 
         self.typeLineEdit.setText(equipoint.equipment.type)
