@@ -7,8 +7,8 @@ class Equipment():
         self.activities = {}          #dictionnary of possible activities. Par ex: {'bad':2,'foot':1,}
         self.revetement = []          #par ex: gazon, ciment, ...
         self.size = None              #(x,y)
-        self.eclairage = None         # 0 ou 1
-        self.arrosage = None          #0 ou 1
+        self.eclairage = 0         # 0 ou 1
+        self.arrosage = 0          #0 ou 1
         self.vestiaire = []           # [nb pr joueurs, pr arbitres]
         self.sanitaires = None        #1 <=> oui mais nombre inconnu, un nombre: le nombre...
         self.douches = []             # [nb individuelles, nb collectives]
@@ -17,8 +17,8 @@ class Equipment():
         self.clubHouse = 0            #0/1
         self.categorie = 0            # 0<=> N/A / no data
         self.date = 0                 # 0<=> N/A / no data
-        self.accesHand = None         #0/1
-        self.toilettesHand = None     #0/1
+        self.accesHand = 0         #0/1
+        self.toilettesHand = 0     #0/1
         self.coords = None            #(latitude, longitude)
         # Les filtreas doivent modifier cette valeur, et appeler appli.update_affichage_equipements() pour mettre,à jour la carte.
 

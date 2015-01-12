@@ -125,7 +125,7 @@ def set_from_file_eclairage(content):
     if content.lower().__contains__("non"):
         return 0
     else:
-        return None
+        return 999
 
 
 def set_from_file_arrosage(content):
@@ -134,7 +134,7 @@ def set_from_file_arrosage(content):
     if content.lower().__contains__("non"):
         return 0
     else:
-        return None
+        return 999
 
 
 def set_from_file_vestiaire(content):
@@ -157,7 +157,7 @@ def set_from_file_vestiaire(content):
 def set_from_file_sanitaires(content):
     content = str(content).lower()
     if content == '':
-        return None
+        return 0
     if content.__contains__('oui'):
         return 1
     else:
@@ -208,7 +208,7 @@ def set_from_file_clubHouse(content):
     elif str(content).lower().__contains__('non'):
         return 0
     else:
-        return None
+        return 999
 
 
 def set_from_file_categorie(content):
@@ -231,7 +231,7 @@ def set_from_file_accesHand(content):
     elif content == 'N' or content == '0':
         return 0
     else:
-        return None
+        return 999
 
 
 def set_from_file_toilettesHand(content):
@@ -240,4 +240,4 @@ def set_from_file_toilettesHand(content):
     elif content == 'N' or content == '0':
         return 0
     else:
-        return None
+        return 999

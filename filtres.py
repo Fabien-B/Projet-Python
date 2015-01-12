@@ -2,14 +2,25 @@
 class Filtre():
     def __init__(self):
         self.activitiesSet = set()
+        self.quartierSet = set()
         self.allEquipSet = set()
+        self.revetementSet = set()
+        self.toilettesHandSet = set()
+        self.arrosageSet = set()
+        self.eclairageSet = set()
 
     def create_set(self, equiplist):
         for equip in equiplist:
             if equip.activities is not None:
-                for key in dict.keys(equip.activities):
+                for key in equip.activities:
                     if key != '':
                         self.activitiesSet.add(key)
+                self.quartierSet.add(equip.quartier)
+                for item in equip.revetement:
+                    self.revetementSet.add(item)
+                self.toilettesHandSet.add(equip.toilettesHand)
+                self.arrosageSet.add(equip.arrosage)
+                self.eclairageSet.add(equip.eclairage)
 
     def equip_set(self,equiplist):
         for equip in equiplist:

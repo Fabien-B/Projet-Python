@@ -4,7 +4,7 @@ from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import carte
 import filtres
-import poi
+import equipement
 import os
 import tisseo
 import Get_GPS
@@ -14,7 +14,7 @@ import proxy_params
 import params
 
 
-class Ihm(Ui_MainWindow):
+class Ihm(Ui_MainWindow,QtCore.QObject):
 
     def __init__(self,MainWindow):
         super(Ihm, self).__init__()
@@ -50,6 +50,8 @@ class Ihm(Ui_MainWindow):
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
+        #self.comboBox.currentIndexChanged.connect(self.changer_filtre)
+        self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.changer_filtre)
 #        self.update_affichage_equipements()
 
     def build_map(self):
@@ -66,6 +68,10 @@ class Ihm(Ui_MainWindow):
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
+
+    def finish_init_with_datas(self):
+        self.add_checkboxs(self.listActivities,'activitiesSet')
+        self.add_combo_items()
 
     def update_affichage_equipements(self):
         for point in self.pointAff:
@@ -102,13 +108,24 @@ class Ihm(Ui_MainWindow):
             self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList))
         self.update_affichage_equipements()
 
-    def addcheckbox(self):
-        self.listActivities.clear()
-        for name in sorted(self.monFiltre.activitiesSet):
-            lwItem = QtGui.QListWidgetItem(name, self.listActivities)
+    def add_checkboxs(self,listView,param):
+        listView.clear()
+        for name in sorted(self.monFiltre.__dict__[param]):
+            name = str(name)
+            if name == '999':
+                name = 'Non renseigné'
+            lwItem = QtGui.QListWidgetItem(name, listView)
             lwItem.setFlags(Qt.ItemIsEnabled)
             lwItem.setCheckState(Qt.Unchecked)
             self.checkBoxs.append(lwItem)
+
+    def add_combo_items(self):
+        for key in equipement.Equipment().__dict__:
+            if key in self.attributsNames.values():
+                name =''
+                for cle in self.attributsNames:
+                    if self.attributsNames[cle] == key:
+                        self.comboBox.addItem(cle)
 
     def itemClicked(self, item):
         if item.checkState() == Qt.Checked:
@@ -134,6 +151,9 @@ class Ihm(Ui_MainWindow):
             self.equipmentSet = self.monFiltre.filtrer_set_par_acti('activities',activitiesList)
         self.update_affichage_equipements()
 
+    def changer_filtre(self,txt):
+        paramSet = str(self.attributsNames[txt]) + 'Set'
+        self.add_checkboxs(self.listWidget,paramSet)
 
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre"""

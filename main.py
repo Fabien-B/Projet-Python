@@ -22,7 +22,7 @@ class Importeur(QtCore.QObject):
     def charging(self, equipmentList):
         self.appli.monFiltre.create_set(equipmentList)
         self.appli.monFiltre.equip_set(equipmentList)
-        self.appli.addcheckbox()
+        self.appli.finish_init_with_datas()
         #self.appli.splitter.adjustSize()
 
     def get_equipment(self):
