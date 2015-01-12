@@ -42,7 +42,7 @@ class Ihm(Ui_MainWindow):
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
-        self.ButtonDSelectAll.clicked.connect(lambda : self.update_checkbox(True))
+        self.ButtonDSelectAll.clicked.connect(self.select_deselect_all)
         self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
         self.listActivities.itemClicked.connect(self.itemClicked)
         self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
@@ -74,7 +74,7 @@ class Ihm(Ui_MainWindow):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-    def update_checkbox(self, checkstate = False):
+    def update_checkbox(self):
         txt = self.lineEditFiltresActivities.text()
         liste = []
         for key in self.monFiltre.activitiesSet:
@@ -85,15 +85,17 @@ class Ihm(Ui_MainWindow):
                 checkbox.setHidden(True)
             else:
                 checkbox.setHidden(False)
-        if checkstate is True:
-            check = not self.checkBoxs[0].checkState()
-            for checkbox in self.checkBoxs:
-                if checkbox.isHidden() is False and check is True:
-                    checkbox.setCheckState(Qt.Checked)
-                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()],self.HandAccessCheckBox.checkState()))
-                if checkbox.isHidden() is False and check is False:
-                    checkbox.setCheckState(Qt.Unchecked)
-                    self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
+        self.update_affichage_equipements()
+
+    def select_deselect_all(self):
+        check = not self.checkBoxs[0].checkState()
+        for checkbox in self.checkBoxs:
+            if checkbox.isHidden() is False and check is True:
+                checkbox.setCheckState(Qt.Checked)
+                self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()],self.HandAccessCheckBox.checkState()))
+            if checkbox.isHidden() is False and check is False:
+                checkbox.setCheckState(Qt.Unchecked)
+                self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
