@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>495</height>
+          <width>248</width>
+          <height>470</height>
          </rect>
         </property>
         <property name="toolTip">
@@ -81,8 +81,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>495</height>
+          <width>248</width>
+          <height>470</height>
          </rect>
         </property>
         <attribute name="label">
@@ -100,6 +100,16 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QComboBox" name="comboBox"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="selectAllSecondFiltreButton">
+             <property name="text">
+              <string>Tout (dé)sélectionner</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditFiltres"/>
            </item>
            <item>
             <widget class="QListWidget" name="listWidget"/>
@@ -135,8 +145,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>495</height>
+          <width>277</width>
+          <height>457</height>
          </rect>
         </property>
         <attribute name="label">
@@ -191,7 +201,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -235,8 +245,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>330</width>
-          <height>668</height>
+          <width>353</width>
+          <height>748</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">

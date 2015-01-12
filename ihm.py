@@ -22,7 +22,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.MainWindow = MainWindow
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
-        self.checkBoxs = []
         self.arret = None
         self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None, None)
@@ -50,14 +49,13 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
-        self.ButtonDSelectAll.clicked.connect(self.select_deselect_all)
-        self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
+        self.ButtonDSelectAll.clicked.connect(lambda : self.select_deselect_all(self.listActivities))
+        self.lineEditFiltresActivities.textEdited.connect(lambda  : self.update_checkbox(self.listActivities, self.lineEditFiltresActivities.text()))
         self.listActivities.itemClicked.connect(self.itemClicked)
-        self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
+        #self.HandAccessCheckBox.stateChanged.connect(lambda : self.hand_changement(self.listActivities))
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
-        #self.comboBox.currentIndexChanged.connect(self.changer_filtre)
         self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.changer_filtre)
 #        self.update_affichage_equipements()
 
@@ -77,7 +75,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
     def finish_init_with_datas(self):
-        self.add_checkboxs(self.listActivities,'activitiesSet')
+        self.add_checkboxs(self.listActivities,'activities')
         self.add_combo_items()
 
     def update_affichage_equipements(self):
@@ -89,78 +87,91 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-    def update_checkbox(self):
-        txt = self.lineEditFiltresActivities.text()
+    def update_checkbox(self,concernedList, txt):
+        #txt = self.lineEditFiltresActivities.text()
         liste = []
-        for key in self.monFiltre.activitiesSet:
+        paramSet = concernedList.item(0).param + 'Set'
+        for key in self.monFiltre.__dict__[paramSet]:
             if txt.capitalize() in key:
                 liste.append(key)
-        for checkbox in self.checkBoxs:
-            if checkbox.text() not in liste:
-                checkbox.setHidden(True)
-            else:
-                checkbox.setHidden(False)
+        print(liste)
+        for i in range(concernedList.count()):
+                checkbox = concernedList.item(i)
+                if checkbox.text() not in liste:
+                    checkbox.setHidden(True)
+                else:
+                    checkbox.setHidden(False)
         self.update_affichage_equipements()
 
-    def select_deselect_all(self):
-        check = 2 if not self.checkBoxs[0].checkState() else 0
+    def select_deselect_all(self,concernedList):
+        check = 2 if not concernedList.item(0).checkState() else 0
+        param = concernedList.item(0).param
         activitiesList = []
-        for checkbox in self.checkBoxs:
-            if not checkbox.isHidden():
-                checkbox.setCheckState(check)
-                activitiesList.append(checkbox.text())
+        for i in range(concernedList.count()):
+                checkbox = concernedList.item(i)
+                if not checkbox.isHidden():
+                    checkbox.setCheckState(check)
+                    activitiesList.append(checkbox.text())
         if check:
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList,self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(param,activitiesList,self.HandAccessCheckBox.checkState()))
         else:
-            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList))
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(param,activitiesList))
         self.update_affichage_equipements()
 
     def add_checkboxs(self,listView,param):
+        print('param ==== ', param)
+        paramSet = param + 'Set'
         listView.clear()
-        for name in sorted(self.monFiltre.__dict__[param]):
+        for name in sorted(self.monFiltre.__dict__[paramSet]):
             name = str(name)
             if name == '999':
                 name = 'Non renseigné'
-            lwItem = QtGui.QListWidgetItem(name, listView)
+            lwItem = filtres.myListWidgetItem(name, listView)
+            lwItem.param = param
             lwItem.setFlags(Qt.ItemIsEnabled)
             lwItem.setCheckState(Qt.Unchecked)
-            self.checkBoxs.append(lwItem)
 
     def add_combo_items(self):
         for key in equipement.Equipment().__dict__:
             if key in self.attributsNames.values():
-                name =''
                 for cle in self.attributsNames:
                     if self.attributsNames[cle] == key:
                         self.comboBox.addItem(cle)
+        self.listWidget.itemClicked.connect(self.itemClicked)
 
     def itemClicked(self, item):
+        print(item.param)
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
-            eqASupprimer = self.monFiltre.filtrer_set_par_acti('activities',[item.text()])
-            for checkbox in self.checkBoxs:
+            eqASupprimer = self.monFiltre.filtrer_set_par_acti(item.param,[item.text()])
+            for i in range(item.liste.count()):
+                checkbox = item.liste.item(i)
                 if checkbox.checkState() == Qt.Checked:
-                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti('activities',[checkbox.text()])
+                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti(item.param,[checkbox.text()])
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti('activities',[item.text()],self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(item.param,[item.text()],self.HandAccessCheckBox.checkState()))
         self.update_affichage_equipements()
 
-    def hand_changement(self):
+    def hand_changement(self,concernedList):
         if self.HandAccessCheckBox.checkState():
             self.equipmentSet.difference_update(self.monFiltre.filtrer_acces_hand(self.equipmentSet,False))
         else:
-            activitiesList = []
-            for checkbox in self.checkBoxs:
+            param = concernedList.item(0).param
+            paramList = []
+            for i in range(concernedList.count()):
+                checkbox = concernedList.item(i)
                 if checkbox.checkState():
-                    activitiesList.append(checkbox.text())
-            self.equipmentSet = self.monFiltre.filtrer_set_par_acti('activities',activitiesList)
+                    paramList.append(checkbox.text())
+            self.equipmentSet = self.monFiltre.filtrer_set_par_acti(param,paramList)
         self.update_affichage_equipements()
 
     def changer_filtre(self,txt):
-        paramSet = str(self.attributsNames[txt]) + 'Set'
-        self.add_checkboxs(self.listWidget,paramSet)
+        self.add_checkboxs(self.listWidget,str(self.attributsNames[txt]))
+        self.selectAllSecondFiltreButton.clicked.connect(lambda : self.select_deselect_all(self.listWidget))
+        self.HandAccessCheckBox.stateChanged.connect(lambda : self.hand_changement(self.listWidget))
+        self.lineEditFiltres.textEdited.connect(lambda  : self.update_checkbox(self.listWidget, self.lineEditFiltres.text()))
 
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre"""
@@ -168,14 +179,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
-        coords = self.locator.find(txt, txt)
-
-        # if self.arret != None:
-        #     self.scene.removeItem(self.arret)
-        if coords != None:
-            #self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt)  #TODO faire un truc plus joli (avec une icone)
-            self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', 'AAZZDD')
-            #self.get_stopArea(coords[0], coords[1])
         coords = self.locator.find(txt,txt)
         if coords != None:
             self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1],'vous_etes_ici', txt)
@@ -226,11 +229,8 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             activityStr = activ + '(' + str(equipoint.equipment.activities[activ]) + ')'
             QtGui.QListWidgetItem(activityStr, self.activitiesListWidget)
 
-        if equipoint.equipment.revetement != []:
-            revetement = ''
-            for i in range(0, len(equipoint.equipment.revetement)):
-                revetement += str(equipoint.equipment.revetement[i])
-            self.revetementLineEdit.setText(revetement)
+        revetement = ' '.join(equipoint.equipment.revetement)
+        self.revetementLineEdit.setText(revetement)
 
         if equipoint.equipment.eclairage == 1:
             self.eclairageLineEdit.setText('Oui')

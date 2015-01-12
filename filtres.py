@@ -1,3 +1,4 @@
+from PyQt4 import QtGui
 
 class Filtre():
     def __init__(self):
@@ -34,7 +35,7 @@ class Filtre():
             if param == 'activities':
                 paramSet = set(equip.__dict__[param])
             elif param == 'revetement':
-                paramSet = set(equip.param)
+                paramSet = set(equip.__dict__[param])
             else:
                 paramSet = set([equip.__dict__[param]])
             ActiRequestSet = set(paramNames)
@@ -60,3 +61,10 @@ class Filtre():
         for key in self.activitiesSet:
             print(key)
         print('nombre clé :', len(self.activitiesSet))
+
+
+class myListWidgetItem(QtGui.QListWidgetItem):
+    def __init__(self,name, listView):
+        super(myListWidgetItem,self).__init__(name, listView)
+        self.param = ''
+        self.liste = listView
