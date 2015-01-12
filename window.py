@@ -393,6 +393,6 @@ class Ui_MainWindow(object):
         self.actionProxy.setText(_translate("MainWindow", "Paramètres de proxy", None))
         self.actionViderCacheDonnees.setText(_translate("MainWindow", "Vider le cache données", None))
         self.actionViderCacheCarte.setText(_translate("MainWindow", "Vider le cache carte", None))
-        self.pushButton.setText(_translate("MainWindow", "Zoom", None))
+        self.pushButton.setText(_translate("MainWindow", "Zoom (appuyer 2x)", None))
 
 from carte import myQGraphicsView
