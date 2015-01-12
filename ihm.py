@@ -42,9 +42,10 @@ class Ihm(Ui_MainWindow):
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
-        self.ButtonDSelectAll.clicked.connect(lambda : self.update_checkbox(True))
+        self.ButtonDSelectAll.clicked.connect(self.select_deselect_all)
         self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
         self.listActivities.itemClicked.connect(self.itemClicked)
+        self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
@@ -74,7 +75,7 @@ class Ihm(Ui_MainWindow):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-    def update_checkbox(self, checkstate = False):
+    def update_checkbox(self):
         txt = self.lineEditFiltresActivities.text()
         liste = []
         for key in self.monFiltre.activitiesSet:
@@ -85,15 +86,19 @@ class Ihm(Ui_MainWindow):
                 checkbox.setHidden(True)
             else:
                 checkbox.setHidden(False)
-        if checkstate is True:
-            check = not self.checkBoxs[0].checkState()
-            for checkbox in self.checkBoxs:
-                if checkbox.isHidden() is False and check is True:
-                    checkbox.setCheckState(Qt.Checked)
-                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()],self.HandAccessCheckBox.checkState()))
-                if checkbox.isHidden() is False and check is False:
-                    checkbox.setCheckState(Qt.Unchecked)
-                    self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
+        self.update_affichage_equipements()
+
+    def select_deselect_all(self):
+        check = 2 if not self.checkBoxs[0].checkState() else 0
+        activitiesList = []
+        for checkbox in self.checkBoxs:
+            if not checkbox.isHidden():
+                checkbox.setCheckState(check)
+                activitiesList.append(checkbox.text())
+        if check:
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(activitiesList,self.HandAccessCheckBox.checkState()))
+        else:
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(activitiesList))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
@@ -117,6 +122,18 @@ class Ihm(Ui_MainWindow):
             self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()], self.HandAccessCheckBox.checkState()))
         self.update_affichage_equipements()
 
+    def hand_changement(self):
+        if self.HandAccessCheckBox.checkState():
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_acces_hand(self.equipmentSet,False))
+        else:
+            activitiesList = []
+            for checkbox in self.checkBoxs:
+                if checkbox.checkState():
+                    activitiesList.append(checkbox.text())
+            self.equipmentSet = self.monFiltre.filtrer_set_par_acti(activitiesList)
+        self.update_affichage_equipements()
+
+
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre"""
         self.statusbar.showMessage("Recherche ...")  #TODO n'a pas l'air de marcher ...
@@ -131,6 +148,9 @@ class Ihm(Ui_MainWindow):
             #self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt)  #TODO faire un truc plus joli (avec une icone)
             self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', 'AAZZDD')
             #self.get_stopArea(coords[0], coords[1])
+        coords = self.locator.find(txt,txt)
+        if coords != None:
+            self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1],'vous_etes_ici', txt)
         else:
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")
