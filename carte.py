@@ -135,7 +135,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
         # if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
         if not os.path.exists(name):
-            if self.ihm.proxy != '':
+            if self.ihm.proxy != self.manager.proxy().hostName():
                 proxy = QtNetwork.QNetworkProxy()
                 proxy.setType(QtNetwork.QNetworkProxy.DefaultProxy)
                 proxy.setHostName(str(self.ihm.proxy))

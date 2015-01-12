@@ -47,6 +47,8 @@ class GPScoord(QtCore.QObject):
                 if self.ihm.proxy != '':
                     proxyline = 'http://' + str(self.ihm.user) + ":" + str(self.ihm.password) + "@" + str(self.ihm.proxy) + ':' + str(self.ihm.port)
                     self.geolocator.set_proxy(proxyline)
+                else:
+                    self.geolocator.set_proxy(None)
                 self.find(adresse,name,i,j)
             else:
                 print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', name)
