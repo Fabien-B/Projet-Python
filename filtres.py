@@ -15,7 +15,6 @@ class Filtre():
         for equip in equiplist:
             self.allEquipSet.add(equip)
 
-
     def filtrer_set_par_acti(self,actiNames,accesHand = False):
         tempSet = set()
         for equip in self.allEquipSet:
@@ -34,7 +33,6 @@ class Filtre():
             if not equip.accesHand:  #TODO supprimer le 'not' pour que ce soit juste (plus facile pour débugger)
                 tempSet.add(equip)
         return tempSet
-
 
     def printkey(self):
         for key in self.activitiesSet:

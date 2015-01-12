@@ -111,6 +111,7 @@ class Equipment_Group(point):
             QGraphicsSceneMouseEvent.accept()
             self.thescene.clusterclicked(self)
 
+
 class BackGroundCluster(QtGui.QGraphicsEllipseItem):
 
     def __init__(self, rayon, the_cluster, scene):
