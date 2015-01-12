@@ -45,6 +45,7 @@ class Ihm(Ui_MainWindow):
         self.ButtonDSelectAll.clicked.connect(lambda : self.update_checkbox(True))
         self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
         self.listActivities.itemClicked.connect(self.itemClicked)
+        self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
 #        self.update_affichage_equipements()
@@ -116,6 +117,18 @@ class Ihm(Ui_MainWindow):
             self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()],self.HandAccessCheckBox.checkState()))
         self.update_affichage_equipements()
 
+    def hand_changement(self):
+        if self.HandAccessCheckBox.checkState():
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_acces_hand(self.equipmentSet,False))
+        else:
+            activitiesList = []
+            for checkbox in self.checkBoxs:
+                if checkbox.checkState():
+                    activitiesList.append(checkbox.text())
+            self.equipmentSet = self.monFiltre.filtrer_set_par_acti(activitiesList)
+        self.update_affichage_equipements()
+
+
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre"""
         self.statusbar.showMessage("Recherche ...") #TODO n'a pas l'air de marcher ...
@@ -123,13 +136,8 @@ class Ihm(Ui_MainWindow):
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
         coords = self.locator.find(txt,txt)
-
-        # if self.arret != None:
-        #     self.scene.removeItem(self.arret)
         if coords != None:
-            #self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt) #TODO faire un truc plus joli (avec une icone)
-            self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1],'vous_etes_ici', 'AAZZDD')
-            #self.get_stopArea(coords[0], coords[1])
+            self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1],'vous_etes_ici', txt)
         else:
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")

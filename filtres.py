@@ -28,11 +28,15 @@ class Filtre():
             return self.filtrer_acces_hand(tempSet)
         return tempSet
 
-    def filtrer_acces_hand(self,equipSet):
+    def filtrer_acces_hand(self,equipSet,state = True):     #state = True <=> renvoie les eqs AVEC acces hand, state = False <=> renvoie ceux SANS acces hand
         tempSet = set()
         for equip in equipSet:
-            if not equip.accesHand:  #TODO supprimer le 'not' pour que ce soit juste (plus facile pour débugger)
-                tempSet.add(equip)
+            if state:
+                if equip.accesHand:
+                    tempSet.add(equip)
+            else:
+                if not equip.accesHand:
+                    tempSet.add(equip)
         return tempSet
 
 
