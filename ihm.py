@@ -88,14 +88,16 @@ class Ihm(Ui_MainWindow):
         self.update_affichage_equipements()
 
     def select_deselect_all(self):
-        check = not self.checkBoxs[0].checkState()
+        check = 2 if not self.checkBoxs[0].checkState() else 0
+        activitiesList = []
         for checkbox in self.checkBoxs:
-            if checkbox.isHidden() is False and check is True:
-                checkbox.setCheckState(Qt.Checked)
-                self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()],self.HandAccessCheckBox.checkState()))
-            if checkbox.isHidden() is False and check is False:
-                checkbox.setCheckState(Qt.Unchecked)
-                self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
+            if not checkbox.isHidden():
+                checkbox.setCheckState(check)
+                activitiesList.append(checkbox.text())
+        if check:
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(activitiesList,self.HandAccessCheckBox.checkState()))
+        else:
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(activitiesList))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
