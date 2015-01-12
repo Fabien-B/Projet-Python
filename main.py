@@ -12,19 +12,18 @@ FILENAME = 'data/ES2011.xls'
 
 class Importeur(QtCore.QObject):
     cache_charging_signal = QtCore.pyqtSignal(list)
-    def __init__(self,appli):
+
+    def __init__(self, appli):
         QtCore.QObject.__init__(self)
-        self.appli=appli
+        self.appli = appli
         self.my_cache = Cache_use.Cache('.cache/')
         self.my_locator = Get_GPS.GPScoord(self.my_cache)
 
-
-    def charging(self,equipmentList):
+    def charging(self, equipmentList):
         self.appli.monFiltre.create_set(equipmentList)
         self.appli.monFiltre.equip_set(equipmentList)
         self.appli.addcheckbox()
         #self.appli.splitter.adjustSize()
-
 
     def get_equipment(self):
         if not self.my_cache.isalive('equipmentList.cache'):
@@ -41,8 +40,6 @@ class Importeur(QtCore.QObject):
             self.charging(equipmentList)
 
 
-
-
 def run():
     fenetre = QtGui.QMainWindow()
     appli = ihm.Ihm(fenetre)
@@ -50,15 +47,12 @@ def run():
     appli.built()
     fenetre.show()
 
-    monImporteur=Importeur(appli)
+    monImporteur = Importeur(appli)
     monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
     monImporteur.cache_charging_signal.connect(appli.notif_chrgmt_equip)
-    threadImportation = threading.Thread(None,monImporteur.get_equipment)
+    threadImportation = threading.Thread(None, monImporteur.get_equipment)
     threadImportation.start()
-    return (app.exec_(),monImporteur.my_locator)
-
-
-
+    return (app.exec_(), monImporteur.my_locator)
 
 if __name__ == '__main__':
 

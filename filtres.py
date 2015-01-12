@@ -45,7 +45,6 @@ class Filtre():
                     tempSet.add(equip)
         return tempSet
 
-
     def printkey(self):
         for key in self.activitiesSet:
             print(key)
