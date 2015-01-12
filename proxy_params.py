@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'proxy_params.ui'
 #
-# Created: Fri Jan  9 21:34:22 2015
+# Created: Mon Jan 12 17:17:53 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -93,7 +93,7 @@ class Ui_Proxy(object):
 
     def retranslateUi(self, Proxy):
         Proxy.setWindowTitle(_translate("Proxy", "Paramètres du Proxy", None))
-        self.label.setText(_translate("Proxy", "Proxy : ", None))
+        self.label.setText(_translate("Proxy", "<html><head/><body>Proxy :<br><span style=\" font-size:6pt; font-style:italic;\">Champ vide : Pas de proxy<br></span><span style=\" font-size:6pt; font-style:italic;\">Ex : </span><span style=\" font-size:6pt;\"/><span style=\" font-size:6pt; font-style:italic;\">webcache-enseignement.interne.enac</span></body></html>", None))
         self.label_3.setText(_translate("Proxy", "Port : ", None))
         self.label_2.setText(_translate("Proxy", "Utilisateur : ", None))
         self.label_4.setText(_translate("Proxy", "Mot de passe : ", None))
