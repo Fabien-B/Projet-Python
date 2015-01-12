@@ -8,11 +8,14 @@ TILEDIM = 256
 class myQGraphicsView(QtGui.QGraphicsView):
     def __init__(self, parent):
         super(myQGraphicsView, self).__init__(parent)
-        self.ZOOM = 14 #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
+        self.ZOOM = 14  #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
         self.cur_zoom = 1
         self.x = 0
         self.y = 0
         self.setTransformationAnchor(2)
+        # en attendant que le zoom fonctionne bien
+        self.latitude = 43.564995
+        self.longitude = 1.481650
 
     def FinishInit(self):
         """fini l'initialisation """
@@ -119,8 +122,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resx, resy) = self.get_tile_nbs(lat, lon)
         #nbw = int(self.width() / TILEDIM) + 1
         #nbh = int(self.height() / TILEDIM) + 1
-        nbw = 10
-        nbh = 10
+        nbw = 5
+        nbh = 5
         biw = int(-nbw / 2)
         bih = int(-nbh / 2)
         for i in range(biw, nbw + biw):
@@ -130,26 +133,26 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def add_tile(self, X, Y):
         """charge une tuile depuis le dique si elle existe, ou va la télécharger"""
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
-        if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
-            if not os.path.exists(name):
-                if self.ihm.proxy != '':
-                    proxy = QtNetwork.QNetworkProxy()
-                    proxy.setType(QtNetwork.QNetworkProxy.DefaultProxy)
-                    proxy.setHostName(str(self.ihm.proxy))
-                    proxy.setPort(int(self.ihm.port))
-                    proxy.setUser(str(self.ihm.user))
-                    proxy.setPassword(self.ihm.password)
-                    self.manager.setProxy(proxy)
-                path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
-                url = QtCore.QUrl(path)
-                request = QtNetwork.QNetworkRequest()
-                request.setUrl(url)
-                print(url, self.ZOOM, X, Y, self.manager.proxy().hostName())
-                request.setRawHeader('User-Agent', 'Une belle tuile')
-                request.setAttribute(QtNetwork.QNetworkRequest.User, (X, Y, self.ZOOM))
-                self.manager.get(request)
-            else:
-                self.load_tile_from_disk((X, Y, self.ZOOM))
+        # if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
+        if not os.path.exists(name):
+            if self.ihm.proxy != '':
+                proxy = QtNetwork.QNetworkProxy()
+                proxy.setType(QtNetwork.QNetworkProxy.DefaultProxy)
+                proxy.setHostName(str(self.ihm.proxy))
+                proxy.setPort(int(self.ihm.port))
+                proxy.setUser(str(self.ihm.user))
+                proxy.setPassword(self.ihm.password)
+                self.manager.setProxy(proxy)
+            path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
+            url = QtCore.QUrl(path)
+            request = QtNetwork.QNetworkRequest()
+            request.setUrl(url)
+            print(url, self.ZOOM, X, Y, self.manager.proxy().hostName())
+            request.setRawHeader('User-Agent', 'Une belle tuile')
+            request.setAttribute(QtNetwork.QNetworkRequest.User, (X, Y, self.ZOOM))
+            self.manager.get(request)
+        else:
+            self.load_tile_from_disk((X, Y, self.ZOOM))
 
     def gererDonnees(self, reply):
         """réceptionne l'image téléchargée, l'enregistre sur le disque, puis l'affiche"""
@@ -172,9 +175,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         img.load(name)
         if self.ZOOM not in self.m_tilePixmaps:
             self.m_tilePixmaps[self.ZOOM]={}
-        self.m_tilePixmaps[self.ZOOM][cle] = [QtGui.QPixmap.fromImage(img),0]
+        self.m_tilePixmaps[self.ZOOM][cle] = [QtGui.QPixmap.fromImage(img), 0]
         self.afficher_tuile(cle)
-
 
     def afficher_tuile(self, cle):
         """ajoute une tuile à la scène"""
@@ -184,13 +186,36 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.m_tilePixmaps[ZOOM][cle][1] = 1
             tuile.setPos(X*TILEDIM, Y*TILEDIM)
 
-
     def update_tiles(self):
         """affiche les tuiles nécessaires, en les prenant depuis la mémoire, le disque ou internet"""
         if self.ZOOM not in self.m_tilePixmaps:
-            self.m_tilePixmaps[self.ZOOM]={}
-        pos1=self.mapToScene(0,0)
-        pos2=self.mapToScene(self.width(),self.height())
+            self.m_tilePixmaps[self.ZOOM] = {}
+        pos1 = self.mapToScene(0, 0)
+        pos2 = self.mapToScene(self.width(), self.height())
+        X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-14))
+        X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-14))
+        Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-14))
+        Y2 = int(pos2.y()/TILEDIM*2**(self.ZOOM-14))
+        for i in range(X1-2, X2+3):
+            for j in range(Y1-2, Y2+3):
+                cle = (i, j, self.ZOOM)
+                if cle not in self.m_tilePixmaps[self.ZOOM]:    #si la cle n'est pas en mémoire, on essaie de la charger du disque, ou on la télecharge
+                    self.add_tile(i, j)
+                else:
+                    self.afficher_tuile(cle)    #sinon (la clé est en mémoire): on l'affiche (controle si déja dans la scene dans la fonction)
+
+    def zoommodif(self):
+        self.ZOOM = 16
+        self.update_tiles()
+        self.zoom(1)
+        self.centerOnPosition(self.latitude,self.longitude)
+
+    def update_tiles2(self):  #ancienne update tiles
+        """affiche les tuiles nécessaires, en les prenant depuis la mémoire, le disque ou internet"""
+        if self.ZOOM not in self.m_tilePixmaps:
+            self.m_tilePixmaps[self.ZOOM] = {}
+        pos1 = self.mapToScene(0, 0)
+        pos2 = self.mapToScene(self.width(), self.height())
         X1 = int(pos1.x()/TILEDIM)
         X2 = int(pos2.x()/TILEDIM)
         Y1 = int(pos1.y()/TILEDIM)

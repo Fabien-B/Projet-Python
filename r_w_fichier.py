@@ -91,8 +91,8 @@ def set_from_file_type(content):
 
 
 def set_from_file_revetement(content):
-    contentList=content.split()
-    revetList=[]
+    contentList = content.split()
+    revetList = []
     for revet in contentList:
         revetList.append(revet.strip(','))
     return revetList
@@ -102,12 +102,12 @@ def set_from_file_size(content):
     terrainList = content.replace('et', '+').split('+')
     terrainSizes = []
     for terrain in terrainList:
-        terrain=terrain.replace('*','x')
-        terrain=terrain.replace('X','x')
-        sizeStr=terrain.split('x')
-        size=[]
+        terrain = terrain.replace('*','x')
+        terrain = terrain.replace('X','x')
+        sizeStr = terrain.split('x')
+        size = []
         for axis in sizeStr:
-            longAxe=axis.strip('m ?')
+            longAxe = axis.strip('m ?')
             if longAxe != '':
                 longAxe = longAxe.replace(',','.')
                 try:
@@ -143,7 +143,7 @@ def set_from_file_vestiaire(content):
     for chaine in nbJA:
         chaine = chaine.strip(' )+')
         chaine = chaine.split('+')
-        nbVest=0
+        nbVest = 0
         for nb in chaine:
             if nb != '':
                 nbVest += int(float(nb))

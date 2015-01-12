@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>248</width>
-          <height>470</height>
+          <width>260</width>
+          <height>495</height>
          </rect>
         </property>
         <property name="toolTip">
@@ -60,6 +60,13 @@
             </layout>
            </item>
            <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string>Zoom</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QLineEdit" name="lineEditFiltresActivities"/>
            </item>
            <item>
@@ -74,8 +81,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>248</width>
-          <height>470</height>
+          <width>260</width>
+          <height>495</height>
          </rect>
         </property>
         <attribute name="label">
@@ -128,8 +135,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>277</width>
-          <height>457</height>
+          <width>260</width>
+          <height>495</height>
          </rect>
         </property>
         <attribute name="label">
@@ -184,7 +191,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>30</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -228,8 +235,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>353</width>
-          <height>748</height>
+          <width>330</width>
+          <height>668</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">

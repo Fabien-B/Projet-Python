@@ -17,11 +17,13 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -39,7 +41,7 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage1 = QtGui.QWidget()
-        self.toolBoxPage1.setGeometry(QtCore.QRect(0, 0, 248, 470))
+        self.toolBoxPage1.setGeometry(QtCore.QRect(0, 0, 260, 495))
         self.toolBoxPage1.setObjectName(_fromUtf8("toolBoxPage1"))
         self.horizontalLayout_9 = QtGui.QHBoxLayout(self.toolBoxPage1)
         self.horizontalLayout_9.setObjectName(_fromUtf8("horizontalLayout_9"))
@@ -51,6 +53,9 @@ class Ui_MainWindow(object):
         self.ButtonDSelectAll.setObjectName(_fromUtf8("ButtonDSelectAll"))
         self.horizontalLayout_2.addWidget(self.ButtonDSelectAll)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.pushButton = QtGui.QPushButton(self.toolBoxPage1)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.verticalLayout.addWidget(self.pushButton)
         self.lineEditFiltresActivities = QtGui.QLineEdit(self.toolBoxPage1)
         self.lineEditFiltresActivities.setObjectName(_fromUtf8("lineEditFiltresActivities"))
         self.verticalLayout.addWidget(self.lineEditFiltresActivities)
@@ -60,7 +65,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addLayout(self.verticalLayout)
         self.toolBox.addItem(self.toolBoxPage1, _fromUtf8(""))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 248, 470))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 260, 495))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -90,7 +95,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 457))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 260, 495))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -114,7 +119,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 897, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 897, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFichier = QtGui.QMenu(self.menubar)
         self.menuFichier.setObjectName(_fromUtf8("menuFichier"))
@@ -136,7 +141,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 353, 748))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 330, 668))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_8 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
@@ -344,6 +349,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAffichage.menuAction())
         self.menubar.addAction(self.menuOutils.menuAction())
 
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -357,6 +363,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.label.setText(_translate("MainWindow", "Rechercher", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Autres filtres", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage3), _translate("MainWindow", "Rechercher une adresse", None))
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage", None))
@@ -386,5 +393,6 @@ class Ui_MainWindow(object):
         self.actionProxy.setText(_translate("MainWindow", "Paramètres de proxy", None))
         self.actionViderCacheDonnees.setText(_translate("MainWindow", "Vider le cache données", None))
         self.actionViderCacheCarte.setText(_translate("MainWindow", "Vider le cache carte", None))
+        self.pushButton.setText(_translate("MainWindow", "Zoom (appuyer 2x)", None))
 
 from carte import myQGraphicsView

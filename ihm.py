@@ -40,6 +40,7 @@ class Ihm(Ui_MainWindow):
             self.port = '8888'
             self.user = ''
         self.password = ''
+        self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand'}
 
     def built(self):
         self.dockWidget_2.hide()
@@ -49,24 +50,25 @@ class Ihm(Ui_MainWindow):
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
-        self.ButtonDSelectAll.clicked.connect(lambda : self.update_checkbox(True))
+        self.ButtonDSelectAll.clicked.connect(self.select_deselect_all)
         self.lineEditFiltresActivities.textEdited.connect(self.update_checkbox)
         self.listActivities.itemClicked.connect(self.itemClicked)
         self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
+        self.pushButton.clicked.connect(self.graphicsView.zoommodif)
 #        self.update_affichage_equipements()
 
     def build_map(self):
         self.scene = Sceneclicked.SceneClickable()
         self.graphicsView.setScene(self.scene)
-        self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag) # allow drag and drop of the view
-        self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag)  # allow drag and drop of the view
+        self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.graphicsView.setRenderHint(QtGui.QPainter.Antialiasing)
         self.graphicsView.FinishInit()
         self.graphicsView.ihm = self
-        self.graphicsView.download(self.latitude,self.longitude)
+        self.graphicsView.download(self.latitude, self.longitude)
         self.connections()
     #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
@@ -81,7 +83,7 @@ class Ihm(Ui_MainWindow):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-    def update_checkbox(self, checkstate = False):
+    def update_checkbox(self):
         txt = self.lineEditFiltresActivities.text()
         liste = []
         for key in self.monFiltre.activitiesSet:
@@ -92,15 +94,19 @@ class Ihm(Ui_MainWindow):
                 checkbox.setHidden(True)
             else:
                 checkbox.setHidden(False)
-        if checkstate is True:
-            check = not self.checkBoxs[0].checkState()
-            for checkbox in self.checkBoxs:
-                if checkbox.isHidden() is False and check is True:
-                    checkbox.setCheckState(Qt.Checked)
-                    self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([checkbox.text()],self.HandAccessCheckBox.checkState()))
-                if checkbox.isHidden() is False and check is False:
-                    checkbox.setCheckState(Qt.Unchecked)
-                    self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti([checkbox.text()]))
+        self.update_affichage_equipements()
+
+    def select_deselect_all(self):
+        check = 2 if not self.checkBoxs[0].checkState() else 0
+        activitiesList = []
+        for checkbox in self.checkBoxs:
+            if not checkbox.isHidden():
+                checkbox.setCheckState(check)
+                activitiesList.append(checkbox.text())
+        if check:
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList,self.HandAccessCheckBox.checkState()))
+        else:
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
@@ -114,14 +120,14 @@ class Ihm(Ui_MainWindow):
     def itemClicked(self, item):
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
-            eqASupprimer = self.monFiltre.filtrer_set_par_acti([item.text()])
+            eqASupprimer = self.monFiltre.filtrer_set_par_acti('activities',[item.text()])
             for checkbox in self.checkBoxs:
                 if checkbox.checkState() == Qt.Checked:
-                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti([checkbox.text()])
+                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti('activities',[checkbox.text()])
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()],self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti('activities',[item.text()],self.HandAccessCheckBox.checkState()))
         self.update_affichage_equipements()
 
     def hand_changement(self):
@@ -132,16 +138,24 @@ class Ihm(Ui_MainWindow):
             for checkbox in self.checkBoxs:
                 if checkbox.checkState():
                     activitiesList.append(checkbox.text())
-            self.equipmentSet = self.monFiltre.filtrer_set_par_acti(activitiesList)
+            self.equipmentSet = self.monFiltre.filtrer_set_par_acti('activities',activitiesList)
         self.update_affichage_equipements()
 
 
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre"""
-        self.statusbar.showMessage("Recherche ...") #TODO n'a pas l'air de marcher ...
+        self.statusbar.showMessage("Recherche ...")  #TODO n'a pas l'air de marcher ...
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
+        coords = self.locator.find(txt, txt)
+
+        # if self.arret != None:
+        #     self.scene.removeItem(self.arret)
+        if coords != None:
+            #self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], QtGui.QPen(QtCore.Qt.black, 3), QtCore.Qt.yellow, 20, txt)  #TODO faire un truc plus joli (avec une icone)
+            self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', 'AAZZDD')
+            #self.get_stopArea(coords[0], coords[1])
         coords = self.locator.find(txt,txt)
         if coords != None:
             self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1],'vous_etes_ici', txt)
@@ -150,23 +164,22 @@ class Ihm(Ui_MainWindow):
             self.statusbar.showMessage("adresse non trouvée")
 
     def get_stopArea(self):     #TODO rame trop, à mettre dans un thread
-        self.statusbar.showMessage("Recherche ...") #TODO n'a pas l'air de marcher ...
+        self.statusbar.showMessage("Recherche ...")  #TODO n'a pas l'air de marcher ...
         txt = self.lineEdit.text()
         if self.arret != None:
             self.scene.removeItem(self.arret)
-        coords = self.locator.find(txt,txt)
+        coords = self.locator.find(txt, txt)
         (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0], coords[1])
 
-        self.arret = self.graphicsView.draw_img_point(latArret, lonArret,'arret_transport_en_commun', nomArret)
-
+        self.arret = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
     def notif_chrgmt_equip(self, infos):
-        if infos[0]=='échec':
+        if infos[0] == 'échec':
             self.statusbar.showMessage("Échec: {}       {}/{}".format(infos[1],infos[2],infos[3]),2000)
-        if infos[0]=='cache':
-            self.statusbar.showMessage('Chargement depuis le cache',2000)
+        if infos[0] == 'cache':
+            self.statusbar.showMessage('Chargement depuis le cache', 2000)
         else:
-            self.statusbar.showMessage("Adresse trouvée: {}       {}/{}".format(infos[0],infos[1],infos[2]),2000)
+            self.statusbar.showMessage("Adresse trouvée: {}       {}/{}".format(infos[0], infos[1], infos[2]), 2000)
 
     def connections(self):
         self.scene.clusterisclicked.connect(self.nocover.explode)
@@ -252,7 +265,7 @@ class Ihm(Ui_MainWindow):
         self.dockWidget_2.show()
 
     def afficher_params_proxy(self):
-        self.paramsWindow=params.Dialogue(self)#QtGui.QDialog()
+        self.paramsWindow=params.Dialogue(self)  #QtGui.QDialog()
         dialogParams = proxy_params.Ui_Proxy()
         dialogParams.setupUi(self.paramsWindow)
         self.paramsWindow.dialog=dialogParams
@@ -260,15 +273,14 @@ class Ihm(Ui_MainWindow):
         self.set_default_proxy_params(dialogParams)
         self.paramsWindow.show()
 
-    def regler_proxy(self,infos):
+    def regler_proxy(self, infos):
         self.proxy = infos[0]
         self.port = infos[1]
         self.user = infos[2]
         self.password = infos[3]
         self.proxycache.save(infos[:-1],'proxy')
-        print('proxy:',self.proxy,self.port,self.user,self.password)
-
-    def set_default_proxy_params(self,dialogParams):
+        print('proxy:',self.proxy,self.port,self.user)
+    def set_default_proxy_params(self, dialogParams):
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
