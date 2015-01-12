@@ -23,7 +23,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Proxy : </string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Proxy :&lt;br&gt;&lt;span style=&quot; font-size:6pt; font-style:italic;&quot;&gt;Champ vide : Pas de proxy&lt;br&gt;&lt;/span&gt;&lt;span style=&quot; font-size:6pt; font-style:italic;&quot;&gt;Ex : &lt;/span&gt;&lt;span style=&quot; font-size:6pt;&quot;/&gt;&lt;span style=&quot; font-size:6pt; font-style:italic;&quot;&gt;webcache-enseignement.interne.enac&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -124,6 +124,8 @@
     </widget>
    </item>
   </layout>
+  <zorder>buttonBox</zorder>
+  <zorder>label_5</zorder>
  </widget>
  <resources/>
  <connections>

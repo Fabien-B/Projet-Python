@@ -12,6 +12,7 @@ import Sceneclicked
 import No_More_Horse_Riding as nmhr
 import proxy_params
 import params
+import Cache_use
 
 
 class Ihm(Ui_MainWindow):
@@ -24,15 +25,21 @@ class Ihm(Ui_MainWindow):
         self.checkBoxs = []
         self.arret = None
         self.ptRecherche = None
-        self.locator = Get_GPS.GPScoord(None)
+        self.locator = Get_GPS.GPScoord(None, None)
         self.equipmentSet = set()
         self.pointAff = []
         self.nocover = nmhr.No_Covering(self)
         self.monFiltre = filtres.Filtre()
-        self.proxy = '10.2.5.9'
-        self.port = '8888'
-        self.user = 'eleve-enac\\'
-        #self.password = 'toto'     #Il vaut sans doute mieux ne pas enregistrer le mot de passe
+        self.proxycache = Cache_use.Cache('.cache/proxy/')
+        if self.proxycache.isalive('proxy'):
+            self.proxy = self.proxycache.rescue('proxy')[0]
+            self.port = self.proxycache.rescue('proxy')[1]
+            self.user = self.proxycache.rescue('proxy')[2]
+        else:
+            self.proxy = ''
+            self.port = '8888'
+            self.user = ''
+        self.password = ''
 
     def built(self):
         self.dockWidget_2.hide()
@@ -258,6 +265,7 @@ class Ihm(Ui_MainWindow):
         self.port = infos[1]
         self.user = infos[2]
         self.password = infos[3]
+        self.proxycache.save(infos[:-1],'proxy')
         print('proxy:',self.proxy,self.port,self.user,self.password)
 
     def set_default_proxy_params(self,dialogParams):

@@ -16,7 +16,7 @@ class Importeur(QtCore.QObject):
         QtCore.QObject.__init__(self)
         self.appli=appli
         self.my_cache = Cache_use.Cache('.cache/')
-        self.my_locator = Get_GPS.GPScoord(self.my_cache)
+        self.my_locator = Get_GPS.GPScoord(self.my_cache, appli)
 
 
     def charging(self,equipmentList):
@@ -53,7 +53,7 @@ def run():
     monImporteur=Importeur(appli)
     monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
     monImporteur.cache_charging_signal.connect(appli.notif_chrgmt_equip)
-    threadImportation = threading.Thread(None,monImporteur.get_equipment)
+    threadImportation = threading.Thread(target= monImporteur.get_equipment)
     threadImportation.start()
     return (app.exec_(),monImporteur.my_locator)
 

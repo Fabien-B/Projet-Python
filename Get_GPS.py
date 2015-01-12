@@ -9,12 +9,13 @@ class GPScoord(QtCore.QObject):
     """
     succesSignal = QtCore.pyqtSignal(list)
 
-    def __init__(self, cache):
+    def __init__(self, cache, appli):
         """
         Set the locator and initialize the number of successes and the number of tries
         """
         QtCore.QObject.__init__(self)
         self.geolocator = pygeocoder.Geocoder()
+        self.ihm = appli
         self.cache = cache
         self.success = 0
         self.timestried = 0
@@ -26,6 +27,7 @@ class GPScoord(QtCore.QObject):
         """
         Try 20 times to get the GPS coordinates from the geolocator with addresses
         """
+
         try:
             self.timestried += 1
             print('Getting coordinates for', name)
@@ -41,7 +43,10 @@ class GPScoord(QtCore.QObject):
 
         except:
             if self.timestried <= 20:
-                print('Error : retrying')
+                print('Error : refreshing proxy and retrying')
+                if self.ihm.proxy != '':
+                    proxyline = 'http://' + str(self.ihm.user) + ":" + str(self.ihm.password) + "@" + str(self.ihm.proxy) + ':' + str(self.ihm.port)
+                    self.geolocator.set_proxy(proxyline)
                 self.find(adresse,name,i,j)
             else:
                 print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', name)

@@ -132,11 +132,19 @@ class myQGraphicsView(QtGui.QGraphicsView):
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
         if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
             if not os.path.exists(name):
+                if self.ihm.proxy != '':
+                    proxy = QtNetwork.QNetworkProxy()
+                    proxy.setType(QtNetwork.QNetworkProxy.DefaultProxy)
+                    proxy.setHostName(str(self.ihm.proxy))
+                    proxy.setPort(int(self.ihm.port))
+                    proxy.setUser(str(self.ihm.user))
+                    proxy.setPassword(self.ihm.password)
+                    self.manager.setProxy(proxy)
                 path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
                 url = QtCore.QUrl(path)
                 request = QtNetwork.QNetworkRequest()
                 request.setUrl(url)
-                print(url, self.ZOOM, X, Y)
+                print(url, self.ZOOM, X, Y, self.manager.proxy().hostName())
                 request.setRawHeader('User-Agent', 'Une belle tuile')
                 request.setAttribute(QtNetwork.QNetworkRequest.User, (X, Y, self.ZOOM))
                 self.manager.get(request)
