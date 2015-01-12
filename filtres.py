@@ -16,12 +16,18 @@ class Filtre():
             self.allEquipSet.add(equip)
 
 
-    def filtrer_set_par_acti(self,actiNames,accesHand = False):
+    def filtrer_set_par_acti(self,param,paramNames,accesHand = False):
         tempSet = set()
         for equip in self.allEquipSet:
-            ActiEquipSet = set(equip.activities.keys())
-            ActiRequestSet = set(actiNames)
-            if ActiRequestSet & ActiEquipSet != set():
+            paramSet = set()
+            if param == 'activities':
+                paramSet = set(equip.__dict__[param])
+            elif param == 'revetement':
+                paramSet = set(equip.param)
+            else:
+                paramSet = set([equip.__dict__[param]])
+            ActiRequestSet = set(paramNames)
+            if ActiRequestSet & paramSet != set():
                 tempSet.add(equip)
         if accesHand:
             print('Acces Hand')

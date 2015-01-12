@@ -32,6 +32,7 @@ class Ihm(Ui_MainWindow):
         self.proxy = '10.2.5.9'
         self.port = '8888'
         self.user = 'eleve-enac\\'
+        self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand'}
         #self.password = 'toto'     #Il vaut sans doute mieux ne pas enregistrer le mot de passe
 
     def built(self):
@@ -95,9 +96,9 @@ class Ihm(Ui_MainWindow):
                 checkbox.setCheckState(check)
                 activitiesList.append(checkbox.text())
         if check:
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti(activitiesList,self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList,self.HandAccessCheckBox.checkState()))
         else:
-            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti(activitiesList))
+            self.equipmentSet.difference_update(self.monFiltre.filtrer_set_par_acti('activities',activitiesList))
         self.update_affichage_equipements()
 
     def addcheckbox(self):
@@ -111,14 +112,14 @@ class Ihm(Ui_MainWindow):
     def itemClicked(self, item):
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
-            eqASupprimer = self.monFiltre.filtrer_set_par_acti([item.text()])
+            eqASupprimer = self.monFiltre.filtrer_set_par_acti('activities',[item.text()])
             for checkbox in self.checkBoxs:
                 if checkbox.checkState() == Qt.Checked:
-                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti([checkbox.text()])
+                    eqASupprimer -= self.monFiltre.filtrer_set_par_acti('activities',[checkbox.text()])
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti([item.text()],self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.monFiltre.filtrer_set_par_acti('activities',[item.text()],self.HandAccessCheckBox.checkState()))
         self.update_affichage_equipements()
 
     def hand_changement(self):
@@ -129,7 +130,7 @@ class Ihm(Ui_MainWindow):
             for checkbox in self.checkBoxs:
                 if checkbox.checkState():
                     activitiesList.append(checkbox.text())
-            self.equipmentSet = self.monFiltre.filtrer_set_par_acti(activitiesList)
+            self.equipmentSet = self.monFiltre.filtrer_set_par_acti('activities',activitiesList)
         self.update_affichage_equipements()
 
 
