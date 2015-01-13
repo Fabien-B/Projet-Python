@@ -6,7 +6,7 @@ class Filtre(QtCore.QObject):
 
     updateSignal = QtCore.pyqtSignal()
 
-    def __init__(self, tabWidget,equipmentSet,pointAff,nocover, graphicsView, scene):
+    def __init__(self, tabWidget,equipmentSet,pointAff):
         super(Filtre,self).__init__()
         self.activitiesSet = set()
         self.quartierSet = set()
@@ -18,9 +18,6 @@ class Filtre(QtCore.QObject):
 
         self.equipmentSet = equipmentSet
         self.pointAff = pointAff
-        self.nocover = nocover
-        self.graphicsView = graphicsView
-        self.scene = scene
 
         self.tabWidget = tabWidget
         self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand'}
@@ -48,10 +45,12 @@ class Filtre(QtCore.QObject):
         self.verticalLayout.addWidget(self.HandAccessCheckBox)
         self.selectAllSecondFiltreButton.setText("Tout (dé)sélectionner")
         self.HandAccessCheckBox.setText("Accès Handicapés")
-
-        self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.changer_filtre)
+        self.selectAllSecondFiltreButton.clicked.connect(self.select_deselect_all)
+        self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
+        self.lineEditFiltre.textEdited.connect(self.update_checkbox)
+        #self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.changer_filtre)
+        self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.add_checkboxs)
         self.add_combo_items()
-        
 
     def create_set(self, equiplist):
         for equip in equiplist:
@@ -106,51 +105,51 @@ class Filtre(QtCore.QObject):
         print('nombre clé :', len(self.activitiesSet))
 
 
-    def update_checkbox(self,concernedList, txt):
+    def update_checkbox(self, txt):
         liste = []
-        paramSet = concernedList.item(0).param + 'Set'
+        paramSet = self.listWidget.item(0).param + 'Set'
         for key in self.__dict__[paramSet]:
             if txt.capitalize() in key:
                 liste.append(key)
         print(liste)
-        for i in range(concernedList.count()):
-                checkbox = concernedList.item(i)
+        for i in range(self.listWidget.count()):
+                checkbox = self.listWidget.item(i)
                 if checkbox.text() not in liste:
                     checkbox.setHidden(True)
                 else:
                     checkbox.setHidden(False)
         self.updateSignal.emit()
-        #self.update_affichage_equipements()
 
-    def select_deselect_all(self,concernedList):
-        check = 2 if not concernedList.item(0).checkState() else 0
-        param = concernedList.item(0).param
-        activitiesList = []
-        for i in range(concernedList.count()):
-                checkbox = concernedList.item(i)
+    def select_deselect_all(self):
+        check = 2 if not self.listWidget.item(0).checkState() else 0
+        param = self.listWidget.item(0).param
+        paramList = []
+        for i in range(self.listWidget.count()):
+                checkbox = self.listWidget.item(i)
                 if not checkbox.isHidden():
                     checkbox.setCheckState(check)
-                    activitiesList.append(checkbox.text())
+                    paramList.append(checkbox.text())
         if check:
-            self.equipmentSet.update(self.filtrer_set_par_acti(param,activitiesList,self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList,self.HandAccessCheckBox.checkState()))
         else:
-            self.equipmentSet.difference_update(self.filtrer_set_par_acti(param,activitiesList))
-        self.update_affichage_equipements()
+            self.equipmentSet.difference_update(self.filtrer_set_par_acti(param,paramList))
+        self.updateSignal.emit()
 
-    def add_checkboxs(self,listView,param):
+    def add_checkboxs(self,txt):
+        print('taaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        param = str(self.attributsNames[txt])
         paramSet = param + 'Set'
-        listView.clear()
+        self.listWidget.clear()
         for name in sorted(self.__dict__[paramSet]):
             name = str(name)
             if name == '999':
                 name = 'Non renseigné'
-            lwItem = myListWidgetItem(name, listView)
+            lwItem = myListWidgetItem(name, self.listWidget)
             lwItem.param = param
             lwItem.setFlags(Qt.ItemIsEnabled)
             lwItem.setCheckState(Qt.Unchecked)
 
     def add_combo_items(self):
-        print('eeeee')
         for key in equipement.Equipment().__dict__:
             if key in self.attributsNames.values():
                 for cle in self.attributsNames:
@@ -171,35 +170,26 @@ class Filtre(QtCore.QObject):
         else:
             item.setCheckState(Qt.Checked)
             self.equipmentSet.update(self.filtrer_set_par_acti(item.param,[item.text()],self.HandAccessCheckBox.checkState()))
-        self.update_affichage_equipements()
+        self.updateSignal.emit()
 
-    def hand_changement(self,concernedList):
+    def hand_changement(self):
         if self.HandAccessCheckBox.checkState():
             self.equipmentSet.difference_update(self.filtrer_acces_hand(self.equipmentSet,False))
         else:
-            param = concernedList.item(0).param
+            param = self.listWidget.item(0).param
             paramList = []
-            for i in range(concernedList.count()):
-                checkbox = concernedList.item(i)
+            for i in range(self.listWidget.count()):
+                checkbox = self.listWidget.item(i)
                 if checkbox.checkState():
                     paramList.append(checkbox.text())
-            self.equipmentSet = self.filtrer_set_par_acti(param,paramList)
-        self.update_affichage_equipements()
+            #self.equipmentSet = self.filtrer_set_par_acti(param,paramList)
+            self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList))
+            print(self.equipmentSet)
+        self.updateSignal.emit()
 
     def changer_filtre(self,txt):
-        self.add_checkboxs(self.listWidget,str(self.attributsNames[txt]))
-        self.selectAllSecondFiltreButton.clicked.connect(lambda : self.select_deselect_all(self.listWidget))
-        self.HandAccessCheckBox.stateChanged.connect(lambda : self.hand_changement(self.listWidget))
-        self.lineEditFiltre.textEdited.connect(lambda  : self.update_checkbox(self.listWidget, self.lineEditFiltre.text()))
-
-    def update_affichage_equipements(self):
-        for point in self.pointAff:
-            if point in self.scene.items():
-                self.scene.removeItem(point)
-        for equip in self.equipmentSet:
-            self.pointAff.append(self.graphicsView.draw_equipment(equip))
-            self.scene.update()
-        self.nocover.cluster(self.pointAff)
+        pass
+#        self.add_checkboxs(str(self.attributsNames[txt]))
 
 
 class myListWidgetItem(QtGui.QListWidgetItem):

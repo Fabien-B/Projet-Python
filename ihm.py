@@ -51,8 +51,8 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
-        self.ajouterFiltreButton.clicked.connect(lambda : filtres.Filtre(self.tabWidget))
-        self.monFiltre = filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff,self.nocover, self.graphicsView, self.scene)
+        self.ajouterFiltreButton.clicked.connect(lambda : filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff))
+        self.monFiltre = filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff)
         self.monFiltre.updateSignal.connect(self.update_affichage_equipements)
 
     def build_map(self):
@@ -75,7 +75,8 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.monFiltre.comboBox.setCurrentIndex(i)
 
     def update_affichage_equipements(self):
-        print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        print('ahahahahah  test ets')
+        print(self.equipmentSet)
         for point in self.pointAff:
             if point in self.scene.items():
                 self.scene.removeItem(point)
@@ -217,7 +218,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
-        #dialogParams.lineEditPassword.setText(self.password)
 
     def vider_cache_donnes(self):
         if os.path.exists('.cache/equipmentList.cache'):
@@ -228,37 +228,3 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             for fichier in os.listdir('.cache_Images/'):
                 path = '.cache_Images/' + fichier
                 os.remove(path)
-
-    # def add_filtre(self):
-    #     self.comboBoxs = []
-    #     self.selectAllSecondFiltreButtons = []
-    #     self.lineEditFiltres = []
-    #     self.listWidgets = []
-    #     self.HandAccessCheckBoxs = []
-    #     self.tabs = []
-    #     self.verticalLayouts = []
-    #
-    #     self.tabs.append(QtGui.QWidget())
-    #     self.tabs[-1].setObjectName("dfhgdh")
-    #     self.tabWidget.addTab(self.tabs[-1], "")
-    #     self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs[-1]),"Autre Filtre")
-    #     self.verticalLayouts.append(QtGui.QVBoxLayout(self.tabs[-1]))
-    #     self.verticalLayouts[-1].setObjectName("verticalLayout")
-    #
-    #     self.comboBoxs.append(QtGui.QComboBox(self.tabs[-1]))
-    #     self.comboBoxs[-1].setObjectName("comboBox")
-    #     self.verticalLayouts[-1].addWidget(self.comboBoxs[-1])
-    #     self.selectAllSecondFiltreButtons.append(QtGui.QPushButton(self.tabs[-1]))
-    #     self.selectAllSecondFiltreButtons[-1].setObjectName("selectAllSecondFiltreButton")
-    #     self.verticalLayouts[-1].addWidget(self.selectAllSecondFiltreButtons[-1])
-    #     self.lineEditFiltres.append(QtGui.QLineEdit(self.tabs[-1]))
-    #     self.lineEditFiltres[-1].setObjectName("lineEditFiltres")
-    #     self.verticalLayouts[-1].addWidget(self.lineEditFiltres[-1])
-    #     self.listWidgets.append(QtGui.QListWidget(self.tabs[-1]))
-    #     self.listWidgets[-1].setObjectName("listWidget")
-    #     self.verticalLayouts[-1].addWidget(self.listWidgets[-1])
-    #     self.HandAccessCheckBoxs.append(QtGui.QCheckBox(self.tabs[-1]))
-    #     self.HandAccessCheckBoxs[-1].setObjectName("HandAccessCheckBox")
-    #     self.verticalLayouts[-1].addWidget(self.HandAccessCheckBoxs[-1])
-    #     self.selectAllSecondFiltreButtons[-1].setText("Tout (dé)sélectionner")
-    #     self.HandAccessCheckBoxs[-1].setText("Accès Handicapés")
