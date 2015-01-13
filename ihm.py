@@ -27,6 +27,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.locator = Get_GPS.GPScoord(None, None)
         self.equipmentSet = set()
         self.pointAff = []
+        self.mesFiltres = []
         self.nocover = nmhr.No_Covering(self)
         self.proxycache = Cache_use.Cache('.cache/proxy/')
         if self.proxycache.isalive('proxy'):
@@ -51,9 +52,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
-        self.ajouterFiltreButton.clicked.connect(lambda : filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff))
-        self.monFiltre = filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff)
-        self.monFiltre.updateSignal.connect(self.update_affichage_equipements)
+        self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
 
     def build_map(self):
         self.scene = Sceneclicked.SceneClickable()
@@ -70,9 +69,17 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
     #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
-    def finish_init_with_datas(self):
-        i = self.monFiltre.comboBox.findText('Activités')
-        self.monFiltre.comboBox.setCurrentIndex(i)
+    def finish_init_with_datas(self,equipmentList):
+        self.equipmentList = equipmentList
+        self.ajouter_filtre()
+
+    def ajouter_filtre(self):
+        self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff))
+        self.mesFiltres[-1].updateSignal.connect(self.update_affichage_equipements)
+        self.mesFiltres[-1].create_set(self.equipmentList)
+        self.mesFiltres[-1].equip_set(self.equipmentList)
+        i = self.mesFiltres[-1].comboBox.findText('Activités')
+        self.mesFiltres[-1].comboBox.setCurrentIndex(i)
 
     def update_affichage_equipements(self):
         print('ahahahahah  test ets')

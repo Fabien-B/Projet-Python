@@ -12,18 +12,13 @@ FILENAME = 'data/ES2011.xls'
 
 class Importeur(QtCore.QObject):
     cache_charging_signal = QtCore.pyqtSignal(list)
+    equipment_import_finish_signal = QtCore.pyqtSignal(list)
 
     def __init__(self, appli):
         QtCore.QObject.__init__(self)
         self.appli = appli
         self.my_cache = Cache_use.Cache('.cache/')
         self.my_locator = Get_GPS.GPScoord(self.my_cache, appli)
-
-    def charging(self, equipmentList):
-        self.appli.monFiltre.create_set(equipmentList)
-        self.appli.monFiltre.equip_set(equipmentList)
-        self.appli.finish_init_with_datas()
-        #self.appli.splitter.adjustSize()
 
     def get_equipment(self):
         if not self.my_cache.isalive('equipmentList.cache'):
@@ -37,7 +32,7 @@ class Importeur(QtCore.QObject):
         equipmentList = self.my_locator.findall(equipmentList)
         #equipmentList = self.my_locator.get_random(equipmentList)
         if equipmentList != None:
-            self.charging(equipmentList)
+            self.equipment_import_finish_signal.emit(equipmentList)
 
 
 def run():
@@ -50,6 +45,7 @@ def run():
     monImporteur = Importeur(appli)
     monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
     monImporteur.cache_charging_signal.connect(appli.notif_chrgmt_equip)
+    monImporteur.equipment_import_finish_signal.connect(appli.finish_init_with_datas)
     threadImportation = threading.Thread(target= monImporteur.get_equipment)
     threadImportation.start()
     return (app.exec_(), monImporteur.my_locator)
