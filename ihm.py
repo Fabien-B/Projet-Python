@@ -25,8 +25,9 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.checkBoxs = []
         self.arret = None
         self.ptRecherche = None
-        self.locator = Get_GPS.GPScoord(None, None)
+        self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
+        self.equipmentlist = []
         self.pointAff = []
         self.nocover = nmhr.No_Covering(self)
         self.monFiltre = filtres.Filtre()
@@ -208,9 +209,11 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
 
     def afficher_inspecteur(self):
         if self.dockWidget_2.isVisible():
+            self.actionInspecteur.setChecked(False)
             self.dockWidget_2.hide()
         else:
             self.dockWidget_2.show()
+            self.actionInspecteur.setChecked(True)
 
     def fill_inspector(self, equipoint):
         """Met à jour l'inspecteur de droite contenant les informations sur l'équipement cliqué"""
@@ -283,6 +286,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             self.sanitairesLineEdit_9.setText(str(equipoint.equipment.categorie))
         self.sanitairesLineEdit_6.setText(str(equipoint.equipment.coords))
         self.dockWidget_2.show()
+        self.actionInspecteur.setChecked(True)
 
     def afficher_params_proxy(self):
         self.paramsWindow=params.Dialogue(self)  #QtGui.QDialog()
@@ -298,8 +302,11 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.port = infos[1]
         self.user = infos[2]
         self.password = infos[3]
+        print(infos)
+        self.locator.setproxy(infos)
+        self.graphicsView.setproxy(infos)
         self.proxycache.save(infos[:-1],'proxy')
-        print('proxy:',self.proxy,self.port,self.user)
+
     def set_default_proxy_params(self, dialogParams):
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)

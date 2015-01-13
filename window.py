@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Sat Jan 10 12:43:21 2015
+# Created: Tue Jan 13 15:09:17 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,13 +17,11 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -349,7 +347,6 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAffichage.menuAction())
         self.menubar.addAction(self.menuOutils.menuAction())
 
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -357,13 +354,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.toolBoxPage1.setToolTip(_translate("MainWindow", "Filtrer les équipements par activités", None))
         self.ButtonDSelectAll.setText(_translate("MainWindow", "Tout (dé)sélectionner", None))
+        self.pushButton.setText(_translate("MainWindow", "Zoom", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage1), _translate("MainWindow", "Filtrer par activités", None))
         self.HandAccessCheckBox.setText(_translate("MainWindow", "Accès Handicapés", None))
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.label.setText(_translate("MainWindow", "Rechercher", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Autres filtres", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage3), _translate("MainWindow", "Rechercher une adresse", None))
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage", None))
@@ -393,6 +390,5 @@ class Ui_MainWindow(object):
         self.actionProxy.setText(_translate("MainWindow", "Paramètres de proxy", None))
         self.actionViderCacheDonnees.setText(_translate("MainWindow", "Vider le cache données", None))
         self.actionViderCacheCarte.setText(_translate("MainWindow", "Vider le cache carte", None))
-        self.pushButton.setText(_translate("MainWindow", "Zoom (appuyer 2x)", None))
 
 from carte import myQGraphicsView
