@@ -49,10 +49,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
-        self.ButtonDSelectAll.clicked.connect(lambda : self.select_deselect_all(self.listActivities))
-        self.lineEditFiltresActivities.textEdited.connect(lambda  : self.update_checkbox(self.listActivities, self.lineEditFiltresActivities.text()))
-        self.listActivities.itemClicked.connect(self.itemClicked)
-        #self.HandAccessCheckBox.stateChanged.connect(lambda : self.hand_changement(self.listActivities))
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
@@ -75,8 +71,9 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
     # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
 
     def finish_init_with_datas(self):
-        self.add_checkboxs(self.listActivities,'activities')
         self.add_combo_items()
+        i = self.comboBox.findText('Activités')
+        self.comboBox.setCurrentIndex(i)
 
     def update_affichage_equipements(self):
         for point in self.pointAff:
@@ -88,7 +85,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.nocover.cluster(self.pointAff)
 
     def update_checkbox(self,concernedList, txt):
-        #txt = self.lineEditFiltresActivities.text()
         liste = []
         paramSet = concernedList.item(0).param + 'Set'
         for key in self.monFiltre.__dict__[paramSet]:
@@ -119,7 +115,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.update_affichage_equipements()
 
     def add_checkboxs(self,listView,param):
-        print('param ==== ', param)
         paramSet = param + 'Set'
         listView.clear()
         for name in sorted(self.monFiltre.__dict__[paramSet]):
