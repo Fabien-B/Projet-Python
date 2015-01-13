@@ -18,7 +18,7 @@ class Importeur(QtCore.QObject):
         QtCore.QObject.__init__(self)
         self.appli = appli
         self.my_cache = Cache_use.Cache('.cache/')
-        self.my_locator = Get_GPS.GPScoord(self.my_cache, appli)
+        self.my_locator = None
 
     def get_equipment(self):
         if not self.my_cache.isalive('equipmentList.cache'):
@@ -29,10 +29,12 @@ class Importeur(QtCore.QObject):
             self.cache_charging_signal.emit(['cache'])
             equipmentList = self.my_cache.rescue('equipmentList.cache')
 
-        equipmentList = self.my_locator.findall(equipmentList)
-        #equipmentList = self.my_locator.get_random(equipmentList)
+        self.my_locator.cache = self.my_cache
+        equipmentList = self.appli.locator.findall(equipmentList)
+        self.appli.equipmentlist = equipmentList
         if equipmentList != None:
             self.equipment_import_finish_signal.emit(equipmentList)
+        #return
 
 
 def run():
@@ -43,6 +45,7 @@ def run():
     fenetre.show()
 
     monImporteur = Importeur(appli)
+    monImporteur.my_locator = appli.locator
     monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
     monImporteur.cache_charging_signal.connect(appli.notif_chrgmt_equip)
     monImporteur.equipment_import_finish_signal.connect(appli.finish_init_with_datas)

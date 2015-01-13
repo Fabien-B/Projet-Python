@@ -9,17 +9,17 @@ class GPScoord(QtCore.QObject):
     """
     succesSignal = QtCore.pyqtSignal(list)
 
-    def __init__(self, cache, appli):
+    def __init__(self, cache):
         """
         Set the locator and initialize the number of successes and the number of tries
         """
         QtCore.QObject.__init__(self)
         self.geolocator = pygeocoder.Geocoder()
-        self.ihm = appli
         self.cache = cache
         self.success = 0
         self.timestried = 0
         self.arreter = False
+        self.equipmentlist = []
 
 
 
@@ -43,12 +43,7 @@ class GPScoord(QtCore.QObject):
 
         except:
             if self.timestried <= 20:
-                print('Error : refreshing proxy and retrying')
-                if self.ihm.proxy != '':
-                    proxyline = 'http://' + str(self.ihm.user) + ":" + str(self.ihm.password) + "@" + str(self.ihm.proxy) + ':' + str(self.ihm.port)
-                    self.geolocator.set_proxy(proxyline)
-                else:
-                    self.geolocator.set_proxy(None)
+                print('Error : retrying')
                 self.find(adresse,name,i,j)
             else:
                 print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', name)
@@ -57,24 +52,26 @@ class GPScoord(QtCore.QObject):
                 return None
 
 
-    def findall(self, eqpmtlist):
+    def findall(self, eqpmtlist = None):
         """
         Read through the list pu the same coordinate if the adress is the same as before
          else use 'find' on each equipment in the list.
         """
-        for i in range(len(eqpmtlist)):
-            if eqpmtlist[i].coords == None:
-                if eqpmtlist[i].adresse == eqpmtlist[i-1].adresse:
-                    eqpmtlist[i].coords = eqpmtlist[i-1].coords
+        if eqpmtlist != None:
+            self.equipmentlist = eqpmtlist
+        for i in range(len(self.equipmentlist)):
+            if self.equipmentlist[i].coords == None:
+                if self.equipmentlist[i].adresse == self.equipmentlist[i-1].adresse:
+                    self.equipmentlist[i].coords = self.equipmentlist[i-1].coords
                     self.success += 1
                 else:
-                    eqpmtlist[i].coords = self.find(eqpmtlist[i].adresse,eqpmtlist[i].name,i,len(eqpmtlist))
+                    self.equipmentlist[i].coords = self.find(self.equipmentlist[i].adresse,self.equipmentlist[i].name,i,len(self.equipmentlist))
             else:
                 self.success +=1
-            self.cache.save(eqpmtlist, 'equipmentList.cache')
+            self.cache.save(self.equipmentlist, 'equipmentList.cache')
             if self.arreter:
                 return None
-        return eqpmtlist
+        return self.equipmentlist
 
     def get_random(self, eqpmtlist):
          for i in range(len(eqpmtlist)):
@@ -94,6 +91,14 @@ class GPScoord(QtCore.QObject):
                 return None
          return eqpmtlist
 
+    def setproxy(self, list):
+        if list[0] != '':
+            proxyline = 'http://' + str(list[2]) + ":" + str(list[3]) + "@" + str(list[0]) + ':' + str(list[1])
+            self.geolocator.set_proxy(proxyline)
+        else:
+            self.geolocator.set_proxy(None)
+
     def odre_arret(self):
         self.arreter = True
+        return
 

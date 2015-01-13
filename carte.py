@@ -28,7 +28,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.manager.setCache(cache)
         self.manager.finished.connect(self.gererDonnees)
         self.m_tilePixmaps = {}
-        self.ihm = None
 
     def wheelEvent(self, e):
         """Zoom sur la carte """
@@ -135,14 +134,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
         # if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
         if not os.path.exists(name):
-            if self.ihm.proxy != self.manager.proxy().hostName():
-                proxy = QtNetwork.QNetworkProxy()
-                proxy.setType(QtNetwork.QNetworkProxy.DefaultProxy)
-                proxy.setHostName(str(self.ihm.proxy))
-                proxy.setPort(int(self.ihm.port))
-                proxy.setUser(str(self.ihm.user))
-                proxy.setPassword(self.ihm.password)
-                self.manager.setProxy(proxy)
             path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
             url = QtCore.QUrl(path)
             request = QtNetwork.QNetworkRequest()
@@ -227,3 +218,14 @@ class myQGraphicsView(QtGui.QGraphicsView):
                     self.add_tile(i, j)
                 else:
                     self.afficher_tuile(cle)    #sinon (la clé est en mémoire): on l'affiche (controle si déja dans la scene dans la fonction)
+
+    def setproxy(self, list):
+        if list[0] != self.manager.proxy().hostName():
+            proxy = QtNetwork.QNetworkProxy()
+            proxy.setType(QtNetwork.QNetworkProxy.DefaultProxy)
+            proxy.setHostName(str(list[0]))
+            proxy.setPort(int(list[1]))
+            proxy.setUser(str(list[2]))
+            proxy.setPassword(str(list[3]))
+            self.manager.setProxy(proxy)
+            print((self.manager.proxy().hostName(), self.manager.proxy().port(), self.manager.proxy().user(), self.manager.proxy().password()))
