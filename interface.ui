@@ -35,7 +35,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>248</width>
+          <width>256</width>
           <height>468</height>
          </rect>
         </property>
@@ -46,38 +46,8 @@
          <item>
           <widget class="QTabWidget" name="tabWidget">
            <property name="currentIndex">
-            <number>0</number>
+            <number>-1</number>
            </property>
-           <widget class="QWidget" name="tab">
-            <attribute name="title">
-             <string>Filtre 1</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout">
-             <item>
-              <widget class="QComboBox" name="comboBox"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="selectAllSecondFiltreButton">
-               <property name="text">
-                <string>Tout (dé)sélectionner</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEditFiltres"/>
-             </item>
-             <item>
-              <widget class="QListWidget" name="listWidget"/>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="HandAccessCheckBox">
-               <property name="text">
-                <string>Accès Handicapés</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
           </widget>
          </item>
          <item>

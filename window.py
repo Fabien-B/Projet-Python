@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Tue Jan 13 13:11:46 2015
+# Created: Tue Jan 13 14:28:14 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,32 +39,12 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 248, 468))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 256, 468))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.tabWidget = QtGui.QTabWidget(self.toolBoxPage2)
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
-        self.tab = QtGui.QWidget()
-        self.tab.setObjectName(_fromUtf8("tab"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.tab)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.comboBox = QtGui.QComboBox(self.tab)
-        self.comboBox.setObjectName(_fromUtf8("comboBox"))
-        self.verticalLayout.addWidget(self.comboBox)
-        self.selectAllSecondFiltreButton = QtGui.QPushButton(self.tab)
-        self.selectAllSecondFiltreButton.setObjectName(_fromUtf8("selectAllSecondFiltreButton"))
-        self.verticalLayout.addWidget(self.selectAllSecondFiltreButton)
-        self.lineEditFiltres = QtGui.QLineEdit(self.tab)
-        self.lineEditFiltres.setObjectName(_fromUtf8("lineEditFiltres"))
-        self.verticalLayout.addWidget(self.lineEditFiltres)
-        self.listWidget = QtGui.QListWidget(self.tab)
-        self.listWidget.setObjectName(_fromUtf8("listWidget"))
-        self.verticalLayout.addWidget(self.listWidget)
-        self.HandAccessCheckBox = QtGui.QCheckBox(self.tab)
-        self.HandAccessCheckBox.setObjectName(_fromUtf8("HandAccessCheckBox"))
-        self.verticalLayout.addWidget(self.HandAccessCheckBox)
-        self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.verticalLayout_3.addWidget(self.tabWidget)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
@@ -338,14 +318,11 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuOutils.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(-1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-        self.selectAllSecondFiltreButton.setText(_translate("MainWindow", "Tout (dé)sélectionner", None))
-        self.HandAccessCheckBox.setText(_translate("MainWindow", "Accès Handicapés", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Filtre 1", None))
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Filtres", None))

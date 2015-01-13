@@ -23,5 +23,5 @@ class Equipment():
         # Les filtreas doivent modifier cette valeur, et appeler appli.update_affichage_equipements() pour mettre,à jour la carte.
 
     def __repr__(self):
-        text = '  '.join([self.name, self.type, str(self.affiche), str(self.coords)])
+        text = '  '.join([self.name, self.type, str(self.coords)])
         return text
