@@ -53,6 +53,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
         self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.changer_filtre)
+        self.ajouterFiltreButton.clicked.connect(self.add_filtre)
 #        self.update_affichage_equipements()
 
     def build_map(self):
@@ -310,3 +311,37 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             for fichier in os.listdir('.cache_Images/'):
                 path = '.cache_Images/' + fichier
                 os.remove(path)
+
+    def add_filtre(self):
+        self.comboBoxs = []
+        self.selectAllSecondFiltreButtons = []
+        self.lineEditFiltres = []
+        self.listWidgets = []
+        self.HandAccessCheckBoxs = []
+        self.tabs = []
+        self.verticalLayouts = []
+
+        self.tabs.append(QtGui.QWidget())
+        self.tabs[-1].setObjectName("dfhgdh")
+        self.tabWidget.addTab(self.tabs[-1], "")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabs[-1]),"Autre Filtre")
+        self.verticalLayouts.append(QtGui.QVBoxLayout(self.tabs[-1]))
+        self.verticalLayouts[-1].setObjectName("verticalLayout")
+
+        self.comboBoxs.append(QtGui.QComboBox(self.tabs[-1]))
+        self.comboBoxs[-1].setObjectName("comboBox")
+        self.verticalLayouts[-1].addWidget(self.comboBoxs[-1])
+        self.selectAllSecondFiltreButtons.append(QtGui.QPushButton(self.tabs[-1]))
+        self.selectAllSecondFiltreButtons[-1].setObjectName("selectAllSecondFiltreButton")
+        self.verticalLayouts[-1].addWidget(self.selectAllSecondFiltreButtons[-1])
+        self.lineEditFiltres.append(QtGui.QLineEdit(self.tabs[-1]))
+        self.lineEditFiltres[-1].setObjectName("lineEditFiltres")
+        self.verticalLayouts[-1].addWidget(self.lineEditFiltres[-1])
+        self.listWidgets.append(QtGui.QListWidget(self.tabs[-1]))
+        self.listWidgets[-1].setObjectName("listWidget")
+        self.verticalLayouts[-1].addWidget(self.listWidgets[-1])
+        self.HandAccessCheckBoxs.append(QtGui.QCheckBox(self.tabs[-1]))
+        self.HandAccessCheckBoxs[-1].setObjectName("HandAccessCheckBox")
+        self.verticalLayouts[-1].addWidget(self.HandAccessCheckBoxs[-1])
+        self.selectAllSecondFiltreButtons[-1].setText("Tout (dé)sélectionner")
+        self.HandAccessCheckBoxs[-1].setText("Accès Handicapés")

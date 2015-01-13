@@ -44,31 +44,41 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QCheckBox" name="HandAccessCheckBox">
-           <property name="text">
-            <string>Accès Handicapés</string>
+          <widget class="QTabWidget" name="tabWidget">
+           <property name="currentIndex">
+            <number>0</number>
            </property>
+           <widget class="QWidget" name="tab">
+            <attribute name="title">
+             <string>Filtre 1</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QComboBox" name="comboBox"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="selectAllSecondFiltreButton">
+               <property name="text">
+                <string>Tout (dé)sélectionner</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditFiltres"/>
+             </item>
+             <item>
+              <widget class="QListWidget" name="listWidget"/>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="HandAccessCheckBox">
+               <property name="text">
+                <string>Accès Handicapés</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QComboBox" name="comboBox"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="selectAllSecondFiltreButton">
-             <property name="text">
-              <string>Tout (dé)sélectionner</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEditFiltres"/>
-           </item>
-           <item>
-            <widget class="QListWidget" name="listWidget"/>
-           </item>
-          </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
