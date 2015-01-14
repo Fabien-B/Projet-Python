@@ -2,6 +2,7 @@ import pickle
 import os
 import sys
 
+
 class Cache():
     def __init__(self, path):
         self.path = path
@@ -9,6 +10,7 @@ class Cache():
             os.makedirs(path)
 
     def save(self, obj, fle):
+        """Puts the data into the cache"""
         try:
             with open(str(self.path)+str(fle), 'w+b') as f:
                 pickle.dump(obj, f)
@@ -21,6 +23,7 @@ class Cache():
 
 
     def rescue(self, fle):
+        """Gets the data from the cache"""
         try:
             with open(str(self.path)+str(fle), 'rb') as f:
                 return pickle.load(f)
@@ -31,6 +34,7 @@ class Cache():
             raise
 
     def erase(self, fle):
+        """Deletes the cache"""
         try:
             os.remove(str(self.path)+str(fle))
         except FileNotFoundError:
@@ -40,6 +44,7 @@ class Cache():
             raise
 
     def isempty(self):
+        """Test to know if the cache is empty or not"""
         if not os.path.exists(self.path) or not os.listdir(self.path):
             return True
         else:

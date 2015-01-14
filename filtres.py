@@ -62,6 +62,7 @@ class Filtre(QtCore.QObject):
 
 
     def create_set(self, equiplist):
+        """Récupère les activités, quartier, revêtement et type des équipements"""
         for equip in equiplist:
             if equip.activities is not None:
                 for key in equip.activities:
@@ -80,10 +81,10 @@ class Filtre(QtCore.QObject):
             self.allEquipSet.add(equip)
 
 
-    def filtrer_set_par_acti(self,param,paramNames,accesHand = False):
+    def filtrer_set_par_acti(self,param,paramNames):
+        """Regarde le critère de filtrage"""
         tempSet = set()
         for equip in self.allEquipSet:
-            paramSet = set()
             if param == 'activities':
                 paramSet = set(equip.__dict__[param])
             elif param == 'revetement':
@@ -93,9 +94,6 @@ class Filtre(QtCore.QObject):
             ActiRequestSet = set(paramNames)
             if ActiRequestSet & paramSet != set():
                 tempSet.add(equip)
-        if accesHand:
-            print('Acces Hand')
-            return self.filtrer_acces_hand(tempSet)
         return tempSet
 
     def printkey(self):
@@ -105,6 +103,7 @@ class Filtre(QtCore.QObject):
 
 
     def update_checkbox(self, txt):
+        """Ajoute les équipements correspondant au filtre demandé à la liste à afficher, cache ceux qui ne correspondent pas"""
         liste = []
         paramSet = self.listWidget.item(0).param + 'Set'
         for key in self.__dict__[paramSet]:
@@ -119,21 +118,26 @@ class Filtre(QtCore.QObject):
         self.updateSignal.emit()
 
     def select_deselect_all(self):
-        check = 2 if not self.listWidget.item(0).checkState() else 0
-        param = self.listWidget.item(0).param
-        paramList = []
-        for i in range(self.listWidget.count()):
-                checkbox = self.listWidget.item(i)
-                if not checkbox.isHidden():
-                    checkbox.setCheckState(check)
-                    paramList.append(checkbox.text())
-        if check:
-            self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList))
-        else:
-            self.equipmentSet.difference_update(self.filtrer_set_par_acti(param,paramList))
-        self.updateSignal.emit()
+        """Selectionne tous les équipements présents dans le widget"""
+        try:
+            check = 2 if not self.listWidget.item(0).checkState() else 0
+            param = self.listWidget.item(0).param
+            paramList = []
+            for i in range(self.listWidget.count()):
+                    checkbox = self.listWidget.item(i)
+                    if not checkbox.isHidden():
+                        checkbox.setCheckState(check)
+                        paramList.append(checkbox.text())
+            if check:
+                self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList))
+            else:
+                self.equipmentSet.difference_update(self.filtrer_set_par_acti(param,paramList))
+            self.updateSignal.emit()
+        except AttributeError:
+            print('sélectionnez un paramètre différent')
 
     def add_checkboxs(self,txt):
+        """Ajoute les checkboxes souhaitées à la listwidget"""
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),txt)
         param = str(self.attributsNames[txt])
         paramSet = param + 'Set'
