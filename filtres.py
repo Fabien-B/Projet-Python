@@ -62,6 +62,7 @@ class Filtre(QtCore.QObject):
 
 
     def create_set(self, equiplist):
+        """Récupère les activités, quartier, revêtement et type des équipements"""
         for equip in equiplist:
             if equip.activities is not None:
                 for key in equip.activities:
@@ -81,6 +82,7 @@ class Filtre(QtCore.QObject):
 
 
     def filtrer_set_par_acti(self,param,paramNames,accesHand = False):
+        """Regarde le critère de filtrage"""
         tempSet = set()
         for equip in self.allEquipSet:
             paramSet = set()
@@ -105,6 +107,7 @@ class Filtre(QtCore.QObject):
 
 
     def update_checkbox(self, txt):
+        """Ajoute les équipements correspondant au filtre demandé à la liste à afficher, cache ceux qui ne correspondent pas"""
         liste = []
         paramSet = self.listWidget.item(0).param + 'Set'
         for key in self.__dict__[paramSet]:
@@ -119,6 +122,7 @@ class Filtre(QtCore.QObject):
         self.updateSignal.emit()
 
     def select_deselect_all(self):
+        """Selectionne tous les équipements présents dans le widget"""
         check = 2 if not self.listWidget.item(0).checkState() else 0
         param = self.listWidget.item(0).param
         paramList = []
@@ -134,6 +138,7 @@ class Filtre(QtCore.QObject):
         self.updateSignal.emit()
 
     def add_checkboxs(self,txt):
+        """Ajoute les checkboxes souhaitées à la listwidget"""
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),txt)
         param = str(self.attributsNames[txt])
         paramSet = param + 'Set'
