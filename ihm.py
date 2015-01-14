@@ -14,9 +14,9 @@ import proxy_params
 import params
 import Cache_use
 
-class Ihm(Ui_MainWindow,QtCore.QObject):
-
-    def __init__(self,MainWindow):
+class Ihm(Ui_MainWindow, QtCore.QObject):
+    """Classe principale du programme"""
+    def __init__(self, MainWindow):
         super(Ihm, self).__init__()
         self.MainWindow = MainWindow
         self.latitude = 43.564995   #latitude et longitudes de départ
@@ -42,6 +42,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand'}
 
     def built(self):
+        """"suite de l'initialisation"""
         self.dockWidget_2.hide()
         self.build_map()
         self.Quitter.triggered.connect(quit)
@@ -56,6 +57,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
 
     def build_map(self):
+        """initialisation de la carte"""
         self.scene = Sceneclicked.SceneClickable()
         self.graphicsView.setScene(self.scene)
         self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag)  # allow drag and drop of the view
@@ -63,20 +65,19 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.graphicsView.setRenderHint(QtGui.QPainter.Antialiasing)
         self.graphicsView.FinishInit()
-        self.graphicsView.ihm = self
         self.graphicsView.download(self.latitude, self.longitude)
-        self.connections()
-    #pour obtenir les coordonnées GPS d'un point de la carte, appeler: self.graphicsView.get_gps_from_map(Xscene,Yscene) avec (Xscene,Yscene) les coordonnées du point dans la scène.
-    #pour dessiner un point sur la carte appeler: self.graphicsView.draw_point(lat,lon [, legend = 'ma legende']), lat et lon étant la latitude et la longitude du point.
-    # Retenir la Qellipse retournée (dans une variable) pour pouvoir l'effacer quand on veut.
+        self.scene.clusterisclicked.connect(self.nocover.explode)
+        self.scene.backgroundclicked.connect(self.nocover.regroup)
+        self.scene.equipointisclicked.connect(self.fill_inspector)
 
     def finish_init_with_datas(self,equipmentList):
+        """fin de l'initialisation après l'import des équipements"""
         self.equipmentList = equipmentList
         self.allEquipmentSet = set(equipmentList)
         self.ajouter_filtre()
 
     def ajouter_filtre(self):
-        #self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff))
+        """crée et initialise un filtre"""
         self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.pointAff))
         self.mesFiltres[-1].updateSignal.connect(self.update_affichage_equipements)
         self.mesFiltres[-1].create_set(self.equipmentList)
@@ -86,12 +87,14 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.mesFiltres[-1].comboBox.setCurrentIndex(i)
 
     def remove_filtre(self,widget):
+        """supprime un filtre"""
         i = self.tabWidget.indexOf(widget)
         self.tabWidget.removeTab(i)
         del self.mesFiltres[i]
         self.update_affichage_equipements()
 
     def update_affichage_equipements(self):
+        """met à jour l'affichage des équipements en fonction des filtres"""
         setEquipements = set(self.allEquipmentSet)
         for fifi in self.mesFiltres:
             setEquipements &= fifi.equipmentSet
@@ -106,20 +109,16 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-    def filtrer_acces_hand(self,equipSet,state = True):     #state = True <=> renvoie les eqs AVEC acces hand, state = False <=> renvoie ceux SANS acces hand
+    def filtrer_acces_hand(self,equipSet,state = True):
+        """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
         tempSet = set()
         for equip in equipSet:
-            if state:
-                if equip.accesHand:
-                    tempSet.add(equip)
-            else:
-                if not equip.accesHand:
+            if not state ^ equip.accesHand:     #pour se la péter! "if non (state ou_exclusif accesHand)"
                     tempSet.add(equip)
         return tempSet
 
     def affiche_addresse(self):
-        """ affiche un point à l'addresse que l'utilisateur entre"""
-        self.statusbar.showMessage("Recherche ...")  #TODO n'a pas l'air de marcher ...
+        """ affiche un point à l'addresse que l'utilisateur entre dans la lineEdit"""
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
@@ -131,7 +130,8 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             self.statusbar.showMessage("adresse non trouvée")
 
     def get_stopArea(self):     #TODO rame trop, à mettre dans un thread
-        self.statusbar.showMessage("Recherche ...")  #TODO n'a pas l'air de marcher ...
+        """recherche avec l'API tisséo l'arret le plus proche"""
+        self.statusbar.showMessage("Recherche ...")
         txt = self.lineEdit.text()
         if self.arret != None:
             self.scene.removeItem(self.arret)
@@ -141,6 +141,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.arret = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
     def notif_chrgmt_equip(self, infos):
+        """notifier dans la barre d'état le chargement"""
         if infos[0] == 'échec':
             self.statusbar.showMessage("Échec: {}       {}/{}".format(infos[1],infos[2],infos[3]),2000)
         if infos[0] == 'cache':
@@ -148,19 +149,15 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         else:
             self.statusbar.showMessage("Adresse trouvée: {}       {}/{}".format(infos[0], infos[1], infos[2]), 2000)
 
-    def connections(self):
-        self.scene.clusterisclicked.connect(self.nocover.explode)
-        self.scene.backgroundclicked.connect(self.nocover.regroup)
-        self.scene.equipointisclicked.connect(self.fill_inspector)
-
     def afficher_inspecteur(self):
+        """change l'affichage de l'inspecteur"""
         if self.dockWidget_2.isVisible():
             self.dockWidget_2.hide()
         else:
             self.dockWidget_2.show()
 
     def fill_inspector(self, equipoint):
-        """Met à jour l'inspecteur de droite contenant les informations sur l'équipement cliqué"""
+        """Met à jour l'inspecteur contenant les informations sur l'équipement cliqué"""
 
         if equipoint.equipment == None:
             return
@@ -229,6 +226,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.dockWidget_2.show()
 
     def afficher_params_proxy(self):
+        """ouvre la boite de dialogue de réglage de proxy"""
         self.paramsWindow=params.Dialogue(self)  #QtGui.QDialog()
         dialogParams = proxy_params.Ui_Proxy()
         dialogParams.setupUi(self.paramsWindow)
@@ -244,16 +242,19 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.password = infos[3]
         self.proxycache.save(infos[:-1],'proxy')
         print('proxy:',self.proxy,self.port,self.user)
+
     def set_default_proxy_params(self, dialogParams):
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
 
     def vider_cache_donnes(self):
+        """supprime le cache des équipements"""
         if os.path.exists('.cache/equipmentList.cache'):
             os.remove('.cache/equipmentList.cache')
 
     def vider_cache_carte(self):
+        """supprime les tuiles OSM"""
         if os.path.exists('.cache_Images'):
             for fichier in os.listdir('.cache_Images/'):
                 path = '.cache_Images/' + fichier

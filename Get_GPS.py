@@ -39,6 +39,8 @@ class GPScoord(QtCore.QObject):
                 self.success +=1
                 self.timestried = 0
                 self.succesSignal.emit([name,i,j])
+                if loc[0].coordinates == (43.604652, 1.444209):
+                    return None
                 return loc[0].coordinates
 
         except:

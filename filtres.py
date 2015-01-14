@@ -8,22 +8,17 @@ class Filtre(QtCore.QObject):
 
     removeSignal = QtCore.pyqtSignal(QtGui.QWidget)
 
-    def __init__(self, tabWidget,pointAff):
+    def __init__(self, tabWidget, pointAff):
         super(Filtre,self).__init__()
         self.activitiesSet = set()
         self.quartierSet = set()
         self.allEquipSet = set()
         self.revetementSet = set()
-        #self.toilettesHandSet = set()
-        #self.arrosageSet = set()
-        #self.eclairageSet = set()
         self.typeSet = set()
-
         self.equipmentSet = set()
         self.pointAff = pointAff
 
         self.tabWidget = tabWidget
-        #self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand','Type':'type'}
         self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Type':'type'}
         self.tab = QtGui.QWidget()
         self.tab.setObjectName("tab")
@@ -70,19 +65,17 @@ class Filtre(QtCore.QObject):
                         self.activitiesSet.add(key)
                 self.quartierSet.add(equip.quartier)
                 for item in equip.revetement:
-                    self.revetementSet.add(item)
+                    self.revetementSet.add(item.capitalize())
                 self.typeSet.add(equip.type)
-                #self.toilettesHandSet.add(equip.toilettesHand)
-                #self.arrosageSet.add(equip.arrosage)
-                #self.eclairageSet.add(equip.eclairage)
 
     def equip_set(self,equiplist):
+        """crée un set de tous les équipements"""
         for equip in equiplist:
             self.allEquipSet.add(equip)
 
 
     def filtrer_set_par_acti(self,param,paramNames):
-        """Regarde le critère de filtrage"""
+        """filtre les équipements selon le critère de filtrage suivant la liste donnée"""
         tempSet = set()
         for equip in self.allEquipSet:
             if param == 'activities':
@@ -118,7 +111,7 @@ class Filtre(QtCore.QObject):
         self.updateSignal.emit()
 
     def select_deselect_all(self):
-        """Selectionne tous les équipements présents dans le widget"""
+        """Selectionne/désélectionne tous les équipements présents dans le widget"""
         try:
             check = 2 if not self.listWidget.item(0).checkState() else 0
             param = self.listWidget.item(0).param
@@ -137,7 +130,7 @@ class Filtre(QtCore.QObject):
             print('sélectionnez un paramètre différent')
 
     def add_checkboxs(self,txt):
-        """Ajoute les checkboxes souhaitées à la listwidget"""
+        """Ajoute les checkboxs souhaitées à la listwidget"""
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),txt)
         param = str(self.attributsNames[txt])
         paramSet = param + 'Set'
@@ -152,15 +145,16 @@ class Filtre(QtCore.QObject):
             lwItem.setCheckState(Qt.Unchecked)
 
     def add_combo_items(self):
+        """Ajoute les choix dans la comboBox"""
         for key in equipement.Equipment().__dict__:
             if key in self.attributsNames.values():
                 for cle in self.attributsNames:
                     if self.attributsNames[cle] == key:
                         self.comboBox.addItem(cle)
-        self.listWidget.itemClicked.connect(self.itemClicked)
+        self.listWidget.itemClicked.connect(self.item_clicked)
 
-    def itemClicked(self, item):
-        print(item.param)
+    def item_clicked(self, item):
+        """calcule les nouveaux équipements suivant l'état de la checBox et ce qu'elle désigne"""
         if item.checkState() == Qt.Checked:
             item.setCheckState(Qt.Unchecked)
             eqASupprimer = self.filtrer_set_par_acti(item.param,[item.text()])
@@ -175,6 +169,7 @@ class Filtre(QtCore.QObject):
         self.updateSignal.emit()
 
     def hand_changement(self):
+        """actualise les équipements à afficher avec/sans accès handicapés"""
         if self.HandAccessCheckBox.checkState():
             self.equipmentSet.difference_update(self.filtrer_acces_hand(self.equipmentSet,False))
         else:
@@ -190,6 +185,7 @@ class Filtre(QtCore.QObject):
 
 
 class myListWidgetItem(QtGui.QListWidgetItem):
+    """redéfinition de QListWidgetItem afin de savoir à qui il appartient, et quel paramètre il désigne"""
     def __init__(self,name, listView):
         super(myListWidgetItem,self).__init__(name, listView)
         self.param = ''

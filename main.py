@@ -11,6 +11,7 @@ FILENAME = 'data/ES2011.xls'
 
 
 class Importeur(QtCore.QObject):
+    """Classe d'importation des données, get_equipment exécutée dans un thread séparé"""
     cache_charging_signal = QtCore.pyqtSignal(list)
     equipment_import_finish_signal = QtCore.pyqtSignal(list)
 
@@ -34,7 +35,7 @@ class Importeur(QtCore.QObject):
         self.appli.equipmentlist = equipmentList
         if equipmentList != None:
             self.equipment_import_finish_signal.emit(equipmentList)
-        #return
+        return 0
 
 
 def run():
@@ -49,7 +50,7 @@ def run():
     monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)
     monImporteur.cache_charging_signal.connect(appli.notif_chrgmt_equip)
     monImporteur.equipment_import_finish_signal.connect(appli.finish_init_with_datas)
-    threadImportation = threading.Thread(target= monImporteur.get_equipment)
+    threadImportation = threading.Thread(target = monImporteur.get_equipment)
     threadImportation.start()
     return (app.exec_(), monImporteur.my_locator)
 
@@ -59,4 +60,4 @@ if __name__ == '__main__':
     threadImportation = None
     (retour, locator) = run()
     locator.odre_arret()
-    sys.exit()
+    sys.exit(0)
