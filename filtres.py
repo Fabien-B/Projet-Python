@@ -32,10 +32,18 @@ class Filtre(QtCore.QObject):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),"Activité")
         self.verticalLayout = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout.setObjectName("verticalLayout")
-
         self.comboBox = QtGui.QComboBox(self.tab)
         self.comboBox.setObjectName("comboBox")
-        self.verticalLayout.addWidget(self.comboBox)
+        self.hLbas = QtGui.QHBoxLayout()
+        self.hLbas.setObjectName("hLbas")
+        self.retirerFiltreButton = QtGui.QToolButton()
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icones/retirerFiltre.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.retirerFiltreButton.setIcon(icon)
+        self.retirerFiltreButton.setObjectName("retirerFiltreButton")
+        self.verticalLayout.addLayout(self.hLbas)
+        self.hLbas.addWidget(self.comboBox)
+        self.hLbas.addWidget(self.retirerFiltreButton)
         self.selectAllSecondFiltreButton = QtGui.QPushButton(self.tab)
         self.selectAllSecondFiltreButton.setObjectName("selectAllSecondFiltreButton")
         self.verticalLayout.addWidget(self.selectAllSecondFiltreButton)
@@ -45,30 +53,8 @@ class Filtre(QtCore.QObject):
         self.listWidget = QtGui.QListWidget(self.tab)
         self.listWidget.setObjectName("listWidget")
         self.verticalLayout.addWidget(self.listWidget)
-
-        self.hLbas = QtGui.QHBoxLayout()
-        self.hLbas.setObjectName("hLbas")
-
-        self.HandAccessCheckBox = QtGui.QCheckBox(self.tab)
-        self.HandAccessCheckBox.setObjectName("HandAccessCheckBox")
-        self.verticalLayout.addWidget(self.HandAccessCheckBox)
         self.selectAllSecondFiltreButton.setText("Tout (dé)sélectionner")
-        self.HandAccessCheckBox.setText("Accès Handicapés")
-
-
-        self.retirerFiltreButton = QtGui.QToolButton()
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icones/retirerFiltre.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.retirerFiltreButton.setIcon(icon)
-        self.retirerFiltreButton.setObjectName("retirerFiltreButton")
-
-        self.hLbas.addWidget(self.HandAccessCheckBox)
-        self.verticalLayout.addLayout(self.hLbas)
-
-        self.hLbas.addWidget(self.retirerFiltreButton)
-
         self.selectAllSecondFiltreButton.clicked.connect(self.select_deselect_all)
-        self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
         self.lineEditFiltre.textEdited.connect(self.update_checkbox)
         self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.add_checkboxs)
         self.retirerFiltreButton.clicked.connect(lambda : self.removeSignal.emit(self.tab))
@@ -113,17 +99,6 @@ class Filtre(QtCore.QObject):
             return self.filtrer_acces_hand(tempSet)
         return tempSet
 
-    def filtrer_acces_hand(self,equipSet,state = True):     #state = True <=> renvoie les eqs AVEC acces hand, state = False <=> renvoie ceux SANS acces hand
-        tempSet = set()
-        for equip in equipSet:
-            if state:
-                if equip.accesHand:
-                    tempSet.add(equip)
-            else:
-                if not equip.accesHand:
-                    tempSet.add(equip)
-        return tempSet
-
     def printkey(self):
         for key in self.activitiesSet:
             print(key)
@@ -136,7 +111,6 @@ class Filtre(QtCore.QObject):
         for key in self.__dict__[paramSet]:
             if txt.capitalize() in key:
                 liste.append(key)
-        print(liste)
         for i in range(self.listWidget.count()):
                 checkbox = self.listWidget.item(i)
                 if checkbox.text() not in liste:
@@ -155,7 +129,7 @@ class Filtre(QtCore.QObject):
                     checkbox.setCheckState(check)
                     paramList.append(checkbox.text())
         if check:
-            self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList,self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList))
         else:
             self.equipmentSet.difference_update(self.filtrer_set_par_acti(param,paramList))
         self.updateSignal.emit()
@@ -194,7 +168,7 @@ class Filtre(QtCore.QObject):
             self.equipmentSet.difference_update(eqASupprimer)
         else:
             item.setCheckState(Qt.Checked)
-            self.equipmentSet.update(self.filtrer_set_par_acti(item.param,[item.text()],self.HandAccessCheckBox.checkState()))
+            self.equipmentSet.update(self.filtrer_set_par_acti(item.param,[item.text()]))
         self.updateSignal.emit()
 
     def hand_changement(self):
@@ -207,7 +181,6 @@ class Filtre(QtCore.QObject):
                 checkbox = self.listWidget.item(i)
                 if checkbox.checkState():
                     paramList.append(checkbox.text())
-            #self.equipmentSet = self.filtrer_set_par_acti(param,paramList)
             self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList))
             print(self.equipmentSet)
         self.updateSignal.emit()

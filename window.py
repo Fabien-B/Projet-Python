@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Tue Jan 13 14:28:14 2015
+# Created: Wed Jan 14 02:53:33 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,13 +39,16 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 256, 468))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 214, 468))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.tabWidget = QtGui.QTabWidget(self.toolBoxPage2)
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.verticalLayout_3.addWidget(self.tabWidget)
+        self.handAccessButton = QtGui.QCheckBox(self.toolBoxPage2)
+        self.handAccessButton.setObjectName(_fromUtf8("handAccessButton"))
+        self.verticalLayout_3.addWidget(self.handAccessButton)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.ajouterFiltreButton = QtGui.QToolButton(self.toolBoxPage2)
@@ -60,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 455))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 96))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -323,6 +326,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
+        self.handAccessButton.setText(_translate("MainWindow", "Accès Handicapés", None))
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Filtres", None))

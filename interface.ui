@@ -35,7 +35,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>256</width>
+          <width>214</width>
           <height>468</height>
          </rect>
         </property>
@@ -47,6 +47,13 @@
           <widget class="QTabWidget" name="tabWidget">
            <property name="currentIndex">
             <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="handAccessButton">
+           <property name="text">
+            <string>Accès Handicapés</string>
            </property>
           </widget>
          </item>
@@ -80,7 +87,7 @@
           <x>0</x>
           <y>0</y>
           <width>277</width>
-          <height>455</height>
+          <height>96</height>
          </rect>
         </property>
         <attribute name="label">

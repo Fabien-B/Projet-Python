@@ -54,6 +54,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.pushButton_7.clicked.connect(self.get_stopArea)
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
         self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
+        self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
 
     def build_map(self):
         self.scene = Sceneclicked.SceneClickable()
@@ -93,10 +94,10 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
 
     def update_affichage_equipements(self):
         setEquipements = set(self.allEquipmentSet)
-        print(self.allEquipmentSet)
         for fifi in self.mesFiltres:
             setEquipements &= fifi.equipmentSet
-            print(setEquipements,fifi.equipmentSet)
+        if self.handAccessButton.checkState():
+                setEquipements = self.filtrer_acces_hand(setEquipements)
         for point in self.pointAff:
             if point in self.scene.items():
                 self.scene.removeItem(point)
@@ -105,7 +106,16 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-
+    def filtrer_acces_hand(self,equipSet,state = True):     #state = True <=> renvoie les eqs AVEC acces hand, state = False <=> renvoie ceux SANS acces hand
+        tempSet = set()
+        for equip in equipSet:
+            if state:
+                if equip.accesHand:
+                    tempSet.add(equip)
+            else:
+                if not equip.accesHand:
+                    tempSet.add(equip)
+        return tempSet
 
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre"""
