@@ -14,7 +14,6 @@ import proxy_params
 import params
 import Cache_use
 
-
 class Ihm(Ui_MainWindow,QtCore.QObject):
 
     def __init__(self,MainWindow):
@@ -101,6 +100,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         for point in self.pointAff:
             if point in self.scene.items():
                 self.scene.removeItem(point)
+        self.pointAff = []
         for equip in setEquipements:
             self.pointAff.append(self.graphicsView.draw_equipment(equip))
             self.scene.update()
