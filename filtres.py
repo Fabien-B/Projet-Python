@@ -8,7 +8,6 @@ class Filtre(QtCore.QObject):
 
     removeSignal = QtCore.pyqtSignal(QtGui.QWidget)
 
-   # def __init__(self, tabWidget,equipmentSet,pointAff):
     def __init__(self, tabWidget,pointAff):
         super(Filtre,self).__init__()
         self.activitiesSet = set()
@@ -27,7 +26,7 @@ class Filtre(QtCore.QObject):
         #self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand','Type':'type'}
         self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Type':'type'}
         self.tab = QtGui.QWidget()
-        self.tab.setObjectName("dfhgdh")
+        self.tab.setObjectName("tab")
         self.tabWidget.addTab(self.tab, "")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),"Activité")
         self.verticalLayout = QtGui.QVBoxLayout(self.tab)
