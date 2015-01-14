@@ -6,25 +6,30 @@ class Filtre(QtCore.QObject):
 
     updateSignal = QtCore.pyqtSignal()
 
-    def __init__(self, tabWidget,equipmentSet,pointAff):
+    removeSignal = QtCore.pyqtSignal(QtGui.QWidget)
+
+   # def __init__(self, tabWidget,equipmentSet,pointAff):
+    def __init__(self, tabWidget,pointAff):
         super(Filtre,self).__init__()
         self.activitiesSet = set()
         self.quartierSet = set()
         self.allEquipSet = set()
         self.revetementSet = set()
-        self.toilettesHandSet = set()
-        self.arrosageSet = set()
-        self.eclairageSet = set()
+        #self.toilettesHandSet = set()
+        #self.arrosageSet = set()
+        #self.eclairageSet = set()
+        self.typeSet = set()
 
-        self.equipmentSet = equipmentSet
+        self.equipmentSet = set()
         self.pointAff = pointAff
 
         self.tabWidget = tabWidget
-        self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand'}
+        #self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand','Type':'type'}
+        self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Type':'type'}
         self.tab = QtGui.QWidget()
         self.tab.setObjectName("dfhgdh")
         self.tabWidget.addTab(self.tab, "")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),"Autre Filtre")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),"Activité")
         self.verticalLayout = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout.setObjectName("verticalLayout")
 
@@ -40,17 +45,36 @@ class Filtre(QtCore.QObject):
         self.listWidget = QtGui.QListWidget(self.tab)
         self.listWidget.setObjectName("listWidget")
         self.verticalLayout.addWidget(self.listWidget)
+
+        self.hLbas = QtGui.QHBoxLayout()
+        self.hLbas.setObjectName("hLbas")
+
         self.HandAccessCheckBox = QtGui.QCheckBox(self.tab)
         self.HandAccessCheckBox.setObjectName("HandAccessCheckBox")
         self.verticalLayout.addWidget(self.HandAccessCheckBox)
         self.selectAllSecondFiltreButton.setText("Tout (dé)sélectionner")
         self.HandAccessCheckBox.setText("Accès Handicapés")
+
+
+        self.retirerFiltreButton = QtGui.QToolButton()
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icones/retirerFiltre.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.retirerFiltreButton.setIcon(icon)
+        self.retirerFiltreButton.setObjectName("retirerFiltreButton")
+
+        self.hLbas.addWidget(self.HandAccessCheckBox)
+        self.verticalLayout.addLayout(self.hLbas)
+
+        self.hLbas.addWidget(self.retirerFiltreButton)
+
         self.selectAllSecondFiltreButton.clicked.connect(self.select_deselect_all)
         self.HandAccessCheckBox.stateChanged.connect(self.hand_changement)
         self.lineEditFiltre.textEdited.connect(self.update_checkbox)
-        #self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.changer_filtre)
         self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.add_checkboxs)
+        self.retirerFiltreButton.clicked.connect(lambda : self.removeSignal.emit(self.tab))
+
         self.add_combo_items()
+
 
     def create_set(self, equiplist):
         for equip in equiplist:
@@ -61,9 +85,10 @@ class Filtre(QtCore.QObject):
                 self.quartierSet.add(equip.quartier)
                 for item in equip.revetement:
                     self.revetementSet.add(item)
-                self.toilettesHandSet.add(equip.toilettesHand)
-                self.arrosageSet.add(equip.arrosage)
-                self.eclairageSet.add(equip.eclairage)
+                self.typeSet.add(equip.type)
+                #self.toilettesHandSet.add(equip.toilettesHand)
+                #self.arrosageSet.add(equip.arrosage)
+                #self.eclairageSet.add(equip.eclairage)
 
     def equip_set(self,equiplist):
         for equip in equiplist:
@@ -136,7 +161,7 @@ class Filtre(QtCore.QObject):
         self.updateSignal.emit()
 
     def add_checkboxs(self,txt):
-        print('taaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),txt)
         param = str(self.attributsNames[txt])
         paramSet = param + 'Set'
         self.listWidget.clear()
@@ -186,10 +211,6 @@ class Filtre(QtCore.QObject):
             self.equipmentSet.update(self.filtrer_set_par_acti(param,paramList))
             print(self.equipmentSet)
         self.updateSignal.emit()
-
-    def changer_filtre(self,txt):
-        pass
-#        self.add_checkboxs(str(self.attributsNames[txt]))
 
 
 class myListWidgetItem(QtGui.QListWidgetItem):

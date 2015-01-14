@@ -26,7 +26,7 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
-        self.equipmentlist = []
+        self.allEquipmentSet = set()
         self.pointAff = []
         self.mesFiltres = []
         self.nocover = nmhr.No_Covering(self)
@@ -72,23 +72,35 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
 
     def finish_init_with_datas(self,equipmentList):
         self.equipmentList = equipmentList
+        self.allEquipmentSet = set(equipmentList)
         self.ajouter_filtre()
 
     def ajouter_filtre(self):
-        self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff))
+        #self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.equipmentSet,self.pointAff))
+        self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.pointAff))
         self.mesFiltres[-1].updateSignal.connect(self.update_affichage_equipements)
         self.mesFiltres[-1].create_set(self.equipmentList)
         self.mesFiltres[-1].equip_set(self.equipmentList)
+        self.mesFiltres[-1].removeSignal.connect(self.remove_filtre)
         i = self.mesFiltres[-1].comboBox.findText('Activités')
         self.mesFiltres[-1].comboBox.setCurrentIndex(i)
 
+    def remove_filtre(self,widget):
+        i = self.tabWidget.indexOf(widget)
+        self.tabWidget.removeTab(i)
+        del self.mesFiltres[i]
+        self.update_affichage_equipements()
+
     def update_affichage_equipements(self):
-        print('ahahahahah  test ets')
-        print(self.equipmentSet)
+        setEquipements = set(self.allEquipmentSet)
+        print(self.allEquipmentSet)
+        for fifi in self.mesFiltres:
+            setEquipements &= fifi.equipmentSet
+            print(setEquipements,fifi.equipmentSet)
         for point in self.pointAff:
             if point in self.scene.items():
                 self.scene.removeItem(point)
-        for equip in self.equipmentSet:
+        for equip in setEquipements:
             self.pointAff.append(self.graphicsView.draw_equipment(equip))
             self.scene.update()
         self.nocover.cluster(self.pointAff)
@@ -133,11 +145,9 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
 
     def afficher_inspecteur(self):
         if self.dockWidget_2.isVisible():
-            self.actionInspecteur.setChecked(False)
             self.dockWidget_2.hide()
         else:
             self.dockWidget_2.show()
-            self.actionInspecteur.setChecked(True)
 
     def fill_inspector(self, equipoint):
         """Met à jour l'inspecteur de droite contenant les informations sur l'équipement cliqué"""
@@ -207,7 +217,6 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
             self.sanitairesLineEdit_9.setText(str(equipoint.equipment.categorie))
         self.sanitairesLineEdit_6.setText(str(equipoint.equipment.coords))
         self.dockWidget_2.show()
-        self.actionInspecteur.setChecked(True)
 
     def afficher_params_proxy(self):
         self.paramsWindow=params.Dialogue(self)  #QtGui.QDialog()
@@ -223,11 +232,8 @@ class Ihm(Ui_MainWindow,QtCore.QObject):
         self.port = infos[1]
         self.user = infos[2]
         self.password = infos[3]
-        print(infos)
-        self.locator.setproxy(infos)
-        self.graphicsView.setproxy(infos)
         self.proxycache.save(infos[:-1],'proxy')
-
+        print('proxy:',self.proxy,self.port,self.user)
     def set_default_proxy_params(self, dialogParams):
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)

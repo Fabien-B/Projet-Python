@@ -83,7 +83,7 @@ def set_from_file_activities(content):
                             dictionnaire[temp[0].strip(' )(')] = int(temp[1])
         return dictionnaire
     else:
-        return {}
+        return {'Non renseigné':1}
 
 
 def set_from_file_type(content):
@@ -95,6 +95,8 @@ def set_from_file_revetement(content):
     revetList = []
     for revet in contentList:
         revetList.append(revet.strip(','))
+    if revetList == []:
+        revetList = ['Non renseigné']
     return revetList
 
 
