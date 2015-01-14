@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Wed Jan 14 02:53:33 2015
+# Created: Wed Jan 14 21:04:49 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 214, 468))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 199, 493))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 96))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 229, 480))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -90,7 +90,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 897, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 897, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFichier = QtGui.QMenu(self.menubar)
         self.menuFichier.setObjectName(_fromUtf8("menuFichier"))
@@ -112,12 +112,15 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 353, 748))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 330, 701))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_8 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
         self.verticalLayout_4 = QtGui.QVBoxLayout()
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
+        self.Findequiarret_2_button = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        self.Findequiarret_2_button.setObjectName(_fromUtf8("Findequiarret_2_button"))
+        self.verticalLayout_4.addWidget(self.Findequiarret_2_button)
         self.layoutNom = QtGui.QHBoxLayout()
         self.layoutNom.setObjectName(_fromUtf8("layoutNom"))
         self.label_4 = QtGui.QLabel(self.scrollAreaWidgetContents)
@@ -337,6 +340,7 @@ class Ui_MainWindow(object):
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage", None))
         self.menuOutils.setTitle(_translate("MainWindow", "Outils", None))
+        self.Findequiarret_2_button.setText(_translate("MainWindow", "Comment s\'y rendre ?", None))
         self.label_4.setText(_translate("MainWindow", "Nom:", None))
         self.label_5.setText(_translate("MainWindow", "Type:", None))
         self.label_6.setText(_translate("MainWindow", "Activités:", None))

@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>214</width>
-          <height>468</height>
+          <width>199</width>
+          <height>493</height>
          </rect>
         </property>
         <attribute name="label">
@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>277</width>
-          <height>96</height>
+          <width>229</width>
+          <height>480</height>
          </rect>
         </property>
         <attribute name="label">
@@ -149,7 +149,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>30</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -193,13 +193,20 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>353</width>
-          <height>748</height>
+          <width>330</width>
+          <height>701</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QPushButton" name="Findequiarret_2_button">
+             <property name="text">
+              <string>Comment s'y rendre ?</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <layout class="QHBoxLayout" name="layoutNom">
              <item>

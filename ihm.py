@@ -21,7 +21,10 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.MainWindow = MainWindow
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
+        self.tisseo = tisseo.Tisseo()
         self.arret = None
+        self.equiarret = None
+        self.tisseopath = None
         self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
@@ -55,6 +58,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
         self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
+        self.Findequiarret_2_button.pressed.connect(self.get_equiStop)
 
     def build_map(self):
         """initialisation de la carte"""
@@ -135,10 +139,75 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         txt = self.lineEdit.text()
         if self.arret != None:
             self.scene.removeItem(self.arret)
+            self.arret = None
         coords = self.locator.find(txt, txt)
-        (nomArret, latArret, lonArret) = tisseo.get_closest_sa(coords[0], coords[1])
+        (nomArret, latArret, lonArret) = self.tisseo.get_closest_sa(coords[0], coords[1])
 
         self.arret = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
+
+    def get_equiStop(self):
+        if self.nomLineEdit.text() == "":
+            self.statusbar.showMessage("Aucun équipement sportif sélectionné")
+            return
+        elif self.lineEdit.text() == "":
+            self.statusbar.showMessage("Veuillez selectionner un point de départ")
+            return
+        else:
+            self.get_stopArea()
+            if self.equiarret != None:
+                self.scene.removeItem(self.equiarret)
+                self.equiarret = None
+            self.statusbar.showMessage("Recherche...")
+            coord = tuple(self.sanitairesLineEdit_6.text().strip('()').split(', '))
+            (nomArret, latArret, lonArret) = self.tisseo.get_closest_sa(float(coord[0]), float(coord[1]))
+            self.equiarret = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
+            self.get_path()
+
+
+    def get_path(self):
+        answer = self.tisseo.gettrail(self.arret.legend, self.equiarret.legend)
+        self.draw_path(answer)
+        print(*self.tisseo.extractinstruct(answer), sep='\n')
+
+    def draw_path(self, answer):
+        if self.tisseopath != None:
+            self.scene.removeItem(self.tisseopath)
+        self.tisseopath = QtGui.QGraphicsItemGroup()
+
+        def get_color(n):
+            """Renvoie une QColor en fonction de l'entier 'n'
+            BY TP noté 2 de Python ENAC"""
+            d = (0xff, 0xdd, 0xbb, 0x99, 0x77, 0x55)[(n // 6) % 6]
+            r, v, b = ((d,0,0), (0,d,0), (0,0,d), (d,d,0), (d,0,d), (0,d,d))[n % 6]
+            return QtGui.QColor(r, v, b)
+
+        pathlist, pointlist = self.tisseo.extractlinecoord(answer)
+        for i in range(len(pathlist)):
+            pen = QtGui.QPen(get_color(i), 2)
+            departnbs = self.graphicsView.get_tile_nbs(float(pathlist[i][0][1]), float(pathlist[i][0][0]))
+            depart = tuple(((departnbs[0]+departnbs[2])*carte.TILEDIM, (departnbs[1]+departnbs[3])*carte.TILEDIM))
+            for j in range(len(pathlist[i])-1):
+                arriveenbs = self.graphicsView.get_tile_nbs(float(pathlist[i][j+1][1]), float(pathlist[i][j+1][0]))
+                arrivee = tuple(((arriveenbs[0]+arriveenbs[2])*carte.TILEDIM, (arriveenbs[1]+arriveenbs[3])*carte.TILEDIM))
+                line = QtGui.QGraphicsLineItem(depart[0], depart[1], arrivee[0], arrivee[1])
+                line.setPen(pen)
+                line.setZValue(13)
+                self.tisseopath.addToGroup(line)
+                depart = arrivee
+        for i in range(len(pointlist)):
+            coordpoint = self.graphicsView.get_tile_nbs(float(pointlist[i][1]), float(pointlist[i][0]))
+            xpoint = (coordpoint[0]+coordpoint[2])*carte.TILEDIM
+            ypoint = (coordpoint[1]+coordpoint[3])*carte.TILEDIM
+            pen = QtGui.QPen(get_color(i+1),2)
+            brush = QtGui.QBrush(get_color(i))
+            point = QtGui.QGraphicsEllipseItem()
+            point.setPen(pen)
+            point.setBrush(brush)
+            point.setRect(0, 0, 16, 16)
+            point.setPos(xpoint-8, ypoint-8)
+            point.setZValue(14)
+            self.tisseopath.addToGroup(point)
+        self.scene.addItem(self.tisseopath)
 
     def notif_chrgmt_equip(self, infos):
         """notifier dans la barre d'état le chargement"""
@@ -241,6 +310,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.user = infos[2]
         self.password = infos[3]
         self.proxycache.save(infos[:-1],'proxy')
+        self.locator.setproxy(infos)
+        self.graphicsView.setproxy(infos)
+        self.tisseo.setproxy(infos)
         print('proxy:',self.proxy,self.port,self.user)
 
     def set_default_proxy_params(self, dialogParams):
