@@ -38,16 +38,17 @@ class equipement_point(POI):
     def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend=''):
         super(equipement_point,self).__init__(Zvalue)
         self.equipment = equipement
+        self.legend = legend
         if equipement != None:
             nameImg = equipement.type.lower().split()[0]
             path = 'icones/' + nameImg + '.png'
-            legend = equipement.name
+            self.legend = equipement.name
         else:
             path = 'icones/' + img + '.png'
         if os.path.exists(path):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
             #self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
-            self.icone.setToolTip(legend)
+            self.icone.setToolTip(self.legend)
             if path == 'icones/vous_etes_ici.png':
                 self.icone.scale(1/8, 1/8)
             else:
