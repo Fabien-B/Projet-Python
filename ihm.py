@@ -227,6 +227,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         else:
             self.statusbar.showMessage("Adresse trouvée: {}       {}/{}".format(infos[0], infos[1], infos[2]), 2000)
 
+    def take_equipment_coordonnates(self,coords):
+        self.currentEquipmentCoords = coords
+
     def afficher_inspecteur(self):
         """change l'affichage de l'inspecteur"""
         if self.dockWidget_2.isVisible():
