@@ -36,13 +36,14 @@ class No_Covering():
     def explode(self, the_cluster):
         if the_cluster.exploded == None:
             size = the_cluster.size()
-            rayon = the_cluster.equipointlist[0].boundingRect().height()*size/2
+            rayon = sum([the_cluster.equipointlist[i].boundingRect().height()*size/2 for i in range(size)])/size + 10
             deltaangle = math.radians(360/size)
             list_angle = [i*deltaangle for i in range(size)]
             bg = self.drawbackground(the_cluster, rayon)
             for i in range(size):
                 pos = (the_cluster.Pos()[0] + rayon/2*math.sin(list_angle[i]), the_cluster.Pos()[1] + rayon/2*math.cos(list_angle[i]))
-                point = poi.equipement_point(pos[0], pos[1], the_cluster.equipointlist[i].equipment)
+                point = poi.equipement_point(pos[0], pos[1], the_cluster.equipointlist[i].equipment, Zvalue=14)
+
                 bg.equippointlist.append(point)
                 self.scene.addItem(point)
                 self.ihm.pointAff.append(point)
