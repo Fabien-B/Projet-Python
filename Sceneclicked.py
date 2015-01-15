@@ -17,8 +17,8 @@ class SceneClickable(QtGui.QGraphicsScene):
 
     def equipclicked(self, equipoint):
         self.equipointisclicked.emit(equipoint)
-        self.giveEqCoordsSignal.emit(equipoint.equipment.coords)
+        if equipoint.equipment:
+            self.giveEqCoordsSignal.emit(equipoint.equipment.coords)
 
     def bgclicked(self, background):
         self.backgroundclicked.emit(background)
-
