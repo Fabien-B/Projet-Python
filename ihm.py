@@ -13,6 +13,7 @@ import No_More_Horse_Riding as nmhr
 import proxy_params
 import params
 import Cache_use
+import threading
 
 class Ihm(Ui_MainWindow, QtCore.QObject):
     """Classe principale du programme"""
@@ -22,8 +23,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
         self.tisseo = tisseo.Tisseo()
-        self.arret = None
-        self.equiarret = None
+        self.arrets = [None, None]
         self.tisseopath = None
         self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None)
@@ -54,11 +54,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
-        self.pushButton_7.clicked.connect(self.get_stopArea)
+        self.pushButton_7.clicked.connect(lambda : self.get_stopArea(0,self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
         self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
         self.Findequiarret_2_button.pressed.connect(self.get_equiStop)
+        self.tisseo.closetASignal.connect(self.draw_stop_point_and_path)
 
     def build_map(self):
         """initialisation de la carte"""
@@ -133,17 +134,18 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")
 
-    def get_stopArea(self):     #TODO rame trop, à mettre dans un thread
+    def get_stopArea(self,i,coords):
         """recherche avec l'API tisséo l'arret le plus proche"""
         self.statusbar.showMessage("Recherche ...")
-        txt = self.lineEdit.text()
-        if self.arret != None:
-            self.scene.removeItem(self.arret)
-            self.arret = None
-        coords = self.locator.find(txt, txt)
-        (nomArret, latArret, lonArret) = self.tisseo.get_closest_sa(coords[0], coords[1])
+        if self.arrets[i] != None:
+            self.scene.removeItem(self.arrets[i])
+        #self.tisseo.get_closest_sa(coords[0], coords[1], i)
+        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], i))
+        threadClosestStopPoint.start()
 
-        self.arret = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
+    def draw_tisseoStopPoint(self,infos):
+        (nomArret, latArret, lonArret, i) = infos
+        self.arrets[i] = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
     def get_equiStop(self):
         if self.nomLineEdit.text() == "":
@@ -153,19 +155,26 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.statusbar.showMessage("Veuillez selectionner un point de départ")
             return
         else:
-            self.get_stopArea()
-            if self.equiarret != None:
-                self.scene.removeItem(self.equiarret)
-                self.equiarret = None
+            txt = self.lineEdit.text()
+            self.get_stopArea(0,self.locator.find(txt, txt))
+
+            if self.arrets[1] != None:
+                self.scene.removeItem(self.arrets[1])
+                self.arrets[1] = None
             self.statusbar.showMessage("Recherche...")
             coord = tuple(self.sanitairesLineEdit_6.text().strip('()').split(', '))
-            (nomArret, latArret, lonArret) = self.tisseo.get_closest_sa(float(coord[0]), float(coord[1]))
-            self.equiarret = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
+            coord = (float(coord[0]),float(coord[1]))
+            self.get_stopArea(1,coord)
+
+    def draw_stop_point_and_path(self,infos):
+        self.draw_tisseoStopPoint(infos)
+        self.statusbar.clearMessage()
+        if infos[3]:
             self.get_path()
 
 
     def get_path(self):
-        answer = self.tisseo.gettrail(self.arret.legend, self.equiarret.legend)
+        answer = self.tisseo.gettrail(self.arrets[0].legend, self.arrets[1].legend)
         self.draw_path(answer)
         print(*self.tisseo.extractinstruct(answer), sep='\n')
 
@@ -251,13 +260,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.sanitairesLineEdit_5.setText('Non renseigné')
         elif equipoint.equipment.sanitaires != 'non':
             self.sanitairesLineEdit_5.setText('Oui')
-        if equipoint.equipment.douches == [None,None]:     #TODO: n'a pas l'air de marcher, renvoie toujours non renseigné
+        if equipoint.equipment.douches == [None,None]:
             self.douchesLineEdit.setText('Non renseigné')
         else:
             txt = str(equipoint.equipment.douches[0]) + ' ind. , ' + str(equipoint.equipment.douches[1]) + ' coll.'
             txt = txt.replace('None', 'aucune')
             self.douchesLineEdit.setText(txt)
-            # self.douchesLineEdit.setText('Individuelles : ' + equipoint.equipment.douches[0] + ' Collectives : ' + equipoint.equipment.douches[1])
         if equipoint.equipment.accesHand == 1:
             self.sanitairesLineEdit_4.setText('Oui')
         elif equipoint.equipment.accesHand == 0:
