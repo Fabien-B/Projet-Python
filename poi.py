@@ -120,8 +120,10 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
         self.thescene = scene
         self.equippointlist = []
         self.the_cluster = the_cluster
+        self.setPen(QtGui.QPen(QtCore.Qt.black, 2))
+        self.setBrush(QtCore.Qt.red)
         self.setPos(the_cluster.Pos()[0]+12 - (rayon+30)/2, the_cluster.Pos()[1]+12 -(rayon+30)/2)
-        self.setZValue(7)
+        self.setZValue(13)
         self.thescene.addItem(self)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
