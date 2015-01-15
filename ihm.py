@@ -47,6 +47,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
     def built(self):
         """"suite de l'initialisation"""
         self.dockWidget_2.hide()
+        self.dockWidgetTrajet.hide()
         self.build_map()
         self.Quitter.triggered.connect(quit)
         self.actionInspecteur.triggered.connect(self.afficher_inspecteur)
@@ -175,7 +176,14 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
     def get_path(self):
         answer = self.tisseo.gettrail(self.arrets[0].legend, self.arrets[1].legend)
         self.draw_path(answer)
-        print(*self.tisseo.extractinstruct(answer), sep='\n')
+        self.print_instructions_path(self.tisseo.extractinstruct(answer))
+
+    def print_instructions_path(self,instructions):
+        #self.dockWidget_2.hide()
+        self.dockWidgetTrajet.show()
+        txt = '\n'.join(instructions)
+        self.instructionsLabel.setText(txt)
+        print(txt)
 
     def draw_path(self, answer):
         if self.tisseopath != None:
@@ -191,7 +199,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
         pathlist, pointlist = self.tisseo.extractlinecoord(answer)
         for i in range(len(pathlist)):
-            pen = QtGui.QPen(get_color(i), 2)
+            pen = QtGui.QPen(get_color(i), 5)
             departnbs = self.graphicsView.get_tile_nbs(float(pathlist[i][0][1]), float(pathlist[i][0][0]))
             depart = tuple(((departnbs[0]+departnbs[2])*carte.TILEDIM, (departnbs[1]+departnbs[3])*carte.TILEDIM))
             for j in range(len(pathlist[i])-1):
