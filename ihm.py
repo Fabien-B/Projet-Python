@@ -42,7 +42,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.port = '8888'
             self.user = ''
         self.password = ''
-        self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Éclairage':'eclairage','Arrosage':'arrosage','Toilettes Handicapés':'toilettesHand'}
+        self.attributsNames = {'Quartier': 'quartier','Activités': 'activities', 'Revêtement': 'revetement', 'Éclairage': 'eclairage', 'Arrosage': 'arrosage', 'Toilettes Handicapés': 'toilettesHand'}
 
     def built(self):
         """"suite de l'initialisation"""
@@ -262,7 +262,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.sanitairesLineEdit_5.setText('Non renseigné')
         elif equipoint.equipment.sanitaires != 'non':
             self.sanitairesLineEdit_5.setText('Oui')
-        if equipoint.equipment.douches == [None,None]:
+        if equipoint.equipment.douches == [None, None]:     #TODO: n'a pas l'air de marcher, renvoie toujours non renseigné
             self.douchesLineEdit.setText('Non renseigné')
         else:
             txt = str(equipoint.equipment.douches[0]) + ' ind. , ' + str(equipoint.equipment.douches[1]) + ' coll.'

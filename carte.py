@@ -8,11 +8,13 @@ TILEDIM = 256
 class myQGraphicsView(QtGui.QGraphicsView):
     def __init__(self, parent):
         super(myQGraphicsView, self).__init__(parent)
-        self.ZOOM = 14  #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
+        self.ZOOM_INIT = 14  #attention:Ne pas le modifier
+        self.ZOOM = self.ZOOM_INIT  #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
         self.cur_zoom = 1
         self.x = 0
         self.y = 0
         self.setTransformationAnchor(2)
+        self.ZoomMode = 0
         # en attendant que le zoom fonctionne bien
         self.latitude = 43.564995
         self.longitude = 1.481650
@@ -31,18 +33,32 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def wheelEvent(self, e):
         """Zoom sur la carte """
-        if e.delta() > 0 :
-            if self.cur_zoom < 4:
-                self.zoom(1.1)
+        if self.ZoomMode:
+            if e.delta() > 0:
+                if self.ZOOM < 16:
+                    self.ZOOM += 1
+                    self.centerOnPosition(self.latitude, self.longitude)
+            else:
+                if self.ZOOM > 13:
+                    self.ZOOM -= 1
+                    self.centerOnPosition(self.latitude, self.longitude)
         else:
-            if self.cur_zoom > 1/4:
-                self.zoom(1/1.1)
+            if e.delta() > 0:
+                if self.cur_zoom < 2:
+                    self.zoom(1.1)
+            else:
+                if self.cur_zoom > 0.4:
+                    self.zoom(1/1.1)
         self.update_tiles()
 
     def mouseMoveEvent(self, e):
         """ met à jour les tuiles à afficher quand on déplace la carte"""
         super().mouseMoveEvent(e)
         self.update_tiles()
+
+    def mouseDoubleClickEvent(self, QMouseEvent):
+        print(QMouseEvent.x(),QMouseEvent.y())
+        print(self.get_gps_from_map(QMouseEvent.x(),QMouseEvent.y()))
 
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
@@ -121,8 +137,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resx, resy) = self.get_tile_nbs(lat, lon)
         #nbw = int(self.width() / TILEDIM) + 1
         #nbh = int(self.height() / TILEDIM) + 1
-        nbw = 5
-        nbh = 5
+        nbw = 3
+        nbh = 3
         biw = int(-nbw / 2)
         bih = int(-nbh / 2)
         for i in range(biw, nbw + biw):
@@ -132,7 +148,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def add_tile(self, X, Y):
         """charge une tuile depuis le dique si elle existe, ou va la télécharger"""
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
-        # if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
+        #  X < int(8270*2**(self.ZOOM-self.ZOOM_INIT)) and Y < int(6000*2**(self.ZOOM-self.ZOOM_INIT)) and X > int(8250*2**(self.ZOOM-self.ZOOM_INIT)) and Y > int(5970*2**(self.ZOOM-self.ZOOM_INIT)):
         if not os.path.exists(name):
             path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
             url = QtCore.QUrl(path)
@@ -144,6 +160,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.manager.get(request)
         else:
             self.load_tile_from_disk((X, Y, self.ZOOM))
+
 
     def gererDonnees(self, reply):
         """réceptionne l'image téléchargée, l'enregistre sur le disque, puis l'affiche"""
@@ -183,10 +200,10 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.m_tilePixmaps[self.ZOOM] = {}
         pos1 = self.mapToScene(0, 0)
         pos2 = self.mapToScene(self.width(), self.height())
-        X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-14))
-        X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-14))
-        Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-14))
-        Y2 = int(pos2.y()/TILEDIM*2**(self.ZOOM-14))
+        X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        Y2 = int(pos2.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
         for i in range(X1-2, X2+3):
             for j in range(Y1-2, Y2+3):
                 cle = (i, j, self.ZOOM)
@@ -196,10 +213,10 @@ class myQGraphicsView(QtGui.QGraphicsView):
                     self.afficher_tuile(cle)    #sinon (la clé est en mémoire): on l'affiche (controle si déja dans la scene dans la fonction)
 
     def zoommodif(self):
-        self.ZOOM = 16
+        self.ZoomMode = not self.ZoomMode
+        self.zoom(1/self.cur_zoom)
+        self.cur_zoom = 1
         self.update_tiles()
-        self.zoom(1)
-        self.centerOnPosition(self.latitude,self.longitude)
 
     def update_tiles2(self):  #ancienne update tiles
         """affiche les tuiles nécessaires, en les prenant depuis la mémoire, le disque ou internet"""
