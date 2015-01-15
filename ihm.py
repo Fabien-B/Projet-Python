@@ -74,6 +74,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.scene.clusterisclicked.connect(self.nocover.explode)
         self.scene.backgroundclicked.connect(self.nocover.regroup)
         self.scene.equipointisclicked.connect(self.fill_inspector)
+        self.scene.giveEqCoordsSignal.connect(self.take_equipment_coordonnates)
 
     def finish_init_with_datas(self,equipmentList):
         """fin de l'initialisation après l'import des équipements"""
@@ -162,9 +163,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 self.scene.removeItem(self.arrets[1])
                 self.arrets[1] = None
             self.statusbar.showMessage("Recherche...")
-            coord = tuple(self.sanitairesLineEdit_6.text().strip('()').split(', '))
-            coord = (float(coord[0]),float(coord[1]))
-            self.get_stopArea(1,coord)
+            self.get_stopArea(1,self.currentEquipmentCoords)
 
     def draw_stop_point_and_path(self,infos):
         self.draw_tisseoStopPoint(infos)
