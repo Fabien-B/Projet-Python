@@ -12,6 +12,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.cur_zoom = 1
         self.x = 0
         self.y = 0
+        self.signalEmetteur = Emetteur()
         self.setTransformationAnchor(2)
         # en attendant que le zoom fonctionne bien
         self.latitude = 43.564995
@@ -44,6 +45,13 @@ class myQGraphicsView(QtGui.QGraphicsView):
         super().mouseMoveEvent(e)
         self.update_tiles()
 
+    def mouseDoubleClickEvent(self, e):
+        pos = self.mapToScene(e.x(),e.y())
+        (lat, lon) = self.get_gps_from_map(pos.x(),pos.y())
+        point = poi.Point(pos.x(), pos.y(), img='pin-double-click', legend='click!',Zvalue=20,decx=-18, decy=-66, lat=lat, lon=lon)
+        self.signalEmetteur.doubleClickSignal.emit(point)
+        self.maScene.addItem(point)
+
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
         self.cur_zoom *= factor
@@ -70,7 +78,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
         if lat < 43.7 and lat > 43.5 and lon < 1.6 and lon > 1.3:
-            point = poi.equipement_point(posX, posY, equipment, Zvalue)
+            point = poi.Equipement_point(posX, posY, equipment, Zvalue)
             self.maScene.addItem(point)
             return point
 
@@ -78,7 +86,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
-        point = poi.equipement_point(posX, posY, img=img, legend=legend)
+        point = poi.Equipement_point(posX, posY, img=img, legend=legend)
         self.maScene.addItem(point)
         return point
 
@@ -110,7 +118,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         X = Xscene / TILEDIM
         Y = Yscene / TILEDIM
         zn = float(1 << self.ZOOM)
-        lon = X * 360 / zn - 180
+        lon = X * 360 / zn -180
         A = math.exp(2 * math.pi * (0.5 - Y / zn))
         lat = math.atan((A ** 2 - 1)/(2 * A))
         lat = lat * 180 / math.pi
@@ -229,3 +237,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
             proxy.setPassword(str(list[3]))
             self.manager.setProxy(proxy)
             print((self.manager.proxy().hostName(), self.manager.proxy().port(), self.manager.proxy().user(), self.manager.proxy().password()))
+
+
+class Emetteur(QtCore.QObject):
+
+    doubleClickSignal = QtCore.pyqtSignal(poi.Point)

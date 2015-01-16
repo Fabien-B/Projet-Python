@@ -9,22 +9,35 @@ class POI(QtGui.QGraphicsItemGroup):
         self.setZValue(Zvalue)
 
 
-class point(POI):
-    def __init__(self, x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None, lat=0, lon=0):
-        super(point,self).__init__(Zvalue)
-        self.PEN = PEN
-        self.BRUSH = BRUSH
+class Point(POI):
+    def __init__(self, x, y, img='', PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None, lat=0, lon=0, decx=0, decy=0):
+        super(Point,self).__init__(Zvalue)
         self.equipment = equipment
         self.legend = legend
         self.coords = (lat,lon)
 
-        self.ellipse = QtGui.QGraphicsEllipseItem()
-        self.ellipse.setPen(PEN)
-        self.ellipse.setBrush(BRUSH)
-        self.ellipse.setRect(0, 0, 20, 20)
-        self.ellipse.setPos(x, y)
-        self.ellipse.setToolTip(self.legend)
-        self.addToGroup(self.ellipse)
+        path = 'icones/' + img + '.png'
+        if os.path.exists(path):
+            self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
+            self.icone.setToolTip(self.legend)
+            if path == 'icones/vous_etes_ici.png':
+                self.icone.scale(1/8, 1/8)
+            else:
+                self.icone.scale(2/3, 2/3)
+            self.icone.setPos(x+decx,y+decy)
+            self.addToGroup(self.icone)
+        else:
+            self.PEN = PEN
+            self.BRUSH = BRUSH
+            self.ellipse = QtGui.QGraphicsEllipseItem()
+            self.ellipse.setPen(PEN)
+            self.ellipse.setBrush(BRUSH)
+            self.ellipse.setRect(0, 0, 20, 20)
+            self.ellipse.setPos(x, y)
+            self.ellipse.setToolTip(self.legend)
+            self.addToGroup(self.ellipse)
+
+
 
 
     def Pos(self):
@@ -34,9 +47,9 @@ class point(POI):
         self.ellipse.setPos(x, y)
 
 
-class equipement_point(POI):
-    def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend=''):
-        super(equipement_point,self).__init__(Zvalue)
+class Equipement_point(POI):
+    def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend='',decx=0, decy=0):
+        super(Equipement_point,self).__init__(Zvalue)
         self.equipment = equipement
         self.legend = legend
         if equipement != None:
@@ -47,14 +60,12 @@ class equipement_point(POI):
             path = 'icones/' + img + '.png'
         if os.path.exists(path):
             self.icone = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(path))
-            #self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
             self.icone.setToolTip(self.legend)
             if path == 'icones/vous_etes_ici.png':
                 self.icone.scale(1/8, 1/8)
             else:
                 self.icone.scale(2/3, 2/3)
-            self.icone.setPos(x,y)
-            #self.icone.setPos(x-self.icone.pixmap().height()/2,y-self.icone.pixmap().width()/2)
+            self.icone.setPos(x+decx,y+decy)
             self.addToGroup(self.icone)
         else:
             PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
@@ -63,7 +74,8 @@ class equipement_point(POI):
             self.icone.setBrush(QtCore.Qt.darkGreen)
             self.icone.setRect(0, 0, 20, 20)
             self.icone.setPos(x-10, y-10)
-            self.icone.setToolTip(equipement.name)
+            txtToolTip = equipement.name if equipement != None else legend
+            self.icone.setToolTip(txtToolTip)
             self.addToGroup(self.icone)
 
     def Pos(self):
@@ -79,7 +91,7 @@ class equipement_point(POI):
             scene.equipclicked(self)
 
 
-class Equipment_Group(point):
+class Equipment_Group(Point):
 
     def __init__(self, scene, x, y):
         super(Equipment_Group, self).__init__(x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 11, legend='', equipment = None)

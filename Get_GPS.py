@@ -7,7 +7,7 @@ class GPScoord(QtCore.QObject):
     """
     Class used for getting the GPS coordinates
     """
-    succesSignal = QtCore.pyqtSignal(list)
+    succesSignal = QtCore.pyqtSignal(str)
 
     def __init__(self, cache):
         """
@@ -30,17 +30,15 @@ class GPScoord(QtCore.QObject):
 
         try:
             self.timestried += 1
-            print('Getting coordinates for', name)
+            #print('Getting coordinates for', name)
             loc = self.geolocator.geocode(str(adresse)+', Toulouse, France')
-            if loc == None:
+            if loc == None or loc[0].coordinates == (43.604652, 1.444209):
                 print('GPS coordinates are missing for', name)
                 return None
             else:
                 self.success +=1
                 self.timestried = 0
-                self.succesSignal.emit([name,i,j])
-                if loc[0].coordinates == (43.604652, 1.444209):
-                    return None
+                self.succesSignal.emit("Adresse trouvée: {}       {}/{}".format(name,i,j))
                 return loc[0].coordinates
 
         except:
@@ -49,7 +47,7 @@ class GPScoord(QtCore.QObject):
                 self.find(adresse,name,i,j)
             else:
                 print('Tried 20 times, can\'t reach out, GPS coordinates are missing for', name)
-                self.succesSignal.emit(["échec",name,i,j])
+                self.succesSignal.emit("Échec: {}       {}/{}".format(name,i,j))
                 self.timestried = 0
                 return None
 
@@ -85,7 +83,7 @@ class GPScoord(QtCore.QObject):
                     eqpmtlist[i].coords = (random.randint(43571,43649)/1000,random.randint(1405, 1504)/1000)
                     time.sleep(0.05)
                     print('get random for {}'.format(eqpmtlist[i].name))
-                    self.succesSignal.emit([eqpmtlist[i].name,i,len(eqpmtlist)])
+                    self.succesSignal.emit("Échec: {}       {}/{}".format(eqpmtlist[i],i,len(eqpmtlist)))
             else:
                 self.success +=1
             self.cache.save(eqpmtlist, 'equipmentList.cache')

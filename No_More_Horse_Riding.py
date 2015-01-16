@@ -42,7 +42,7 @@ class No_Covering():
             bg = self.drawbackground(the_cluster, rayon)
             for i in range(size):
                 pos = (the_cluster.Pos()[0] + rayon/2*math.sin(list_angle[i]), the_cluster.Pos()[1] + rayon/2*math.cos(list_angle[i]))
-                point = poi.equipement_point(pos[0], pos[1], the_cluster.equipointlist[i].equipment, Zvalue=14)
+                point = poi.Equipement_point(pos[0], pos[1], the_cluster.equipointlist[i].equipment, Zvalue=14)
 
                 bg.equippointlist.append(point)
                 self.scene.addItem(point)

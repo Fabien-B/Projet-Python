@@ -12,7 +12,7 @@ FILENAME = 'data/ES2011.xls'
 
 class Importeur(QtCore.QObject):
     """Classe d'importation des données, get_equipment exécutée dans un thread séparé"""
-    cache_charging_signal = QtCore.pyqtSignal(list)
+    cache_charging_signal = QtCore.pyqtSignal(str)
     equipment_import_finish_signal = QtCore.pyqtSignal(list)
 
     def __init__(self, appli):
@@ -27,7 +27,7 @@ class Importeur(QtCore.QObject):
             r_w_fichier.import_file(FILENAME, equipmentList)
             self.my_cache.save(equipmentList, 'equipmentList.cache')
         else:
-            self.cache_charging_signal.emit(['cache'])
+            self.cache_charging_signal.emit('Chargement des équipements depuis le cache ...')
             equipmentList = self.my_cache.rescue('equipmentList.cache')
 
         self.my_locator.cache = self.my_cache

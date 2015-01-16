@@ -10,14 +10,15 @@ class Tisseo(QtCore.QObject):
         super(Tisseo,self).__init__()
         self.proxy = None
 
-    def get_closest_sa(self, lat,lon, point = None):
+    def get_closest_sa(self, lat,lon, point = None, isItineraire = False):
+        print(lat,lon)
         url="""https://api.tisseo.fr/v1/stop_points.json?sortByDistance=1&number=3&displayCoordXY=1&bbox={}%2C{}%2C{}%2C{}&key=a65ccc5d3b7d6d99063240434ef117d54""".format(lon-0.1,lat-0.1,lon+0.1,lat+0.1)
         if self.proxy == None:
             r = requests.get(url)
         else:
             r = requests.get(url, proxies= self.proxy)
         ans = r.json()['physicalStops']['physicalStop'][0]['stopArea']
-        rep = (ans['name'], float(ans['y']), float(ans['x']), point)
+        rep = (ans['name'], float(ans['y']), float(ans['x']), point, isItineraire)
         print(rep)
         self.closetASignal.emit(rep)
 

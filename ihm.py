@@ -23,9 +23,10 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
         self.tisseo = tisseo.Tisseo()
-        self.arrets = [None, None]
+        self.arrets = [None, None,None]     #arrive, depart1, départ2
         self.tisseopath = None
         self.ptRecherche = None
+        self.pinPoint = None
         self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
         self.allEquipmentSet = set()
@@ -47,7 +48,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
     def built(self):
         """"suite de l'initialisation"""
         self.dockWidget_2.hide()
-        self.dockWidgetTrajet.hide()
         self.build_map()
         self.Quitter.triggered.connect(quit)
         self.actionInspecteur.triggered.connect(self.afficher_inspecteur)
@@ -55,12 +55,14 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
-        self.pushButton_7.clicked.connect(lambda : self.get_stopArea(0,self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
+        self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.zoommodif)
         self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
-        self.Findequiarret_2_button.pressed.connect(self.get_equiStop)
+        self.Findequiarret_2_button.pressed.connect(lambda : self.get_equiStop(1))
+        self.findPathFromPinButton.pressed.connect(lambda : self.get_equiStop(2))
         self.tisseo.closetASignal.connect(self.draw_stop_point_and_path)
+        self.graphicsView.signalEmetteur.doubleClickSignal.connect(self.get_pin)
 
     def build_map(self):
         """initialisation de la carte"""
@@ -100,6 +102,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         del self.mesFiltres[i]
         self.update_affichage_equipements()
 
+    def get_pin(self,point):
+        self.scene.removeItem(self.pinPoint)
+        self.pinPoint = point
+        print(point.legend)
+        print(point.coords)
+
     def update_affichage_equipements(self):
         """met à jour l'affichage des équipements en fonction des filtres"""
         setEquipements = set(self.allEquipmentSet)
@@ -136,54 +144,58 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")
 
-    def get_stopArea(self,i,coords):
+    def get_stopArea(self,pointIndex,coords, isItineraire = False):
         """recherche avec l'API tisséo l'arret le plus proche"""
         self.statusbar.showMessage("Recherche ...")
-        if self.arrets[i] != None:
-            self.scene.removeItem(self.arrets[i])
-        #self.tisseo.get_closest_sa(coords[0], coords[1], i)
-        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], i))
+        if self.arrets[pointIndex] != None:
+            self.scene.removeItem(self.arrets[pointIndex])
+        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], pointIndex, isItineraire))     #True : itinéraire
         threadClosestStopPoint.start()
 
     def draw_tisseoStopPoint(self,infos):
-        (nomArret, latArret, lonArret, i) = infos
+        (nomArret, latArret, lonArret, i, isItineraire) = infos
         self.arrets[i] = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
-    def get_equiStop(self):
+    def get_equiStop(self,departurePointIndex):
         if self.nomLineEdit.text() == "":
             self.statusbar.showMessage("Aucun équipement sportif sélectionné")
             return
-        elif self.lineEdit.text() == "":
+        if departurePointIndex == 1 and self.lineEdit.text() == "":                     #départ: adresse
             self.statusbar.showMessage("Veuillez selectionner un point de départ")
             return
-        else:
-            txt = self.lineEdit.text()
-            self.get_stopArea(0,self.locator.find(txt, txt))
+        if departurePointIndex == 2 and self.pinPoint == None:                         #départ: épingle
+            self.statusbar.showMessage("Veuillez double clicker pour selectionner un point de départ")
 
-            if self.arrets[1] != None:
-                self.scene.removeItem(self.arrets[1])
-                self.arrets[1] = None
-            self.statusbar.showMessage("Recherche...")
-            self.get_stopArea(1,self.currentEquipmentCoords)
+        if departurePointIndex == 1:
+            txt = self.lineEdit.text()
+            coords = self.locator.find(txt, txt)
+        if departurePointIndex == 2:
+            coords = self.pinPoint.coords
+        self.get_stopArea(departurePointIndex,coords, True)       #coords : pt de départ,    True: calcul d'itinéraire
+
+        if self.arrets[departurePointIndex] != None:
+            self.scene.removeItem(self.arrets[1])
+            self.arrets[departurePointIndex] = None
+        self.statusbar.showMessage("Recherche...")
+        self.get_stopArea(departurePointIndex,self.currentEquipmentCoords)
 
     def draw_stop_point_and_path(self,infos):
         self.draw_tisseoStopPoint(infos)
         self.statusbar.clearMessage()
-        if infos[3]:
-            self.get_path()
+        if infos[4]:        #si c'est un calcul d'itinéraire
+            if not infos[3]:
+                self.get_path(infos[3])
+            else:
+                self.get_stopArea(0,self.currentEquipmentCoords,True)
 
-
-    def get_path(self):
-        answer = self.tisseo.gettrail(self.arrets[0].legend, self.arrets[1].legend)
+    def get_path(self,indexPoint):
+        answer = self.tisseo.gettrail(self.arrets[indexPoint].legend, self.arrets[0].legend)
         self.draw_path(answer)
         self.print_instructions_path(self.tisseo.extractinstruct(answer))
 
     def print_instructions_path(self,instructions):
-        #self.dockWidget_2.hide()
-        self.dockWidgetTrajet.show()
-        txt = '\n'.join(instructions)
-        self.instructionsLabel.setText(txt)
-        print(txt)
+        txt = '\n\n'.join(instructions)
+        self.textEdit.setText(txt)
 
     def draw_path(self, answer):
         if self.tisseopath != None:
@@ -227,12 +239,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def notif_chrgmt_equip(self, infos):
         """notifier dans la barre d'état le chargement"""
-        if infos[0] == 'échec':
-            self.statusbar.showMessage("Échec: {}       {}/{}".format(infos[1],infos[2],infos[3]),2000)
-        if infos[0] == 'cache':
-            self.statusbar.showMessage('Chargement depuis le cache', 2000)
-        else:
-            self.statusbar.showMessage("Adresse trouvée: {}       {}/{}".format(infos[0], infos[1], infos[2]), 2000)
+        self.statusbar.showMessage(infos,2000)
 
     def take_equipment_coordonnates(self,coords):
         self.currentEquipmentCoords = coords

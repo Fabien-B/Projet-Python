@@ -5,7 +5,7 @@ import os
 class SceneClickable(QtGui.QGraphicsScene):
 
     clusterisclicked = QtCore.pyqtSignal(poi.Equipment_Group)
-    equipointisclicked = QtCore.pyqtSignal(poi.equipement_point)
+    equipointisclicked = QtCore.pyqtSignal(poi.Equipement_point)
     backgroundclicked = QtCore.pyqtSignal(poi.BackGroundCluster)
     giveEqCoordsSignal = QtCore.pyqtSignal(tuple)
 
