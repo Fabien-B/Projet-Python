@@ -44,7 +44,6 @@ def run():
     appli.setupUi(fenetre)
     appli.built()
     fenetre.show()
-
     monImporteur = Importeur(appli)
     monImporteur.my_locator = appli.locator
     monImporteur.my_locator.succesSignal.connect(appli.notif_chrgmt_equip)

@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(897, 653)
+        MainWindow.resize(900, 650)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout_9 = QtGui.QVBoxLayout(self.centralwidget)
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 199, 493))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 200, 500))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -336,7 +336,7 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Rechercher", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage3), _translate("MainWindow", "Rechercher une adresse", None))
-        self.pushButton.setText(_translate("MainWindow", "Changer le mode de zoom", None))
+        self.pushButton.setText(_translate("MainWindow", "Reset Zoom", None))
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage", None))
         self.menuOutils.setTitle(_translate("MainWindow", "Outils", None))

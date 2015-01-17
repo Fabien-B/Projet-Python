@@ -55,19 +55,20 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(0,self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
-        self.pushButton.clicked.connect(self.graphicsView.zoommodif)
+        self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
         self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
         self.Findequiarret_2_button.pressed.connect(self.get_equiStop)
         self.tisseo.closetASignal.connect(self.draw_stop_point_and_path)
+        self.toolBox.resize(400, 1000)
 
     def build_map(self):
         """initialisation de la carte"""
         self.scene = Sceneclicked.SceneClickable()
         self.graphicsView.setScene(self.scene)
         self.graphicsView.setDragMode(QtGui.QGraphicsView.ScrollHandDrag)  # allow drag and drop of the view
-        self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.graphicsView.setRenderHint(QtGui.QPainter.Antialiasing)
         self.graphicsView.FinishInit()
         self.graphicsView.download(self.latitude, self.longitude)
@@ -86,6 +87,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         """crée et initialise un filtre"""
         self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.pointAff))
         self.mesFiltres[-1].updateSignal.connect(self.update_affichage_equipements)
+        self.graphicsView.updateEquipSignal.connect(self.update_affichage_equipements)
         self.mesFiltres[-1].create_set(self.equipmentList)
         self.mesFiltres[-1].equip_set(self.equipmentList)
         self.mesFiltres[-1].removeSignal.connect(self.remove_filtre)
