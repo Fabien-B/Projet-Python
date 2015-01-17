@@ -22,6 +22,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         # en attendant que le zoom fonctionne bien
         self.latitude = 43.5992525
         self.longitude = 1.4283475
+        self.tiles_beeing_downloaded = []
 
     def FinishInit(self):
         """fini l'initialisation """
@@ -168,6 +169,9 @@ class myQGraphicsView(QtGui.QGraphicsView):
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
         if X < int(8265*2**(self.ZOOM-self.ZOOM_INIT)) and Y < int(5990*2**(self.ZOOM-self.ZOOM_INIT)) and X > int(8250*2**(self.ZOOM-self.ZOOM_INIT)) and Y > int(5975*2**(self.ZOOM-self.ZOOM_INIT)):
             if not os.path.exists(name):
+                if name in self.tiles_beeing_downloaded:
+                    return
+                self.tiles_beeing_downloaded.append(name)
                 path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
                 url = QtCore.QUrl(path)
                 request = QtNetwork.QNetworkRequest()
@@ -192,6 +196,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             file.close()
             reply.deleteLater()
             self.load_tile_from_disk(cle)
+            self.tiles_beeing_downloaded.remove(name)
 
     def load_tile_from_disk(self, cle):
         """charge une tuile depuis le disque dur et l'affiche"""
