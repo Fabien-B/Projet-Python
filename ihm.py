@@ -105,7 +105,8 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.update_affichage_equipements()
 
     def get_pin(self,point):
-        self.scene.removeItem(self.pinPoint)
+        if self.pinPoint != None:
+            self.scene.removeItem(self.pinPoint)
         self.pinPoint = point
         print(point.legend)
         print(point.coords)
