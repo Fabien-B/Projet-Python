@@ -147,12 +147,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")
 
-    def get_stopArea(self,pointIndex,coords, isItineraire = False):
+    def get_stopArea(self,pointIndex,coords, isItineraire = False, departurePoint=0):
         """recherche avec l'API tisséo l'arret le plus proche"""
         self.statusbar.showMessage("Recherche ...")
         if self.arrets[pointIndex] != None:
             self.scene.removeItem(self.arrets[pointIndex])
-        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], pointIndex, isItineraire))     #True : itinéraire
+        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], pointIndex, isItineraire, departurePoint))     #True : itinéraire
         threadClosestStopPoint.start()
 
     def draw_tisseoStopPoint(self,infos):
@@ -174,7 +174,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.locator.find(txt, txt)
         if departurePointIndex == 2:
             coords = self.pinPoint.coords
-        self.get_stopArea(departurePointIndex,coords, True)       #coords : pt de départ,    True: calcul d'itinéraire
+        self.get_stopArea(departurePointIndex,coords, True,departurePoint = departurePointIndex)       #coords : pt de départ,    True: calcul d'itinéraire
 
         if self.arrets[departurePointIndex] != None:
             self.scene.removeItem(self.arrets[1])
@@ -186,13 +186,13 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.draw_tisseoStopPoint(infos)
         self.statusbar.clearMessage()
         if infos[4]:        #si c'est un calcul d'itinéraire
-            if not infos[3]:
-                self.get_path(infos[3])
+            if not infos[3]:    #si on a calculer le point d'arrivée
+                self.get_path(infos[5])
             else:
                 self.get_stopArea(0,self.currentEquipmentCoords,True)
 
-    def get_path(self,indexPoint):
-        answer = self.tisseo.gettrail(self.arrets[indexPoint].legend, self.arrets[0].legend)
+    def get_path(self,indexDeparturePoint):
+        answer = self.tisseo.gettrail(self.arrets[indexDeparturePoint].legend, self.arrets[0].legend)
         self.draw_path(answer)
         self.print_instructions_path(self.tisseo.extractinstruct(answer))
 
