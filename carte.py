@@ -6,17 +6,24 @@ import os
 TILEDIM = 256
 
 class myQGraphicsView(QtGui.QGraphicsView):
+
+    updateEquipSignal = QtCore.pyqtSignal()
+
+
     def __init__(self, parent):
         super(myQGraphicsView, self).__init__(parent)
-        self.ZOOM = 14  #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
+        self.ZOOM_INIT = 14  #attention:Ne pas le modifier
+        self.ZOOM = self.ZOOM_INIT  #attention: ce zoom correspond au niveau de zoom des tuiles OSM. Aucun rapport avec le zoom molette.
         self.cur_zoom = 1
         self.x = 0
         self.y = 0
         self.signalEmetteur = Emetteur()
         self.setTransformationAnchor(2)
+        self.ZoomMode = 0
         # en attendant que le zoom fonctionne bien
-        self.latitude = 43.564995
-        self.longitude = 1.481650
+        self.latitude = 43.5992525
+        self.longitude = 1.4283475
+        self.tiles_beeing_downloaded = []
 
     def FinishInit(self):
         """fini l'initialisation """
@@ -29,16 +36,27 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.manager.setCache(cache)
         self.manager.finished.connect(self.gererDonnees)
         self.m_tilePixmaps = {}
+        self.initCarte()
 
     def wheelEvent(self, e):
         """Zoom sur la carte """
-        if e.delta() > 0 :
-            if self.cur_zoom < 4:
-                self.zoom(1.1)
+        pos = self.mapToScene(e.x(), e.y())
+        coord = self.get_gps_from_map(pos.x(), pos.y())
+        print(self.cur_zoom)
+        if e.delta() > 0:
+            if self.cur_zoom < 1.5:
+                self.zoom((self.cur_zoom+0.10)/self.cur_zoom)
+            elif self.ZOOM < 15:
+                self.ZOOM += 1
+                self.reset_zoom()
+                self.centerOnPosition(coord[0], coord[1])
         else:
-            if self.cur_zoom > 1/4:
-                self.zoom(1/1.1)
-        self.update_tiles()
+            if self.cur_zoom > 0.6:
+                self.zoom((self.cur_zoom-0.10)/self.cur_zoom)
+            elif self.ZOOM > 13:
+                self.ZOOM -= 1
+                self.reset_zoom()
+                self.centerOnPosition(coord[0], coord[1])
 
     def mouseMoveEvent(self, e):
         """ met à jour les tuiles à afficher quand on déplace la carte"""
@@ -51,6 +69,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         point = poi.Point(pos.x(), pos.y(), img='pin-double-click', legend='click!',Zvalue=20,decx=-18, decy=-66, lat=lat, lon=lon)
         self.signalEmetteur.doubleClickSignal.emit(point)
         self.maScene.addItem(point)
+        self.update_tiles()
+        self.centerOnPosition(lat, lon)
 
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
@@ -65,6 +85,17 @@ class myQGraphicsView(QtGui.QGraphicsView):
         point = poi.point(posX,posY, PEN, BRUSH, legend=legend, lat=lat, lon=lon)
         self.maScene.addItem(point)
         return point
+
+    def initCarte(self, PEN = QtGui.QPen(QtCore.Qt.transparent, 2), BRUSH = QtCore.Qt.transparent,  legend=''):
+        """affiche un point aux coordonnées lat, lon."""
+        tiles_init = [(2000, 2000), (17000, 13000)]
+        for (X, Y) in tiles_init:
+            posX = X*TILEDIM
+            posY = Y*TILEDIM
+            point = poi.Point(posX, posY, PEN=PEN, BRUSH=BRUSH, legend=legend)
+            self.maScene.addItem(point)
+        self.centerOn(8257.5*256, 5982.5*256)
+
 
     def draw_equipment(self, equipment, Zvalue = 10):
         try:
@@ -129,8 +160,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resx, resy) = self.get_tile_nbs(lat, lon)
         #nbw = int(self.width() / TILEDIM) + 1
         #nbh = int(self.height() / TILEDIM) + 1
-        nbw = 5
-        nbh = 5
+        nbw = 3
+        nbh = 3
         biw = int(-nbw / 2)
         bih = int(-nbh / 2)
         for i in range(biw, nbw + biw):
@@ -140,18 +171,21 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def add_tile(self, X, Y):
         """charge une tuile depuis le dique si elle existe, ou va la télécharger"""
         name='.cache_Images/' + str((X, Y, self.ZOOM)) + '.png'
-        # if X < 8265 and Y < 5990 and X > 8250 and Y > 5975:
-        if not os.path.exists(name):
-            path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
-            url = QtCore.QUrl(path)
-            request = QtNetwork.QNetworkRequest()
-            request.setUrl(url)
-            print(url, self.ZOOM, X, Y, self.manager.proxy().hostName())
-            request.setRawHeader('User-Agent', 'Une belle tuile')
-            request.setAttribute(QtNetwork.QNetworkRequest.User, (X, Y, self.ZOOM))
-            self.manager.get(request)
-        else:
-            self.load_tile_from_disk((X, Y, self.ZOOM))
+        if X < int(8265*2**(self.ZOOM-self.ZOOM_INIT)) and Y < int(5990*2**(self.ZOOM-self.ZOOM_INIT)) and X > int(8250*2**(self.ZOOM-self.ZOOM_INIT)) and Y > int(5975*2**(self.ZOOM-self.ZOOM_INIT)):
+            if not os.path.exists(name):
+                if name in self.tiles_beeing_downloaded:
+                    return
+                self.tiles_beeing_downloaded.append(name)
+                path = 'http://tile.openstreetmap.org/%d/%d/%d.png' % (self.ZOOM, X, Y)
+                url = QtCore.QUrl(path)
+                request = QtNetwork.QNetworkRequest()
+                request.setUrl(url)
+                print(url, self.ZOOM, X, Y, self.manager.proxy().hostName())
+                request.setRawHeader('User-Agent', 'Une belle tuile')
+                request.setAttribute(QtNetwork.QNetworkRequest.User, (X, Y, self.ZOOM))
+                self.manager.get(request)
+            else:
+                self.load_tile_from_disk((X, Y, self.ZOOM))
 
     def gererDonnees(self, reply):
         """réceptionne l'image téléchargée, l'enregistre sur le disque, puis l'affiche"""
@@ -166,6 +200,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             file.close()
             reply.deleteLater()
             self.load_tile_from_disk(cle)
+            self.tiles_beeing_downloaded.remove(name)
 
     def load_tile_from_disk(self, cle):
         """charge une tuile depuis le disque dur et l'affiche"""
@@ -191,10 +226,11 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.m_tilePixmaps[self.ZOOM] = {}
         pos1 = self.mapToScene(0, 0)
         pos2 = self.mapToScene(self.width(), self.height())
-        X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-14))
-        X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-14))
-        Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-14))
-        Y2 = int(pos2.y()/TILEDIM*2**(self.ZOOM-14))
+        #print(2**(self.ZOOM-self.ZOOM_INIT))
+        X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        Y2 = int(pos2.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
         for i in range(X1-2, X2+3):
             for j in range(Y1-2, Y2+3):
                 cle = (i, j, self.ZOOM)
@@ -203,29 +239,18 @@ class myQGraphicsView(QtGui.QGraphicsView):
                 else:
                     self.afficher_tuile(cle)    #sinon (la clé est en mémoire): on l'affiche (controle si déja dans la scene dans la fonction)
 
-    def zoommodif(self):
-        self.ZOOM = 16
+    def reset_zoom(self):
+        self.zoom(1/self.cur_zoom)
+        self.cur_zoom = 1
         self.update_tiles()
-        self.zoom(1)
-        self.centerOnPosition(self.latitude,self.longitude)
+        self.updateEquipSignal.emit()
 
-    def update_tiles2(self):  #ancienne update tiles
-        """affiche les tuiles nécessaires, en les prenant depuis la mémoire, le disque ou internet"""
-        if self.ZOOM not in self.m_tilePixmaps:
-            self.m_tilePixmaps[self.ZOOM] = {}
-        pos1 = self.mapToScene(0, 0)
-        pos2 = self.mapToScene(self.width(), self.height())
-        X1 = int(pos1.x()/TILEDIM)
-        X2 = int(pos2.x()/TILEDIM)
-        Y1 = int(pos1.y()/TILEDIM)
-        Y2 = int(pos2.y()/TILEDIM)
-        for i in range(X1-2, X2+3):
-            for j in range(Y1-2, Y2+3):
-                cle = (i, j, self.ZOOM)
-                if cle not in self.m_tilePixmaps[self.ZOOM]:    #si la cle n'est pas en mémoire, on essaie de la charger du disque, ou on la télecharge
-                    self.add_tile(i, j)
-                else:
-                    self.afficher_tuile(cle)    #sinon (la clé est en mémoire): on l'affiche (controle si déja dans la scene dans la fonction)
+    def reset_affichage(self):
+        self.zoom(1/self.cur_zoom)
+        self.cur_zoom = 1
+        self.ZOOM = self.ZOOM_INIT
+        self.update_tiles()
+        self.centerOnPosition(self.latitude, self.longitude)
 
     def setproxy(self, list):
         if list[0] != self.manager.proxy().hostName():
