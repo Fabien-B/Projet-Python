@@ -70,6 +70,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.centerOnPosition(lat, lon)
 
     def mousePressEvent(self, e):
+        super().mousePressEvent(e)
         if e.button() == QtCore.Qt.RightButton:
             pos = self.mapToScene(e.x(),e.y())
             (lat, lon) = self.get_gps_from_map(pos.x(),pos.y())

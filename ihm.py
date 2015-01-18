@@ -62,6 +62,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.Findequiarret_2_button.pressed.connect(lambda : self.get_equiStop(1))
         self.findPathFromPinButton.pressed.connect(lambda : self.get_equiStop(2))
         self.tisseo.closetASignal.connect(self.draw_stop_point_and_path)
+        self.tisseo.errorSignal.connect(lambda txt: self.statusbar.showMessage(txt,2000))
         self.graphicsView.signalEmetteur.doubleClickSignal.connect(self.get_pin)
         self.toolBox.resize(400, 1000)
 
@@ -108,8 +109,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         if self.pinPoint != None:
             self.scene.removeItem(self.pinPoint)
         self.pinPoint = point
-        print(point.legend)
-        print(point.coords)
 
     def update_affichage_equipements(self):
         """met à jour l'affichage des équipements en fonction des filtres"""
@@ -152,11 +151,11 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.statusbar.showMessage("Recherche ...")
         if self.arrets[pointIndex] != None:
             self.scene.removeItem(self.arrets[pointIndex])
-        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], pointIndex, isItineraire, departurePoint))     #True : itinéraire
+        threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], point=pointIndex, isItineraire=isItineraire, departurePoint=departurePoint))     #True : itinéraire
         threadClosestStopPoint.start()
 
     def draw_tisseoStopPoint(self,infos):
-        (nomArret, latArret, lonArret, i, isItineraire) = infos
+        (nomArret, latArret, lonArret, i, _,_) = infos
         self.arrets[i] = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
     def get_equiStop(self,departurePointIndex):
@@ -174,27 +173,27 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.locator.find(txt, txt)
         if departurePointIndex == 2:
             coords = self.pinPoint.coords
-        self.get_stopArea(departurePointIndex,coords, True,departurePoint = departurePointIndex)       #coords : pt de départ,    True: calcul d'itinéraire
 
         if self.arrets[departurePointIndex] != None:
-            self.scene.removeItem(self.arrets[1])
+            self.scene.removeItem(self.arrets[departurePointIndex])
             self.arrets[departurePointIndex] = None
         self.statusbar.showMessage("Recherche...")
-        self.get_stopArea(departurePointIndex,self.currentEquipmentCoords)
+        self.get_stopArea(departurePointIndex,coords, True,departurePoint=departurePointIndex)
 
     def draw_stop_point_and_path(self,infos):
         self.draw_tisseoStopPoint(infos)
         self.statusbar.clearMessage()
         if infos[4]:        #si c'est un calcul d'itinéraire
-            if not infos[3]:    #si on a calculer le point d'arrivée
+            if not infos[3]:    #si on a calculé le point d'arrivée
                 self.get_path(infos[5])
             else:
-                self.get_stopArea(0,self.currentEquipmentCoords,True)
+                self.get_stopArea(0,self.currentEquipmentCoords,True,infos[5])
 
     def get_path(self,indexDeparturePoint):
         answer = self.tisseo.gettrail(self.arrets[indexDeparturePoint].legend, self.arrets[0].legend)
-        self.draw_path(answer)
-        self.print_instructions_path(self.tisseo.extractinstruct(answer))
+        if answer != None:
+            self.draw_path(answer)
+            self.print_instructions_path(self.tisseo.extractinstruct(answer))
 
     def print_instructions_path(self,instructions):
         txt = '\n\n'.join(instructions)

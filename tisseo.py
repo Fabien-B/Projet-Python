@@ -5,6 +5,7 @@ class Tisseo(QtCore.QObject):
 
     closetASignal = QtCore.pyqtSignal(tuple)
     railGettedSignal = QtCore.pyqtSignal(list)
+    errorSignal = QtCore.pyqtSignal(str)
 
     def __init__(self):
         super(Tisseo,self).__init__()
@@ -19,7 +20,6 @@ class Tisseo(QtCore.QObject):
             r = requests.get(url, proxies= self.proxy)
         ans = r.json()['physicalStops']['physicalStop'][0]['stopArea']
         rep = (ans['name'], float(ans['y']), float(ans['x']), point, isItineraire, departurePoint)
-        print(rep)
         self.closetASignal.emit(rep)
 
     def getinfo(self, keyword):
@@ -38,7 +38,11 @@ class Tisseo(QtCore.QObject):
         else:
             r = requests.get(url, proxies=self.proxy)
         a=r.json()
-        a = a['routePlannerResult']['journeys'][0]['journey']['chunks']
+        try:
+            a = a['routePlannerResult']['journeys'][0]['journey']['chunks']
+        except KeyError:
+            self.errorSignal.emit('aucun trajets trouvés')
+            return None
         # ['wkt'].strip('LINESTRING ()').split()
         return a
 
