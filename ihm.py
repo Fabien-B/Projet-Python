@@ -27,7 +27,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.tisseopath = None
         self.answer = None
         self.pinPoint = None
-        self.ptRecherche = []
+        self.ptRecherche = None
         self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
         self.allEquipmentSet = set()
@@ -130,23 +130,22 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def update_after_zoom(self):
         self.update_affichage_equipements()
-        if self.ptRecherche != []:
-            self.scene.removeItem(self.ptRecherche[0])
-            coords = self.ptRecherche[1]
-            txt = self.ptRecherche[2]
-            self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
+        if self.ptRecherche != None:
+            self.scene.removeItem(self.ptRecherche)
+            coords = self.ptRecherche.coords
+            txt = self.ptRecherche.legend
+            self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], img='vous_etes_ici', legend=txt)
         if self.tisseopath != None and self.answer != None:
             self.draw_path(self.answer)
         if self.pinPoint != None:
             coords = self.pinPoint.coords
             self.scene.removeItem(self.pinPoint)
             self.graphicsView.dessiner_pinPoint(coords[0], coords[1])
-#        if self.arrets != None:
-#            for (i, pt) in enumerate(self.arrets):
-#                if pt != None:
-#                    infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
-#                    self.scene.removeItem(pt)
-#                    self.draw_tisseoStopPoint(infos)
+            for (i, pt) in enumerate(self.arrets):
+                if pt != None:
+                   infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
+                   self.scene.removeItem(pt)
+                   self.draw_tisseoStopPoint(infos)
 
     def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
@@ -159,11 +158,11 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre dans la lineEdit"""
         txt = self.lineEdit.text()
-        if self.ptRecherche != []:
-            self.scene.removeItem(self.ptRecherche[0])
+        if self.ptRecherche != None:
+            self.scene.removeItem(self.ptRecherche)
         coords = self.locator.find(txt, txt)
         if coords != None:
-            self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
+            self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], img='vous_etes_ici', legend=txt)
             self.graphicsView.centerOnPosition(coords[0], coords[1])
         else:
             print("adresse non trouvée")
@@ -179,7 +178,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def draw_tisseoStopPoint(self, infos):
         (nomArret, latArret, lonArret, i, _,_) = infos
-        self.arrets[i] = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
+        self.arrets[i] = self.graphicsView.draw_point(latArret, lonArret, img='arret_transport_en_commun', legend=nomArret)
 
     def get_equiStop(self,departurePointIndex):
         if self.nomLineEdit.text() == "":

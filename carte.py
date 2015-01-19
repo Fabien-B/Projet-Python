@@ -75,24 +75,20 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.dessiner_pinPoint(lat, lon)
 
     def dessiner_pinPoint(self, lat, lon):
-        (X, Y, resX, resY) = self.get_tile_nbs(lat, lon)
-        posX = (X + resX)*TILEDIM
-        posY = (Y + resY)*TILEDIM
-        point = poi.Point(posX, posY, img='pin-double-click', legend='click!', Zvalue=20, decx=-18, decy=-66, lat=lat, lon=lon)
+        point = self.draw_point(lat, lon, img='pin-double-click', legend='click!', Zvalue=20, decx=-18, decy=-66)
         self.signalEmetteur.doubleClickSignal.emit(point)
-        self.maScene.addItem(point)
 
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
         self.cur_zoom *= factor
         self.scale(factor, factor)
 
-    def draw_point(self, lat, lon, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend=''):
+    def draw_point(self, lat, lon, img='', PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10,  legend='', equipment = None, decx=0, decy=0):
         """affiche un point aux coordonnées lat, lon."""
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
-        point = poi.point(posX, posY, PEN, BRUSH, legend=legend, lat=lat, lon=lon)
+        point = poi.Point(posX, posY, img=img, PEN=PEN, BRUSH=BRUSH, Zvalue=Zvalue, legend=legend, equipment=equipment, lat=lat, lon=lon, decx=decx, decy=decy)
         self.maScene.addItem(point)
         return point
 
