@@ -131,7 +131,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
     def update_after_zoom(self):
         self.update_affichage_equipements()
         if self.ptRecherche != None:
-            self.scene.removeItem(self.ptRecherche)
             coords = self.ptRecherche.coords
             txt = self.ptRecherche.legend
             self.ptRecherche = self.graphicsView.draw_point(coords[0], coords[1], img='vous_etes_ici', legend=txt)
@@ -139,13 +138,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.draw_path(self.answer)
         if self.pinPoint != None:
             coords = self.pinPoint.coords
-            self.scene.removeItem(self.pinPoint)
             self.graphicsView.dessiner_pinPoint(coords[0], coords[1])
-            for (i, pt) in enumerate(self.arrets):
-                if pt != None:
-                   infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
-                   self.scene.removeItem(pt)
-                   self.draw_tisseoStopPoint(infos)
+        for (i, pt) in enumerate(self.arrets):
+            print(i,pt)
+            if pt != None:
+               infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
+               self.draw_tisseoStopPoint(infos)
 
     def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
