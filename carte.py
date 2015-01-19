@@ -19,9 +19,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.signalEmetteur = Emetteur()
         self.setTransformationAnchor(2)
         self.ZoomMode = 0
-        # en attendant que le zoom fonctionne bien
-        self.latitude = 43.5992525
-        self.longitude = 1.4283475
         self.tiles_beeing_downloaded = []
 
     def FinishInit(self):
@@ -97,8 +94,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         return point
 
     def initCarte(self, PEN = QtGui.QPen(QtCore.Qt.transparent, 2), BRUSH = QtCore.Qt.transparent,  legend=''):
-        """affiche un point aux coordonnées lat, lon."""
-        tiles_init = [(2000, 2000), (17000, 13000)]
+        """initialise une taille de carte suffisante et nous positionne au centre de Toulouse"""
+        tiles_init = [(2000, 2000), (17000, 17000)]
         for (X, Y) in tiles_init:
             posX = X*TILEDIM
             posY = Y*TILEDIM
@@ -259,7 +256,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.cur_zoom = 1
         self.ZOOM = self.ZOOM_INIT
         self.update_tiles()
-        self.centerOnPosition(self.latitude, self.longitude)
+        self.centerOn(8257.5*256, 5982.5*256)
 
     def setproxy(self, list):
         if list[0] != self.manager.proxy().hostName():
