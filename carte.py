@@ -41,14 +41,14 @@ class myQGraphicsView(QtGui.QGraphicsView):
         if e.delta() > 0:
             if self.cur_zoom < 1.5:
                 self.zoom((self.cur_zoom+0.10)/self.cur_zoom)
-            elif self.ZOOM < 15:
+            elif self.ZOOM < 19:
                 self.ZOOM += 1
                 self.reset_zoom()
                 self.centerOnPosition(coord[0], coord[1])
         else:
             if self.cur_zoom > 0.6:
                 self.zoom((self.cur_zoom-0.10)/self.cur_zoom)
-            elif self.ZOOM > 13:
+            elif self.ZOOM > 12:
                 self.ZOOM -= 1
                 self.reset_zoom()
                 self.centerOnPosition(coord[0], coord[1])
@@ -60,9 +60,12 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def mouseDoubleClickEvent(self, e):
         pos = self.mapToScene(e.x(),e.y())
-        (lat, lon) = self.get_gps_from_map(pos.x(),pos.y())
-        self.update_tiles()
-        self.centerOnPosition(lat, lon)
+        (lat, lon) = self.get_gps_from_map(pos.x(), pos.y())
+        if self.ZOOM < 19:
+            self.ZOOM += 1
+            self.update_tiles()
+            self.centerOnPosition(lat, lon)
+            self.updateZoomLevel.emit()
 
     def mousePressEvent(self, e):
         super().mousePressEvent(e)
@@ -95,14 +98,13 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def initCarte(self, PEN = QtGui.QPen(QtCore.Qt.transparent, 2), BRUSH = QtCore.Qt.transparent,  legend=''):
         """initialise une taille de carte suffisante et nous positionne au centre de Toulouse"""
-        tiles_init = [(2000, 2000), (17000, 17000)]
+        tiles_init = [(0, 0), (1400000, 1000000)]
         for (X, Y) in tiles_init:
             posX = X*TILEDIM
             posY = Y*TILEDIM
             point = poi.Point(posX, posY, PEN=PEN, BRUSH=BRUSH, legend=legend)
             self.maScene.addItem(point)
         self.centerOn(8257.5*256, 5982.5*256)
-
 
     def draw_equipment(self, equipment, Zvalue = 10):
         try:
@@ -233,10 +235,10 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.m_tilePixmaps[self.ZOOM] = {}
         pos1 = self.mapToScene(0, 0)
         pos2 = self.mapToScene(self.width(), self.height())
-        X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
-        X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
-        Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
-        Y2 = int(pos2.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
+        X1 = int(pos1.x()/TILEDIM)
+        X2 = int(pos2.x()/TILEDIM)
+        Y1 = int(pos1.y()/TILEDIM)
+        Y2 = int(pos2.y()/TILEDIM)
         for i in range(X1-2, X2+3):
             for j in range(Y1-2, Y2+3):
                 cle = (i, j, self.ZOOM)
