@@ -64,6 +64,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.tisseo.closetASignal.connect(self.draw_stop_point_and_path)
         self.tisseo.errorSignal.connect(lambda txt: self.statusbar.showMessage(txt,2000))
         self.graphicsView.signalEmetteur.doubleClickSignal.connect(self.get_pin)
+        self.graphicsView.signalEmetteur.coordoneeErrorSignal.connect(lambda txt: self.statusbar.showMessage(txt,2000))
         self.toolBox.resize(400, 1000)
 
     def build_map(self):
@@ -279,7 +280,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.sanitairesLineEdit_5.setText('Non renseigné')
         elif equipoint.equipment.sanitaires != 'non':
             self.sanitairesLineEdit_5.setText('Oui')
-        if equipoint.equipment.douches == [None, None]:     #TODO: n'a pas l'air de marcher, renvoie toujours non renseigné
+        if equipoint.equipment.douches == [None, None]:
             self.douchesLineEdit.setText('Non renseigné')
         else:
             txt = str(equipoint.equipment.douches[0]) + ' ind. , ' + str(equipoint.equipment.douches[1]) + ' coll.'

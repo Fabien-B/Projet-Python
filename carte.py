@@ -110,7 +110,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         except TypeError:
             lat = 0
             lon = 0
-            print("Erreur d'importation coordonnées ")
+            self.signalEmetteur.coordoneeErrorSignal.emit("Erreur d'importation coordonnées")
         (X, Y, resX, resY) = self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
@@ -129,7 +129,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def centerOnPosition(self, lat, lon):
         """centre la carte sur la position définie par une latitude et une longitude"""
-        #TODO : à refaire avec des self.setSceneRect()
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX) * TILEDIM
         posY = (Y + resY) * TILEDIM
@@ -273,3 +272,4 @@ class myQGraphicsView(QtGui.QGraphicsView):
 class Emetteur(QtCore.QObject):
 
     doubleClickSignal = QtCore.pyqtSignal(poi.Point)
+    coordoneeErrorSignal = QtCore.pyqtSignal(str)
