@@ -92,7 +92,7 @@ class Equipement_point(POI):
 
 
 class Equipment_Group(Point):
-
+    """La classe qui dessine, compte le nombre d'équipement, affiche le nombre, gère le clic des cluster (fermés)"""
     def __init__(self, scene, x, y):
         super(Equipment_Group, self).__init__(x, y, PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 11, legend='', equipment = None)
         self.thescene = scene
@@ -126,17 +126,41 @@ class Equipment_Group(Point):
 
 
 class BackGroundCluster(QtGui.QGraphicsEllipseItem):
-
+    """La classe qui dessine, anime, gère le clic le background quand on explose un cluster"""
     def __init__(self, rayon, the_cluster, scene):
         super(BackGroundCluster, self).__init__(0, 0, rayon+30, rayon+30)
+        self.setTransformOriginPoint(the_cluster.Pos()[0]+12 + (rayon+30)/2,the_cluster.Pos()[1]+12 +(rayon+30)/2)
         self.thescene = scene
+        self.rayon = rayon+30
         self.equippointlist = []
         self.the_cluster = the_cluster
         self.setPen(QtGui.QPen(QtCore.Qt.black, 2))
         self.setBrush(QtCore.Qt.red)
-        self.setPos(the_cluster.Pos()[0]+12 - (rayon+30)/2, the_cluster.Pos()[1]+12 -(rayon+30)/2)
         self.setZValue(13)
+        self.setOpacity(0.8)
         self.thescene.addItem(self)
+
+        class Adapter(QtCore.QObject):
+            """the class that will animate the opacity
+            Inspired by TD de QT ENAC"""
+            def __init__(self, item):
+                super(Adapter, self).__init__()
+                self.item = item
+            opening = QtCore.pyqtProperty(float,lambda s: s.item.boundingRect().height(), lambda s, v: s.item.makebig(v))
+
+
+        anim = QtCore.QPropertyAnimation(Adapter(self), 'opening')
+        anim.setDuration(200)
+        anim.setStartValue(0)
+        anim.setKeyValueAt(0.5, 1)
+        anim.setEndValue(rayon+30)
+        anim.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
+        anim.start()
+        self.anim = anim  # prevents GC to collect the anim instance
+
+    def makebig(self, v):
+        self.setPos(self.the_cluster.Pos()[0]+12 - v/2, self.the_cluster.Pos()[1]+12 -v/2)
+        self.setRect(0,0,v,v)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()

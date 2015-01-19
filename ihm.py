@@ -58,7 +58,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
-        self.ajouterFiltreButton.clicked.connect(lambda : self.ajouter_filtre())
+        self.ajouterFiltreButton.clicked.connect(lambda: self.ajouter_filtre())
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
         self.Findequiarret_2_button.pressed.connect(lambda : self.get_equiStop(1))
         self.findPathFromPinButton.pressed.connect(lambda : self.get_equiStop(2))
