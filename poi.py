@@ -49,7 +49,7 @@ class Point(POI):
 
 class Equipement_point(POI):
     def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend='',decx=0, decy=0):
-        super(Equipement_point,self).__init__(Zvalue)
+        super(Equipement_point, self).__init__(Zvalue)
         self.equipment = equipement
         self.legend = legend
         if equipement != None:

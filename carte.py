@@ -92,7 +92,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
-        point = poi.point(posX,posY, PEN, BRUSH, legend=legend, lat=lat, lon=lon)
+        point = poi.point(posX, posY, PEN, BRUSH, legend=legend, lat=lat, lon=lon)
         self.maScene.addItem(point)
         return point
 

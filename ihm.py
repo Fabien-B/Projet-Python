@@ -141,6 +141,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.pinPoint.coords
             self.scene.removeItem(self.pinPoint)
             self.graphicsView.dessiner_pinPoint(coords[0], coords[1])
+#        if self.arrets != None:
+#            for (i, pt) in enumerate(self.arrets):
+#                if pt != None:
+#                    infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
+#                    self.scene.removeItem(pt)
+#                    self.draw_tisseoStopPoint(infos)
 
     def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
@@ -171,7 +177,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], point=pointIndex, isItineraire=isItineraire, departurePoint=departurePoint))     #True : itinéraire
         threadClosestStopPoint.start()
 
-    def draw_tisseoStopPoint(self,infos):
+    def draw_tisseoStopPoint(self, infos):
         (nomArret, latArret, lonArret, i, _,_) = infos
         self.arrets[i] = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
