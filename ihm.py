@@ -88,7 +88,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         """crée et initialise un filtre"""
         self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.pointAff))
         self.mesFiltres[-1].updateSignal.connect(self.update_affichage_equipements)
-        self.graphicsView.updateEquipSignal.connect(self.update_affichage_equipements)
+        self.graphicsView.updateZoomLevel.connect(self.update_after_zoom)
         self.mesFiltres[-1].create_set(self.equipmentList)
         self.mesFiltres[-1].equip_set(self.equipmentList)
         self.mesFiltres[-1].removeSignal.connect(self.remove_filtre)
@@ -118,7 +118,16 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
-    def filtrer_acces_hand(self,equipSet,state = True):
+    def update_after_zoom(self):
+        self.update_affichage_equipements()
+        if self.ptRecherche != None:
+            coords = self.ptRecherche[1]
+            txt = self.ptRecherche[2]
+            self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
+        if self.tisseopath != None:
+
+
+    def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
         tempSet = set()
         for equip in equipSet:
@@ -131,14 +140,15 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         txt = self.lineEdit.text()
         if self.ptRecherche != None:
             self.scene.removeItem(self.ptRecherche)
-        coords = self.locator.find(txt,txt)
+        coords = self.locator.find(txt, txt)
         if coords != None:
-            self.ptRecherche = self.graphicsView.draw_img_point(coords[0], coords[1],'vous_etes_ici', txt)
+            self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
+            self.graphicsView.centerOnPosition(coords[0], coords[1])
         else:
             print("adresse non trouvée")
             self.statusbar.showMessage("adresse non trouvée")
 
-    def get_stopArea(self,i,coords):
+    def get_stopArea(self, i, coords):
         """recherche avec l'API tisséo l'arret le plus proche"""
         self.statusbar.showMessage("Recherche ...")
         if self.arrets[i] != None:
@@ -147,7 +157,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         threadClosestStopPoint = threading.Thread(target = lambda : self.tisseo.get_closest_sa(coords[0], coords[1], i))
         threadClosestStopPoint.start()
 
-    def draw_tisseoStopPoint(self,infos):
+    def draw_tisseoStopPoint(self, infos):
         (nomArret, latArret, lonArret, i) = infos
         self.arrets[i] = self.graphicsView.draw_img_point(latArret, lonArret, 'arret_transport_en_commun', nomArret)
 
@@ -160,7 +170,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             return
         else:
             txt = self.lineEdit.text()
-            self.get_stopArea(0,self.locator.find(txt, txt))
+            self.get_stopArea(0, self.locator.find(txt, txt))
 
             if self.arrets[1] != None:
                 self.scene.removeItem(self.arrets[1])
@@ -168,12 +178,11 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             self.statusbar.showMessage("Recherche...")
             self.get_stopArea(1,self.currentEquipmentCoords)
 
-    def draw_stop_point_and_path(self,infos):
+    def draw_stop_point_and_path(self, infos):
         self.draw_tisseoStopPoint(infos)
         self.statusbar.clearMessage()
         if infos[3]:
             self.get_path()
-
 
     def get_path(self):
         answer = self.tisseo.gettrail(self.arrets[0].legend, self.arrets[1].legend)

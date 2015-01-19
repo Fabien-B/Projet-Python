@@ -5,10 +5,9 @@ import os
 
 TILEDIM = 256
 
+
 class myQGraphicsView(QtGui.QGraphicsView):
-
-    updateEquipSignal = QtCore.pyqtSignal()
-
+    updateZoomLevel = QtCore.pyqtSignal()
 
     def __init__(self, parent):
         super(myQGraphicsView, self).__init__(parent)
@@ -41,7 +40,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         """Zoom sur la carte """
         pos = self.mapToScene(e.x(), e.y())
         coord = self.get_gps_from_map(pos.x(), pos.y())
-        print(self.cur_zoom)
         if e.delta() > 0:
             if self.cur_zoom < 1.5:
                 self.zoom((self.cur_zoom+0.10)/self.cur_zoom)
@@ -212,9 +210,10 @@ class myQGraphicsView(QtGui.QGraphicsView):
         """ajoute une tuile à la scène"""
         if self.m_tilePixmaps[self.ZOOM][cle][1] == 0:
             (X, Y, ZOOM) = cle
-            tuile = self.maScene.addPixmap(self.m_tilePixmaps[ZOOM][cle][0])
-            self.m_tilePixmaps[ZOOM][cle][1] = 1
-            tuile.setPos(X*TILEDIM, Y*TILEDIM)
+            if X < int(8265*2**(self.ZOOM-self.ZOOM_INIT)) and Y < int(5990*2**(self.ZOOM-self.ZOOM_INIT)) and X > int(8250*2**(self.ZOOM-self.ZOOM_INIT)) and Y > int(5975*2**(self.ZOOM-self.ZOOM_INIT)):
+                tuile = self.maScene.addPixmap(self.m_tilePixmaps[ZOOM][cle][0])
+                self.m_tilePixmaps[ZOOM][cle][1] = 1
+                tuile.setPos(X*TILEDIM, Y*TILEDIM)
 
     def update_tiles(self):
         """affiche les tuiles nécessaires, en les prenant depuis la mémoire, le disque ou internet"""
@@ -222,7 +221,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.m_tilePixmaps[self.ZOOM] = {}
         pos1 = self.mapToScene(0, 0)
         pos2 = self.mapToScene(self.width(), self.height())
-        #print(2**(self.ZOOM-self.ZOOM_INIT))
         X1 = int(pos1.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
         X2 = int(pos2.x()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
         Y1 = int(pos1.y()/TILEDIM*2**(self.ZOOM-self.ZOOM_INIT))
@@ -239,7 +237,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.zoom(1/self.cur_zoom)
         self.cur_zoom = 1
         self.update_tiles()
-        self.updateEquipSignal.emit()
+        self.updateZoomLevel.emit()
 
     def reset_affichage(self):
         self.zoom(1/self.cur_zoom)
