@@ -25,8 +25,8 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.tisseo = tisseo.Tisseo()
         self.arrets = [None, None,None]     #arrive, depart1, départ2
         self.tisseopath = None
-        self.ptRecherche = None
         self.pinPoint = None
+        self.ptRecherche = []
         self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
         self.allEquipmentSet = set()
@@ -99,7 +99,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         i = self.mesFiltres[-1].comboBox.findText('Activités')
         self.mesFiltres[-1].comboBox.setCurrentIndex(i)
 
-    def remove_filtre(self,widget):
+    def remove_filtre(self, widget):
         """supprime un filtre"""
         i = self.tabWidget.indexOf(widget)
         self.tabWidget.removeTab(i)
@@ -129,12 +129,11 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def update_after_zoom(self):
         self.update_affichage_equipements()
-        if self.ptRecherche != None:
+        if self.ptRecherche != []:
+            self.scene.removeItem(self.ptRecherche[0])
             coords = self.ptRecherche[1]
             txt = self.ptRecherche[2]
             self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
-        if self.tisseopath != None:
-            pass
 
     def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
@@ -147,8 +146,8 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
     def affiche_addresse(self):
         """ affiche un point à l'addresse que l'utilisateur entre dans la lineEdit"""
         txt = self.lineEdit.text()
-        if self.ptRecherche != None:
-            self.scene.removeItem(self.ptRecherche)
+        if self.ptRecherche != []:
+            self.scene.removeItem(self.ptRecherche[0])
         coords = self.locator.find(txt, txt)
         if coords != None:
             self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
@@ -219,7 +218,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             """Renvoie une QColor en fonction de l'entier 'n'
             BY TP noté 2 de Python ENAC"""
             d = (0xff, 0xdd, 0xbb, 0x99, 0x77, 0x55)[(n // 6) % 6]
-            r, v, b = ((d,0,0), (0,d,0), (0,0,d), (d,d,0), (d,0,d), (0,d,d))[n % 6]
+            r, v, b = ((d, 0, 0), (0, d, 0), (0, 0, d), (d, d, 0), (d, 0, d), (0, d, d))[n % 6]
             return QtGui.QColor(r, v, b)
 
         pathlist, pointlist = self.tisseo.extractlinecoord(answer)
