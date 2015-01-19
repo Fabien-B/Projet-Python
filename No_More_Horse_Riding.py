@@ -67,38 +67,47 @@ class No_Covering():
 
 
 
+class No_Covering_Active(QtCore.QObject):
+    def __init__(self, ihm):
+        super(No_Covering_Active, self).__init__()
+        self.ihm = ihm
+        self.scene = None
+    def repulse(self, equipList):
+        self.scene = self.ihm.scene
+        equipListClustered = equipList
+        clusterlist = []
+        packed = []
+        icons = list(set(equipList) - set([None]))
+        for elicon1 in icons:
+            collidingitems = elicon1.collidingItems()
+            colliding = list(set(collidingitems) & set(icons) - set(packed))
+            if colliding:
+                    trait = QtGui.QGraphicsLineItem()
+                    pen = QtGui.QPen(QtCore.Qt.red, 2, QtCore.Qt.SolidLine, QtCore.Qt.RoundCap, QtCore.Qt.RoundJoin)
+                    trait.setPen(pen)
+                    trait.setLine(elicon1.Pos()[0], elicon1.Pos()[1], elicon1.Pos()[0]+20, elicon1.Pos()[1]+20)
+                    trait.setZValue(4)
+                    self.scene.addItem(trait)
+                    # elicon1.SetPos()
+                    elicon2.SetPos(elicon2.Pos()[0]+40, elicon2.Pos()[1]+40)
+                    elicon2.setOpacity(0.5)
 
-def repulse(equipList, scene):
-    for elicon1 in equipList.values():
-        collidingitems = elicon1.collidingItems()
-        for elicon2 in collidingitems:
-            if elicon2 in equipList.values():
-                trait = QtGui.QGraphicsLineItem()
-                pen = QtGui.QPen(QtCore.Qt.red, 2, QtCore.Qt.SolidLine, QtCore.Qt.RoundCap, QtCore.Qt.RoundJoin)
-                trait.setPen(pen)
-                trait.setLine(elicon1.Pos()[0], elicon1.Pos()[1], elicon1.Pos()[0]+20, elicon1.Pos()[1]+20)
-                trait.setZValue(4)
-                scene.addItem(trait)
-                # elicon1.SetPos()
-                elicon2.SetPos(elicon2.Pos()[0]+40, elicon2.Pos()[1]+40)
-                elicon2.setOpacity(0.5)
-
-def repulse2(equipList, scene):
-        global tries
-        changed = 0
-        checked = []
-        for (equip1, point1) in equipList.items():
-            for (equip2, point2) in equipList.items():
-                if point1 != None and point2 != None and equip1 != equip2 and equip1 not in checked and equip2 not in checked:
-                    try :
-                        pos1 = (point1.icone.scenePos().x(), point2.icone.scenePos().y())
-                        print(pos1)
-                    except AttributeError:
-                     try:
-                        pos1 = (point1.ellipse.scenePos().x(), point2.icone.scenePos().x())
-                        print(pos1)
-                     except AttributeError:
-                        pos1 = (0,0)
+    def repulse2(self, equipList):
+            global tries
+            changed = 0
+            checked = []
+            for (equip1, point1) in equipList:
+                for (equip2, point2) in equipList:
+                    if point1 != None and point2 != None and equip1 != equip2 and equip1 not in checked and equip2 not in checked:
+                        try :
+                            pos1 = (point1.icone.scenePos().x(), point2.icone.scenePos().y())
+                            print(pos1)
+                        except AttributeError:
+                         try:
+                            pos1 = (point1.ellipse.scenePos().x(), point2.icone.scenePos().x())
+                            print(pos1)
+                         except AttributeError:
+                            pos1 = (0,0)
 
                     # pos2 = (point2.ellipse.rect().x(), point2.ellipse.rect().y())
 
@@ -124,16 +133,16 @@ def repulse2(equipList, scene):
                         ellipse.setBrush(QtCore.Qt.red)
                         ellipse.setRect(pos1[0], pos1[1], 20, 20)
                         ellipse.setZValue(150)
-                        scene.addItem(ellipse)
+                        self.scene.addItem(ellipse)
                         # print("\"",equip1.name, equip2.name, "\"")
                         checked.append(equip1)
                         checked.append(equip2)
                         changed = 1
-        if changed == 1:
-            tries += 1
-            print(tries)
+            if changed == 1:
+                tries += 1
+                print(tries)
             # if tries <= 5:
-                # repulse(equipList)
+                # repulse(self.equipList)
             # else:
             #     tries = 0
             #     return
