@@ -124,8 +124,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.ptRecherche[1]
             txt = self.ptRecherche[2]
             self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
-        if self.tisseopath != None:
-
 
     def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
