@@ -14,7 +14,7 @@ class Point(POI):
         super(Point,self).__init__(Zvalue)
         self.equipment = equipment
         self.legend = legend
-        self.coords = (lat,lon)
+        self.coords = (lat, lon)
 
         path = 'icones/' + img + '.png'
         if os.path.exists(path):

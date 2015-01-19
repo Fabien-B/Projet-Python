@@ -23,8 +23,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.latitude = 43.564995   #latitude et longitudes de départ
         self.longitude = 1.481650
         self.tisseo = tisseo.Tisseo()
-        self.arrets = [None, None,None]     #arrive, depart1, départ2
+        self.arrets = [None, None, None]     #arrive, depart1, départ2
         self.tisseopath = None
+        self.answer = None
         self.pinPoint = None
         self.ptRecherche = []
         self.locator = Get_GPS.GPScoord(None)
@@ -106,7 +107,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         del self.mesFiltres[i]
         self.update_affichage_equipements()
 
-    def get_pin(self,point):
+    def get_pin(self, point):
         if self.pinPoint != None:
             self.scene.removeItem(self.pinPoint)
         self.pinPoint = point
@@ -134,6 +135,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.ptRecherche[1]
             txt = self.ptRecherche[2]
             self.ptRecherche = [self.graphicsView.draw_img_point(coords[0], coords[1], 'vous_etes_ici', txt), coords, txt]
+        if self.tisseopath != None and self.answer != None:
+            self.draw_path(self.answer)
+        if self.pinPoint != None:
+            coords = self.pinPoint.coords
+            self.scene.removeItem(self.pinPoint)
+            self.graphicsView.dessiner_pinPoint(coords[0], coords[1])
 
     def filtrer_acces_hand(self, equipSet,state = True):
         """prend en paramètre un set d'équipements, renvoie un set de ceux avec (ou sans) accès handicapés (suivant l'état de state)"""
@@ -204,6 +211,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         if answer != None:
             self.draw_path(answer)
             self.print_instructions_path(self.tisseo.extractinstruct(answer))
+            self.answer = answer
 
     def print_instructions_path(self,instructions):
         txt = '\n\n'.join(instructions)

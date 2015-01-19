@@ -70,11 +70,17 @@ class myQGraphicsView(QtGui.QGraphicsView):
     def mousePressEvent(self, e):
         super().mousePressEvent(e)
         if e.button() == QtCore.Qt.RightButton:
-            pos = self.mapToScene(e.x(),e.y())
-            (lat, lon) = self.get_gps_from_map(pos.x(),pos.y())
-            point = poi.Point(pos.x(), pos.y(), img='pin-double-click', legend='click!',Zvalue=20,decx=-18, decy=-66, lat=lat, lon=lon)
-            self.signalEmetteur.doubleClickSignal.emit(point)
-            self.maScene.addItem(point)
+            pos = self.mapToScene(e.x(), e.y())
+            (lat, lon) = self.get_gps_from_map(pos.x(), pos.y())
+            self.dessiner_pinPoint(lat, lon)
+
+    def dessiner_pinPoint(self, lat, lon):
+        (X, Y, resX, resY) = self.get_tile_nbs(lat, lon)
+        posX = (X + resX)*TILEDIM
+        posY = (Y + resY)*TILEDIM
+        point = poi.Point(posX, posY, img='pin-double-click', legend='click!', Zvalue=20, decx=-18, decy=-66, lat=lat, lon=lon)
+        self.signalEmetteur.doubleClickSignal.emit(point)
+        self.maScene.addItem(point)
 
     def zoom(self, factor):
         """zoom du facteur 'factor'"""
