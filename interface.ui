@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>VEST - Visualisation des Équipements Sportifs Toulousain</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>214</width>
-          <height>468</height>
+          <width>199</width>
+          <height>493</height>
          </rect>
         </property>
         <attribute name="label">
@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>277</width>
-          <height>455</height>
+          <width>229</width>
+          <height>480</height>
          </rect>
         </property>
         <attribute name="label">
@@ -97,14 +97,11 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Rechercher</string>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="placeholderText">
+              <string>Rechercher ( press Enter ) </string>
              </property>
             </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit"/>
            </item>
           </layout>
          </item>
@@ -161,7 +158,7 @@ itinéraire:</string>
     <item>
      <widget class="QPushButton" name="pushButton">
       <property name="text">
-       <string>Zoom</string>
+       <string>Revenir au Zoom Initial</string>
       </property>
      </widget>
     </item>
@@ -173,7 +170,7 @@ itinéraire:</string>
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>30</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -216,9 +213,9 @@ itinéraire:</string>
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-197</y>
-          <width>353</width>
-          <height>748</height>
+          <y>0</y>
+          <width>330</width>
+          <height>668</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">

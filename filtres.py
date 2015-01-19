@@ -43,6 +43,7 @@ class Filtre(QtCore.QObject):
         self.verticalLayout.addWidget(self.selectAllSecondFiltreButton)
         self.lineEditFiltre = QtGui.QLineEdit(self.tab)
         self.lineEditFiltre.setObjectName("lineEditFiltres")
+        self.lineEditFiltre.setPlaceholderText('Rechercher')
         self.verticalLayout.addWidget(self.lineEditFiltre)
         self.listWidget = QtGui.QListWidget(self.tab)
         self.listWidget.setObjectName("listWidget")
@@ -132,6 +133,7 @@ class Filtre(QtCore.QObject):
     def add_checkboxs(self,txt):
         """Ajoute les checkboxs souhaitées à la listwidget"""
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),txt)
+        self.lineEditFiltre.clear()
         param = str(self.attributsNames[txt])
         paramSet = param + 'Set'
         self.listWidget.clear()
@@ -143,6 +145,7 @@ class Filtre(QtCore.QObject):
             lwItem.param = param
             lwItem.setFlags(Qt.ItemIsEnabled)
             lwItem.setCheckState(Qt.Unchecked)
+
 
     def add_combo_items(self):
         """Ajoute les choix dans la comboBox"""

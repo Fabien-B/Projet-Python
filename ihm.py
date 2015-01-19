@@ -63,9 +63,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.Findequiarret_2_button.pressed.connect(lambda : self.get_equiStop(1))
         self.findPathFromPinButton.pressed.connect(lambda : self.get_equiStop(2))
         self.tisseo.closetASignal.connect(self.draw_stop_point_and_path)
-        self.tisseo.errorSignal.connect(lambda txt: self.statusbar.showMessage(txt,2000))
+        self.tisseo.errorSignal.connect(lambda txt: self.statusbar.showMessage(txt, 2000))
         self.graphicsView.signalEmetteur.doubleClickSignal.connect(self.get_pin)
-        self.graphicsView.signalEmetteur.coordoneeErrorSignal.connect(lambda txt: self.statusbar.showMessage(txt,2000))
+        self.graphicsView.signalEmetteur.coordoneeErrorSignal.connect(lambda txt: self.statusbar.showMessage(txt, 2000))
         self.toolBox.resize(400, 1000)
 
     def build_map(self):

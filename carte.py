@@ -169,8 +169,8 @@ class myQGraphicsView(QtGui.QGraphicsView):
         (X, Y, resx, resy) = self.get_tile_nbs(lat, lon)
         #nbw = int(self.width() / TILEDIM) + 1
         #nbh = int(self.height() / TILEDIM) + 1
-        nbw = 3
-        nbh = 3
+        nbw = 10
+        nbh = 10
         biw = int(-nbw / 2)
         bih = int(-nbh / 2)
         for i in range(biw, nbw + biw):

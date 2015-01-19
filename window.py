@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Thu Jan 15 23:52:40 2015
+# Created: Mon Jan 19 15:57:34 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(900, 650)
+        MainWindow.resize(897, 653)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout_9 = QtGui.QVBoxLayout(self.centralwidget)
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 200, 500))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 199, 493))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -63,15 +63,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 455))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 229, 480))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.toolBoxPage3)
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
         self.lineEdit = QtGui.QLineEdit(self.toolBoxPage3)
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.horizontalLayout.addWidget(self.lineEdit)
@@ -104,7 +101,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 897, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 897, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFichier = QtGui.QMenu(self.menubar)
         self.menuFichier.setObjectName(_fromUtf8("menuFichier"))
@@ -126,7 +123,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -197, 353, 748))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 330, 668))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_8 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
@@ -339,12 +336,12 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "VEST - Visualisation des Équipements Sportifs Toulousain", None))
         self.handAccessButton.setText(_translate("MainWindow", "Accès Handicapés", None))
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Filtres", None))
-        self.label.setText(_translate("MainWindow", "Rechercher", None))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Rechercher ( press Enter ) ", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
         self.label_3.setText(_translate("MainWindow", "Chercher un itinéraire\n"
 "vers l\'équipement:", None))
@@ -353,7 +350,7 @@ class Ui_MainWindow(object):
         self.label_19.setText(_translate("MainWindow", "Instructions\n"
 "itinéraire:", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage3), _translate("MainWindow", "Rechercher une adresse", None))
-        self.pushButton.setText(_translate("MainWindow", "Reset Zoom", None))
+        self.pushButton.setText(_translate("MainWindow", "Revenir au Zoom Initial", None))
         self.menuFichier.setTitle(_translate("MainWindow", "Fichier", None))
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage", None))
         self.menuOutils.setTitle(_translate("MainWindow", "Outils", None))
