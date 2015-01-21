@@ -3,7 +3,7 @@ import poi
 import os
 
 class SceneClickable(QtGui.QGraphicsScene):
-
+    """Version de la scène qui envoie des signaux"""
     clusterisclicked = QtCore.pyqtSignal(poi.Equipment_Group)
     equipointisclicked = QtCore.pyqtSignal(poi.Equipement_point)
     backgroundclicked = QtCore.pyqtSignal(poi.BackGroundCluster)
@@ -14,6 +14,7 @@ class SceneClickable(QtGui.QGraphicsScene):
         self.selectbackground = None
 
     def clusterclicked(self, cluster):
+        """Si un cluster est cliké envoyer un signal"""
         self.clusterisclicked.emit(cluster)
 
     def equipclicked(self, equipoint):
