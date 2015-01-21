@@ -29,7 +29,7 @@ GenericName=VEST
 Comment=Application de visualisation des équipements sportifs toulousains
 Icon=$a/vesp_ico.png
 Exec='$a/VEST'
-Terminal=true
+Terminal=false
 StartupNotify=true
 Categories='Application'" > /usr/share/applications/VEST.desktop
 
@@ -37,5 +37,10 @@ chmod +x $a/VEST
 chmod +x /home/$user/Bureau/VEST.desktop
 chmod +x /usr/share/applications/VEST.desktop
 chown $user /home/$user/Bureau/VEST.desktop
+
+apt-get install python3-PyQt4 -y
+apt-get install python3-pip -y
+pip3 install xlrd
+pip3 install geopy==1.5.0
 
 echo "done"
