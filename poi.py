@@ -3,18 +3,14 @@ import carte
 import os
 
 
-class POI(QtGui.QGraphicsItemGroup):
-    def __init__(self, Zvalue = 10):
-        super(POI, self).__init__()
-        self.setZValue(Zvalue)
-
-
-class Point(POI):
+class Point(QtGui.QGraphicsItemGroup):
     def __init__(self, x, y, img='', PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None, lat=0, lon=0, decx=0, decy=0):
-        super(Point,self).__init__(Zvalue)
+        super(Point,self).__init__()
         self.equipment = equipment
         self.legend = legend
         self.coords = (lat, lon)
+        self.setZValue(Zvalue)
+        self.selected = False
 
         path = 'icones/' + img + '.png'
         if os.path.exists(path):
@@ -47,12 +43,15 @@ class Point(POI):
         self.ellipse.setPos(x, y)
 
 
-class Equipement_point(POI):
+class Equipement_point(QtGui.QGraphicsItemGroup):
     def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend='',decx=0, decy=0):
-        super(Equipement_point, self).__init__(Zvalue)
+        super(Equipement_point, self).__init__()
         self.equipment = equipement
         self.legend = legend
+        self.setZValue(Zvalue)
+        self.selected = False
         if equipement != None:
+
             nameImg = equipement.type.lower().split()[0]
             path = 'icones/' + nameImg + '.png'
             self.legend = equipement.name
@@ -129,7 +128,6 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
     """La classe qui dessine, anime, gère le clic le background quand on explose un cluster"""
     def __init__(self, rayon, the_cluster, scene):
         super(BackGroundCluster, self).__init__(0, 0, rayon+30, rayon+30)
-        self.setTransformOriginPoint(the_cluster.Pos()[0]+12 + (rayon+30)/2,the_cluster.Pos()[1]+12 +(rayon+30)/2)
         self.thescene = scene
         self.rayon = rayon+30
         self.equippointlist = []
@@ -141,7 +139,7 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
         self.thescene.addItem(self)
 
         class Adapter(QtCore.QObject):
-            """the class that will animate the opacity
+            """the class that will animate the opening
             Inspired by TD de QT ENAC"""
             def __init__(self, item):
                 super(Adapter, self).__init__()
@@ -152,7 +150,6 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
         anim = QtCore.QPropertyAnimation(Adapter(self), 'opening')
         anim.setDuration(200)
         anim.setStartValue(0)
-        anim.setKeyValueAt(0.5, 1)
         anim.setEndValue(rayon+30)
         anim.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
         anim.start()
@@ -165,3 +162,35 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
         QGraphicsSceneMouseEvent.accept()
         self.thescene.bgclicked(self)
+
+
+class SelectBackground(QtGui.QGraphicsEllipseItem):
+    def __init__(self, equipoint):
+        super(SelectBackground, self).__init__()
+        self.equipoint = equipoint
+        self.setZValue(equipoint.zValue()-1)
+        equipwitdth = equipoint.boundingRect().width()
+        equipheight = equipoint.boundingRect().height()
+        width = equipwitdth + 10
+        height = equipheight + 10
+        self.setRect(0,0,width, height)
+        self.setPos(equipoint.Pos()[0] - width/2 + equipwitdth/2, equipoint.Pos()[1] - height/2 + equipheight/2)
+        self.setBrush(QtCore.Qt.darkBlue)
+
+        class Adapter(QtCore.QObject):
+            """the class that will animate the opacity
+            Inspired by TD de QT ENAC"""
+            def __init__(self, item):
+                super(Adapter, self).__init__()
+                self.item = item
+            fading = QtCore.pyqtProperty(float,lambda s: s.item.opacity(), lambda s, v: s.item.setOpacity(v))
+
+        anim = QtCore.QPropertyAnimation(Adapter(self), 'fading')
+        anim.setDuration(2500)
+        anim.setStartValue(0.4)
+        anim.setKeyValueAt(0.5, 1)
+        anim.setEndValue(0.4)
+        anim.setLoopCount(-1)
+        anim.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
+        anim.start()
+        self.anim = anim

@@ -11,6 +11,7 @@ class SceneClickable(QtGui.QGraphicsScene):
 
     def __init__(self):
         super(SceneClickable, self).__init__()
+        self.selectbackground = None
 
     def clusterclicked(self, cluster):
         self.clusterisclicked.emit(cluster)
@@ -19,6 +20,14 @@ class SceneClickable(QtGui.QGraphicsScene):
         self.equipointisclicked.emit(equipoint)
         if equipoint.equipment:
             self.giveEqCoordsSignal.emit(equipoint.equipment.coords)
+        self.draw_back_equip_select(equipoint)
+
+    def draw_back_equip_select(self, equipoint):
+        equipoint.selected = True
+        if self.selectbackground:
+            self.removeItem(self.selectbackground)
+        self.selectbackground = poi.SelectBackground(equipoint)
+        self.addItem(self.selectbackground)
 
     def bgclicked(self, background):
         self.backgroundclicked.emit(background)

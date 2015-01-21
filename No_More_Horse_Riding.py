@@ -2,11 +2,15 @@ from PyQt4 import QtCore, QtGui
 import math
 import poi
 
-class No_Covering():
+class No_Covering(QtCore.QObject):
+
+    equipoint_clicked_in_cluster = QtCore.pyqtSignal(poi.Equipment_Group)
+
     def __init__(self, ihm):
+        super(No_Covering, self).__init__()
         self.ihm = ihm
         self.scene = None
-
+        self.equipoint_selected_clustered = None
 
     def cluster(self, equipList):
         self.scene = self.ihm.scene
@@ -25,6 +29,10 @@ class No_Covering():
                 for point in equicluster.equipointlist:
                     packed.append(point)
                     equipListClustered.append(equicluster)
+                    if point.selected:
+                        self.equipoint_selected_clustered = point
+                        self.equipoint_clicked_in_cluster.emit(equicluster)
+                        equicluster.selected = True
                     self.scene.removeItem(point)
                 equicluster.tooltiper()
                 equicluster.digitalize()
@@ -43,7 +51,8 @@ class No_Covering():
             for i in range(size):
                 pos = (the_cluster.Pos()[0] + rayon/2*math.sin(list_angle[i]), the_cluster.Pos()[1] + rayon/2*math.cos(list_angle[i]))
                 point = poi.Equipement_point(pos[0], pos[1], the_cluster.equipointlist[i].equipment, Zvalue=14)
-
+                if self.equipoint_selected_clustered and self.equipoint_selected_clustered.equipment == point.equipment:
+                    self.scene.draw_back_equip_select(point)
                 bg.equippointlist.append(point)
                 self.scene.addItem(point)
                 self.ihm.pointAff.append(point)
@@ -58,6 +67,9 @@ class No_Covering():
 
     def regroup(self, background):
         for point in background.equippointlist:
+            if point.selected:
+                self.scene.draw_back_equip_select(background.the_cluster)
+                self.equipoint_selected_clustered = point
             self.scene.removeItem(point)
         self.scene.addItem(background.the_cluster)
         background.the_cluster.exploded = None
