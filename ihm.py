@@ -28,6 +28,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.answer = None
         self.pinPoint = None
         self.ptRecherche = None
+        self.equipointSelected = None
         self.locator = Get_GPS.GPScoord(None)
         self.equipmentSet = set()
         self.allEquipmentSet = set()
@@ -82,6 +83,10 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.scene.backgroundclicked.connect(self.nocover.regroup)
         self.scene.equipointisclicked.connect(self.fill_inspector)
         self.scene.giveEqCoordsSignal.connect(self.take_equipment_coordonnates)
+        self.nocover.equipoint_clicked_in_cluster.connect(self.scene.draw_back_equip_select)
+        self.graphicsView.updateZoomLevel.connect(self.update_after_zoom)
+        self.graphicsView.updateZoomLevel.connect(self.mouse_simu_move)
+
 
     def finish_init_with_datas(self,equipmentList):
         """fin de l'initialisation après l'import des équipements"""
@@ -93,7 +98,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         """crée et initialise un filtre"""
         self.mesFiltres.append(filtres.Filtre(self.tabWidget,self.pointAff))
         self.mesFiltres[-1].updateSignal.connect(self.update_affichage_equipements)
-        self.graphicsView.updateZoomLevel.connect(self.update_after_zoom)
         self.mesFiltres[-1].create_set(self.equipmentList)
         self.mesFiltres[-1].equip_set(self.equipmentList)
         self.mesFiltres[-1].removeSignal.connect(self.remove_filtre)
@@ -125,6 +129,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.pointAff = []
         for equip in setEquipements:
             self.pointAff.append(self.graphicsView.draw_equipment(equip))
+            if self.equipointSelected and equip == self.equipointSelected.equipment:
+                self.scene.draw_back_equip_select(self.pointAff[-1])
+                self.pointAff[-1].selected = True
             self.scene.update()
         self.nocover.cluster(self.pointAff)
 
@@ -276,7 +283,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def fill_inspector(self, equipoint):
         """Met à jour l'inspecteur contenant les informations sur l'équipement cliqué"""
-
+        if self.equipointSelected:
+            self.equipointSelected.selected = False
+        self.equipointSelected = equipoint
         if equipoint.equipment == None:
             return
         self.nomLineEdit.setText(equipoint.equipment.name)
@@ -379,3 +388,13 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             for fichier in os.listdir('.cache_Images/'):
                 path = '.cache_Images/' + fichier
                 os.remove(path)
+
+    def mouse_simu_move(self):
+        """ Permet de ne pas avoir a bouger la souris pour afficher les tuiles apres un changement de niveau de zoom  """
+        cur = self.MainWindow.cursor()
+        pos = cur.pos()
+        q = QtCore.QPoint(1, 1)
+        pos = pos + q
+        cur.setPos(pos)
+        pos = pos - q
+        cur.setPos(pos)

@@ -83,7 +83,7 @@ def set_from_file_activities(content):
                             dictionnaire[temp[0].strip(' )(')] = int(temp[1])
         return dictionnaire
     else:
-        return {'Non renseigné':1}
+        return {'Non renseigné': 1}
 
 
 def set_from_file_type(content):

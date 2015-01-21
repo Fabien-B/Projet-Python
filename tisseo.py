@@ -12,7 +12,7 @@ class Tisseo(QtCore.QObject):
         self.proxy = None
 
     def get_closest_sa(self, lat,lon, point = None, isItineraire = False, departurePoint=0):
-        print(lat,lon)
+        print(lat, lon)
         url="""https://api.tisseo.fr/v1/stop_points.json?sortByDistance=1&number=3&displayCoordXY=1&bbox={}%2C{}%2C{}%2C{}&key=a65ccc5d3b7d6d99063240434ef117d54""".format(lon-0.1,lat-0.1,lon+0.1,lat+0.1)
         if self.proxy == None:
             r = requests.get(url)
@@ -81,9 +81,6 @@ class Tisseo(QtCore.QObject):
                     partie = answer[i]['service']['text']['text']
             instructlist.append(partie)
         return instructlist
-
-
-
 
     def setproxy(self, list):
         if list[0]=='':
