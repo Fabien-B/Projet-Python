@@ -147,7 +147,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.pinPoint.coords
             self.graphicsView.dessiner_pinPoint(coords[0], coords[1])
         for (i, pt) in enumerate(self.arrets):
-            print(i,pt)
             if pt != None:
                infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
                self.draw_tisseoStopPoint(infos)
@@ -398,3 +397,17 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         cur.setPos(pos)
         pos = pos - q
         cur.setPos(pos)
+
+    def cache_info(self):
+        """retourne la taille du cache image en Mo et du cache des données en ko"""
+        sizeOfCacheImage = 0
+        sizeOfCacheDonnee = 0
+        if os.path.exists('.cache_Images'):
+            for fichier in os.listdir('.cache_Images/'):
+                path = '.cache_Images/' + fichier
+                sizeOfCacheImage += os.path.getsize(path)
+        if os.path.exists('.cache/equipmentList.cache'):
+            sizeOfCacheDonnee = os.path.getsize('.cache/equipmentList.cache')
+        #print(sizeOfCacheImage/(1024*1024))
+        #print(sizeOfCacheDonnee/1024)
+        return (sizeOfCacheImage/(1024*1024), sizeOfCacheDonnee/1024)
