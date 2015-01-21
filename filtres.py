@@ -20,6 +20,7 @@ class Filtre(QtCore.QObject):
 
         self.tabWidget = tabWidget
         self.attributsNames = {'Quartier':'quartier','Activités':'activities','Revêtement':'revetement','Type':'type'}
+        self.quartiersNames = {"1.1":"Capitole, Arnaud Bernard, Carmes","1.2":"Amidonniers, Compans-Cafarelli","1.3":"Les Chalets, Bayard, Belfort, Saint-Aubin, Dupuy","2.1":"Saint-Cyprien","2.2":"Croix-de-Pierre, Route d'Espagne","2.3":"Fontaine-Lestang, Bagatelle, Papus, Tabar, Bordelongue","2.4":"Fontaine-Bayonne, Cartoucherie ","3.1":"Minimes, Barrière-de-Paris","3.2":"Sept-Deniers, Ginestous, Lalande","3.3":"Trois Cocus, Borderouge, Croix-Daurade, Paleficat, Grand-Selve","3.4":"Les Izards, Trois Cocus, Borderouge, Croix-Daurade","4.1":"Bonnefoy, Roseraie, Gramont","4.2":"Jolimont, Bonhoure, Soupetard","4.3":"Côte-Pavée, L'Hers, Limayrac ","5.1":"Pont-des-Demoiselles, Montaudran, La Terrasse","5.2":"Rangueil, Sauzelong, Pech-David, Pouvourville","5.3":"Saint-Michel Empalot, Saint-Agne, Le Busca","6.1":"Arènes Romaines, Saint-Martin-du-Touch","6.2":"Lardenne, Pradettes, Basso-Cambo","6.3":"Mirail, Reynerie, Bellefontaine","6.4":"Saint-Simon, Lafourguette","6.5":"Lafourguette","":"Non renseigné"}
         self.tab = QtGui.QWidget()
         self.tab.setObjectName("tab")
         self.tabWidget.addTab(self.tab, "")
@@ -86,6 +87,14 @@ class Filtre(QtCore.QObject):
             else:
                 paramSet = set([equip.__dict__[param]])
             ActiRequestSet = set(paramNames)
+            if param == 'quartier':
+                print('ttttttttttttttttttttt')
+                newParams = []
+                for quart in paramNames:
+                    for key in self.quartiersNames:
+                        if self.quartiersNames[key] == quart:
+                            newParams.append(key)
+                ActiRequestSet = set(newParams)
             if ActiRequestSet & paramSet != set():
                 tempSet.add(equip)
         return tempSet
@@ -141,6 +150,8 @@ class Filtre(QtCore.QObject):
             name = str(name)
             if name == '999':
                 name = 'Non renseigné'
+            if param == 'quartier':
+                name = self.quartiersNames[name]
             lwItem = myListWidgetItem(name, self.listWidget)
             lwItem.param = param
             lwItem.setFlags(Qt.ItemIsEnabled)
