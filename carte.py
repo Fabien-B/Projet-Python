@@ -190,6 +190,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
                 self.manager.get(request)
             else:
                 self.load_tile_from_disk((X, Y, self.ZOOM))
+            self.update()
 
     def gererDonnees(self, reply):
         """réceptionne l'image téléchargée, l'enregistre sur le disque, puis l'affiche"""
@@ -248,6 +249,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.cur_zoom = 1
         self.update_tiles()
         self.updateZoomLevel.emit()
+
 
     def reset_affichage(self):
         self.ZOOM = self.ZOOM_INIT
