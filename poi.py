@@ -28,10 +28,9 @@ class Point(QtGui.QGraphicsItemGroup):
             self.icone.setPos(x+decx,y+decy)
             self.addToGroup(self.icone)
         else:
-            PEN = QtGui.QPen(QtCore.Qt.darkGreen, 2)
             self.icone = QtGui.QGraphicsEllipseItem()
             self.icone.setPen(PEN)
-            self.icone.setBrush(QtCore.Qt.darkGreen)
+            self.icone.setBrush(BRUSH)
             self.icone.setRect(0, 0, 20, 20)
             self.icone.setPos(x-10, y-10)
             txtToolTip = equipment.name if equipment != None else legend
