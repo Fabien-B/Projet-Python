@@ -88,7 +88,6 @@ class Filtre(QtCore.QObject):
                 paramSet = set([equip.__dict__[param]])
             ActiRequestSet = set(paramNames)
             if param == 'quartier':
-                print('ttttttttttttttttttttt')
                 newParams = []
                 for quart in paramNames:
                     for key in self.quartiersNames:
