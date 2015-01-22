@@ -198,6 +198,7 @@ itinéraire:</string>
     </property>
     <addaction name="actionZoom"/>
     <addaction name="actionZoom_2"/>
+    <addaction name="actionChanger_le_mode_du_zoom"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAffichage"/>
@@ -568,6 +569,7 @@ itinéraire:</string>
    <addaction name="actionZoom_2"/>
    <addaction name="actionViderCache"/>
    <addaction name="actionProxy"/>
+   <addaction name="actionChanger_le_mode_du_zoom"/>
   </widget>
   <action name="Quitter">
    <property name="checkable">
@@ -607,10 +609,16 @@ itinéraire:</string>
    <property name="text">
     <string>Paramètres de proxy</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
   </action>
   <action name="actionViderCache">
    <property name="text">
     <string>Vider le cache</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionViderCacheCarte">
@@ -622,10 +630,24 @@ itinéraire:</string>
    <property name="text">
     <string>Zoom +</string>
    </property>
+   <property name="shortcut">
+    <string>+</string>
+   </property>
   </action>
   <action name="actionZoom_2">
    <property name="text">
     <string>Zoom -</string>
+   </property>
+   <property name="shortcut">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionChanger_le_mode_du_zoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Zoom progressif</string>
    </property>
   </action>
  </widget>
