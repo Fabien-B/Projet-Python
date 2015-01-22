@@ -5,7 +5,7 @@ import equipement
 class Filtre(QtCore.QObject):
 
     updateSignal = QtCore.pyqtSignal()
-
+    changePageSignal = QtCore.pyqtSignal()
     removeSignal = QtCore.pyqtSignal(QtGui.QWidget)
 
     def __init__(self, tabWidget, pointAff):
@@ -54,7 +54,6 @@ class Filtre(QtCore.QObject):
         self.lineEditFiltre.textEdited.connect(self.update_checkbox)
         self.connect(self.comboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.add_checkboxs)
         self.retirerFiltreButton.clicked.connect(lambda : self.removeSignal.emit(self.tab))
-
         self.add_combo_items()
 
 

@@ -58,9 +58,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionInspecteur.triggered.connect(self.afficher_inspecteur)
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
         self.actionViderCache.triggered.connect(self.afficher_params_cache)
+        self.actionZoom.triggered.connect(self.graphicsView.zoom_in)
+        self.actionZoom_2.triggered.connect((self.graphicsView.zoom_out))
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
+        self.pushButton_2.clicked.connect(self.change_toolboxpage)
         self.ajouterFiltreButton.clicked.connect(lambda: self.ajouter_filtre())
         self.handAccessButton.stateChanged.connect(self.update_affichage_equipements)
         self.Findequiarret_2_button.pressed.connect(lambda : self.get_equiStop(1))
@@ -69,6 +72,12 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.tisseo.errorSignal.connect(lambda txt: self.statusbar.showMessage(txt, 2000))
         self.graphicsView.signalEmetteur.doubleClickSignal.connect(self.get_pin)
         self.graphicsView.signalEmetteur.coordoneeErrorSignal.connect(lambda txt: self.statusbar.showMessage(txt, 2000))
+        self.Quitter.setIcon(QtGui.QIcon("Toolbar icones/Close.png"))
+        self.actionInspecteur.setIcon(QtGui.QIcon("Toolbar icones/info.png"))
+        self.actionZoom.setIcon(QtGui.QIcon("Toolbar icones/Zoom in.png"))
+        self.actionZoom_2.setIcon(QtGui.QIcon("Toolbar icones/Zoom out.png"))
+        self.actionViderCache.setIcon(QtGui.QIcon("Toolbar icones/Cache.png"))
+        self.actionProxy.setIcon(QtGui.QIcon("Toolbar icones/Proxy.png"))
         self.toolBox.resize(400, 1000)
 
     def build_map(self):
@@ -377,6 +386,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 """supprime le cache des équipements"""
                 if os.path.exists('.cache/equipmentList.cache'):
                     os.remove('.cache/equipmentList.cache')
+                maj_taille_cache()
 
         def vider_cache_carte():
             """supprime les tuiles OSM"""
@@ -384,7 +394,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 for fichier in os.listdir('.cache_Images/'):
                     path = '.cache_Images/' + fichier
                     os.remove(path)
-                    maj_taille_cache()
+            maj_taille_cache()
 
         self.cacheWindow = wincache.Cache_Dialogue(self)
         dialogCache = cache_info.Ui_Cache()
@@ -414,7 +424,9 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
 
-
+    def change_toolboxpage(self):
+        print('hop')
+        self.toolBox.setCurrentIndex(self.toolBox.indexOf(self.toolBoxPage3))
 
     def mouse_simu_move(self):
         """ Permet de ne pas avoir a bouger la souris pour afficher les tuiles apres un changement de niveau de zoom  """
