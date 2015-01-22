@@ -60,6 +60,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionViderCache.triggered.connect(self.afficher_params_cache)
         self.actionZoom.triggered.connect(self.graphicsView.zoom_in)
         self.actionZoom_2.triggered.connect((self.graphicsView.zoom_out))
+        self.actionChanger_le_mode_du_zoom.triggered.connect(self.graphicsView.zoom_change)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
@@ -78,6 +79,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionZoom_2.setIcon(QtGui.QIcon("Toolbar icones/Zoom out.png"))
         self.actionViderCache.setIcon(QtGui.QIcon("Toolbar icones/Cache.png"))
         self.actionProxy.setIcon(QtGui.QIcon("Toolbar icones/Proxy.png"))
+        self.actionChanger_le_mode_du_zoom.setIcon(QtGui.QIcon("Toolbar icones/Zoom mode.png"))
         self.toolBox.resize(400, 1000)
 
     def build_map(self):

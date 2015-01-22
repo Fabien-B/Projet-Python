@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Thu Jan 22 21:16:54 2015
+# Created: Thu Jan 22 22:01:57 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -315,7 +315,6 @@ class Ui_MainWindow(object):
         self.toolBar = QtGui.QToolBar(MainWindow)
         self.toolBar.setObjectName(_fromUtf8("toolBar"))
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
-        MainWindow.insertToolBarBreak(self.toolBar)
         self.Quitter = QtGui.QAction(MainWindow)
         self.Quitter.setCheckable(True)
         self.Quitter.setChecked(False)
@@ -335,12 +334,16 @@ class Ui_MainWindow(object):
         self.actionZoom.setObjectName(_fromUtf8("actionZoom"))
         self.actionZoom_2 = QtGui.QAction(MainWindow)
         self.actionZoom_2.setObjectName(_fromUtf8("actionZoom_2"))
+        self.actionChanger_le_mode_du_zoom = QtGui.QAction(MainWindow)
+        self.actionChanger_le_mode_du_zoom.setCheckable(True)
+        self.actionChanger_le_mode_du_zoom.setObjectName(_fromUtf8("actionChanger_le_mode_du_zoom"))
         self.menuFichier.addAction(self.Quitter)
         self.menuAffichage.addAction(self.actionInspecteur)
         self.menuOutils.addAction(self.actionProxy)
         self.menuOutils.addAction(self.actionViderCache)
         self.menuVue.addAction(self.actionZoom)
         self.menuVue.addAction(self.actionZoom_2)
+        self.menuVue.addAction(self.actionChanger_le_mode_du_zoom)
         self.menubar.addAction(self.menuFichier.menuAction())
         self.menubar.addAction(self.menuAffichage.menuAction())
         self.menubar.addAction(self.menuOutils.menuAction())
@@ -351,6 +354,8 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionZoom_2)
         self.toolBar.addAction(self.actionViderCache)
         self.toolBar.addAction(self.actionProxy)
+        self.toolBar.addAction(self.actionChanger_le_mode_du_zoom)
+
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(-1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -400,9 +405,14 @@ class Ui_MainWindow(object):
         self.actionInspecteur.setText(_translate("MainWindow", "Inspecteur", None))
         self.actionInspecteur.setShortcut(_translate("MainWindow", "Ctrl+I", None))
         self.actionProxy.setText(_translate("MainWindow", "Paramètres de proxy", None))
+        self.actionProxy.setShortcut(_translate("MainWindow", "Ctrl+P", None))
         self.actionViderCache.setText(_translate("MainWindow", "Vider le cache", None))
+        self.actionViderCache.setShortcut(_translate("MainWindow", "Ctrl+D", None))
         self.actionViderCacheCarte.setText(_translate("MainWindow", "Vider le cache carte", None))
         self.actionZoom.setText(_translate("MainWindow", "Zoom +", None))
+        self.actionZoom.setShortcut(_translate("MainWindow", "+", None))
         self.actionZoom_2.setText(_translate("MainWindow", "Zoom -", None))
+        self.actionZoom_2.setShortcut(_translate("MainWindow", "-", None))
+        self.actionChanger_le_mode_du_zoom.setText(_translate("MainWindow", "Zoom progressif", None))
 
 from carte import myQGraphicsView
