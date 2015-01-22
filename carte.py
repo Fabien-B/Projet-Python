@@ -43,18 +43,14 @@ class myQGraphicsView(QtGui.QGraphicsView):
                 if self.cur_zoom < 1.5:
                     self.zoom((self.cur_zoom+0.10)/self.cur_zoom)
                 elif self.ZOOM < 19:
-                    self.ZOOM += 1
                     self.reset_zoom()
-                    self.centerOnPosition(coord[0], coord[1])
-                    self.update_tiles()
+                    self.zoom_in()
             else:
                 if self.cur_zoom > 0.6:
                     self.zoom((self.cur_zoom-0.10)/self.cur_zoom)
                 elif self.ZOOM > 12:
-                    self.ZOOM -= 1
                     self.reset_zoom()
-                    self.centerOnPosition(coord[0], coord[1])
-                    self.update_tiles()
+                    self.zoom_out()
         else:
             if e.delta() > 0:
                 self.zoom_in()
