@@ -45,6 +45,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
                 self.ZOOM += 1
                 self.reset_zoom()
                 self.centerOnPosition(coord[0], coord[1])
+                self.update_tiles()
         else:
             if self.cur_zoom > 0.6:
                 self.zoom((self.cur_zoom-0.10)/self.cur_zoom)
@@ -52,6 +53,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
                 self.ZOOM -= 1
                 self.reset_zoom()
                 self.centerOnPosition(coord[0], coord[1])
+                self.update_tiles()
 
     def mouseMoveEvent(self, e):
         """ met à jour les tuiles à afficher quand on déplace la carte"""
@@ -59,12 +61,12 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.update_tiles()
 
     def mouseDoubleClickEvent(self, e):
-        pos = self.mapToScene(e.x(),e.y())
+        pos = self.mapToScene(e.x(), e.y())
         (lat, lon) = self.get_gps_from_map(pos.x(), pos.y())
         if self.ZOOM < 19:
             self.ZOOM += 1
-            self.update_tiles()
             self.centerOnPosition(lat, lon)
+            self.update_tiles()
             self.updateZoomLevel.emit()
 
     def mousePressEvent(self, e):
@@ -267,6 +269,23 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.manager.setProxy(proxy)
             print((self.manager.proxy().hostName(), self.manager.proxy().port(), self.manager.proxy().user(), self.manager.proxy().password()))
 
+    def zoom_in(self):
+        pos = self.mapToScene(self.width()/2, self.height()/2)
+        coord = self.get_gps_from_map(pos.x(), pos.y())
+        if self.ZOOM < 19:
+            self.ZOOM += 1
+            self.centerOnPosition(coord[0], coord[1])
+            self.update_tiles()
+            self.updateZoomLevel.emit()
+
+    def zoom_out(self):
+        pos = self.mapToScene(self.width()/2, self.height()/2)
+        coord = self.get_gps_from_map(pos.x(), pos.y())
+        if self.ZOOM > 12:
+            self.ZOOM -= 1
+            self.centerOnPosition(coord[0], coord[1])
+            self.update_tiles()
+            self.updateZoomLevel.emit()
 
 class Emetteur(QtCore.QObject):
 

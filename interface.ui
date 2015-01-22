@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>897</width>
+    <width>996</width>
     <height>653</height>
    </rect>
   </property>
@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>199</width>
-          <height>493</height>
+          <width>238</width>
+          <height>464</height>
          </rect>
         </property>
         <attribute name="label">
@@ -66,7 +66,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>icones/ajouterFiltre.png</normaloff>icones/ajouterFiltre.png</iconset>
+               <normaloff>../../Bureau/Projet-Python/icones/ajouterFiltre.png</normaloff>../../Bureau/Projet-Python/icones/ajouterFiltre.png</iconset>
              </property>
             </widget>
            </item>
@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>229</width>
-          <height>310</height>
+          <width>238</width>
+          <height>464</height>
          </rect>
         </property>
         <attribute name="label">
@@ -169,7 +169,7 @@ itinéraire:</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>897</width>
+     <width>996</width>
      <height>25</height>
     </rect>
    </property>
@@ -192,9 +192,17 @@ itinéraire:</string>
     <addaction name="actionProxy"/>
     <addaction name="actionViderCache"/>
    </widget>
+   <widget class="QMenu" name="menuVue">
+    <property name="title">
+     <string>Vue</string>
+    </property>
+    <addaction name="actionZoom"/>
+    <addaction name="actionZoom_2"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAffichage"/>
    <addaction name="menuOutils"/>
+   <addaction name="menuVue"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_2">
@@ -214,10 +222,17 @@ itinéraire:</string>
           <x>0</x>
           <y>0</y>
           <width>330</width>
-          <height>668</height>
+          <height>701</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="text">
+            <string>Trouver un itinéraire</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
@@ -537,6 +552,23 @@ itinéraire:</string>
     </layout>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="Quitter"/>
+   <addaction name="actionInspecteur"/>
+   <addaction name="actionZoom"/>
+   <addaction name="actionZoom_2"/>
+   <addaction name="actionViderCache"/>
+   <addaction name="actionProxy"/>
+  </widget>
   <action name="Quitter">
    <property name="checkable">
     <bool>true</bool>
@@ -584,6 +616,16 @@ itinéraire:</string>
   <action name="actionViderCacheCarte">
    <property name="text">
     <string>Vider le cache carte</string>
+   </property>
+  </action>
+  <action name="actionZoom">
+   <property name="text">
+    <string>Zoom +</string>
+   </property>
+  </action>
+  <action name="actionZoom_2">
+   <property name="text">
+    <string>Zoom -</string>
    </property>
   </action>
  </widget>
