@@ -74,6 +74,7 @@ class GPScoord(QtCore.QObject):
         return self.equipmentlist
 
     def get_random(self, eqpmtlist):
+
          for i in range(len(eqpmtlist)):
             if eqpmtlist[i].coords == None:
                 if eqpmtlist[i].adresse == eqpmtlist[i-1].adresse:
