@@ -4,8 +4,8 @@ class Dialogue(QtGui.QDialog):
 
     finishedSignal = QtCore.pyqtSignal(list)
 
-    def __init__(self,appli):
-        super(Dialogue,self).__init__()
+    def __init__(self, appli):
+        super(Dialogue, self).__init__()
         self.dialog = None
         self.appli = appli
 

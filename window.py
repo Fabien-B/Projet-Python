@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Mon Jan 19 15:57:34 2015
+# Created: Thu Jan 22 13:47:38 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 229, 480))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 229, 310))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -318,15 +318,14 @@ class Ui_MainWindow(object):
         self.actionInspecteur.setObjectName(_fromUtf8("actionInspecteur"))
         self.actionProxy = QtGui.QAction(MainWindow)
         self.actionProxy.setObjectName(_fromUtf8("actionProxy"))
-        self.actionViderCacheDonnees = QtGui.QAction(MainWindow)
-        self.actionViderCacheDonnees.setObjectName(_fromUtf8("actionViderCacheDonnees"))
+        self.actionViderCache = QtGui.QAction(MainWindow)
+        self.actionViderCache.setObjectName(_fromUtf8("actionViderCache"))
         self.actionViderCacheCarte = QtGui.QAction(MainWindow)
         self.actionViderCacheCarte.setObjectName(_fromUtf8("actionViderCacheCarte"))
         self.menuFichier.addAction(self.Quitter)
         self.menuAffichage.addAction(self.actionInspecteur)
         self.menuOutils.addAction(self.actionProxy)
-        self.menuOutils.addAction(self.actionViderCacheDonnees)
-        self.menuOutils.addAction(self.actionViderCacheCarte)
+        self.menuOutils.addAction(self.actionViderCache)
         self.menubar.addAction(self.menuFichier.menuAction())
         self.menubar.addAction(self.menuAffichage.menuAction())
         self.menubar.addAction(self.menuOutils.menuAction())
@@ -377,7 +376,7 @@ class Ui_MainWindow(object):
         self.actionInspecteur.setText(_translate("MainWindow", "Inspecteur", None))
         self.actionInspecteur.setShortcut(_translate("MainWindow", "Ctrl+I", None))
         self.actionProxy.setText(_translate("MainWindow", "Paramètres de proxy", None))
-        self.actionViderCacheDonnees.setText(_translate("MainWindow", "Vider le cache données", None))
+        self.actionViderCache.setText(_translate("MainWindow", "Vider le cache", None))
         self.actionViderCacheCarte.setText(_translate("MainWindow", "Vider le cache carte", None))
 
 from carte import myQGraphicsView

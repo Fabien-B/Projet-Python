@@ -2,6 +2,9 @@ from PyQt4.QtCore import pyqtSlot, Qt
 from PyQt4.QtGui import QWidget, QListWidgetItem
 from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
+from cache_info import Ui_Cache
+import cache_info
+import wincache
 import carte
 import filtres
 import equipement
@@ -54,8 +57,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.Quitter.triggered.connect(quit)
         self.actionInspecteur.triggered.connect(self.afficher_inspecteur)
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
-        self.actionViderCacheDonnees.triggered.connect(self.dialogue_vider_cache_donnees)
-        self.actionViderCacheCarte.triggered.connect(self.dialogue_vider_cache_carte)
+        self.actionViderCache.triggered.connect(self.afficher_params_cache)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
@@ -147,7 +149,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             coords = self.pinPoint.coords
             self.graphicsView.dessiner_pinPoint(coords[0], coords[1])
         for (i, pt) in enumerate(self.arrets):
-            print(i,pt)
             if pt != None:
                infos = (pt.legend, pt.coords[0], pt.coords[1], i, '0', '0')
                self.draw_tisseoStopPoint(infos)
@@ -353,13 +354,28 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def afficher_params_proxy(self):
         """ouvre la boite de dialogue de réglage de proxy"""
-        self.paramsWindow=params.Dialogue(self)  #QtGui.QDialog()
+        self.paramsWindow = params.Dialogue(self)  #QtGui.QDialog()
         dialogParams = proxy_params.Ui_Proxy()
         dialogParams.setupUi(self.paramsWindow)
-        self.paramsWindow.dialog=dialogParams
+        self.paramsWindow.dialog = dialogParams
         self.paramsWindow.finishedSignal.connect(self.regler_proxy)
         self.set_default_proxy_params(dialogParams)
         self.paramsWindow.show()
+
+    def afficher_params_cache(self):
+        """ouvre la boite de dialogue du cache"""
+        self.cacheWindow = wincache.Cache_Dialogue(self)
+        dialogCache = cache_info.Ui_Cache()
+        dialogCache.setupUi(self.cacheWindow)
+        self.cacheWindow.dialog = dialogCache
+        self.maj_taille_cache(dialogCache)
+        self.cacheWindow.show()
+
+    def maj_taille_cache(self, dialogCache):
+        infos = self.cache_size()
+        dialogCache.Label_TailleCacheImage.setText(str(infos[0])[:5] + ' Mo')
+        dialogCache.Label_NombreDeDalles.setText(str(infos[1]))
+        dialogCache.Label_TailleCacheDonne.setText(str(infos[2])[:5] + ' ko')
 
     def regler_proxy(self, infos):
         self.proxy = infos[0]
@@ -399,20 +415,16 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         pos = pos - q
         cur.setPos(pos)
 
-    def dialogue_vider_cache_donnees(self):
-        txt = 'Attention, voulez vous vraiment vider le cache de données ?'
-        reponse = QtGui.QMessageBox.warning(None,'Vider le cache de données',txt,QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
-        if reponse == 16384:
-            self.vider_cache_donnes()
-
-    def dialogue_vider_cache_carte(self):
-        path = '.cache_Images'
-        size = 0
-        for root, dirs, files in os.walk(path):
-            for fic in files:
-                size += os.path.getsize(os.path.join(root, fic))
-        size /= 1000000
-        txt = 'Attention, voulez vous vraiment vider le cache de carte ? ({:.1f} Mo)'.format(size)
-        reponse = QtGui.QMessageBox.warning(None,'Vider le cache de carte',txt,QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
-        if reponse == 16384:
-            self.vider_cache_carte()
+    def cache_size(self):
+        """retourne la taille du cache image en Mo et du cache des données en ko"""
+        sizeOfCacheImage = 0
+        sizeOfCacheDonnee = 0
+        numberOfTiles = 0
+        if os.path.exists('.cache_Images'):
+            for fichier in os.listdir('.cache_Images/'):
+                path = '.cache_Images/' + fichier
+                sizeOfCacheImage += os.path.getsize(path)
+                numberOfTiles += 1
+        if os.path.exists('.cache/equipmentList.cache'):
+            sizeOfCacheDonnee = os.path.getsize('.cache/equipmentList.cache')
+        return (sizeOfCacheImage/(1024*1024), numberOfTiles, sizeOfCacheDonnee/1024)

@@ -29,7 +29,6 @@ class Importeur(QtCore.QObject):
         else:
             self.cache_charging_signal.emit('Chargement des équipements depuis le cache ...')
             equipmentList = self.my_cache.rescue('equipmentList.cache')
-
         self.my_locator.cache = self.my_cache
         equipmentList = self.appli.locator.findall(equipmentList)
         self.appli.equipmentlist = equipmentList

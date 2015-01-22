@@ -87,7 +87,7 @@
           <x>0</x>
           <y>0</y>
           <width>229</width>
-          <height>480</height>
+          <height>310</height>
          </rect>
         </property>
         <attribute name="label">
@@ -190,8 +190,7 @@ itinéraire:</string>
      <string>Outils</string>
     </property>
     <addaction name="actionProxy"/>
-    <addaction name="actionViderCacheDonnees"/>
-    <addaction name="actionViderCacheCarte"/>
+    <addaction name="actionViderCache"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAffichage"/>
@@ -577,9 +576,9 @@ itinéraire:</string>
     <string>Paramètres de proxy</string>
    </property>
   </action>
-  <action name="actionViderCacheDonnees">
+  <action name="actionViderCache">
    <property name="text">
-    <string>Vider le cache données</string>
+    <string>Vider le cache</string>
    </property>
   </action>
   <action name="actionViderCacheCarte">

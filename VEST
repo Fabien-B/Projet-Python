@@ -1,2 +1,3 @@
 #!/bin/bash
+cd /home/fabien/Bureau/Projet-Python
 python3 main.py
