@@ -54,8 +54,8 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.Quitter.triggered.connect(quit)
         self.actionInspecteur.triggered.connect(self.afficher_inspecteur)
         self.actionProxy.triggered.connect(self.afficher_params_proxy)
-        self.actionViderCacheDonnees.triggered.connect(self.vider_cache_donnes)
-        self.actionViderCacheCarte.triggered.connect(self.vider_cache_carte)
+        self.actionViderCacheDonnees.triggered.connect(self.dialogue_vider_cache_donnees)
+        self.actionViderCacheCarte.triggered.connect(self.dialogue_vider_cache_carte)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
@@ -398,3 +398,21 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         cur.setPos(pos)
         pos = pos - q
         cur.setPos(pos)
+
+    def dialogue_vider_cache_donnees(self):
+        txt = 'Attention, voulez vous vraiment vider le cache de données ?'
+        reponse = QtGui.QMessageBox.warning(None,'Vider le cache de données',txt,QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
+        if reponse == 16384:
+            self.vider_cache_donnes()
+
+    def dialogue_vider_cache_carte(self):
+        path = '.cache_Images'
+        size = 0
+        for root, dirs, files in os.walk(path):
+            for fic in files:
+                size += os.path.getsize(os.path.join(root, fic))
+        size /= 1000000
+        txt = 'Attention, voulez vous vraiment vider le cache de carte ? ({:.1f} Mo)'.format(size)
+        reponse = QtGui.QMessageBox.warning(None,'Vider le cache de carte',txt,QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
+        if reponse == 16384:
+            self.vider_cache_carte()
