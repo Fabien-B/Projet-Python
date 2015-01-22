@@ -121,7 +121,10 @@ class Filtre(QtCore.QObject):
     def select_deselect_all(self):
         """Selectionne/désélectionne tous les équipements présents dans le widget"""
         try:
-            check = 2 if not self.listWidget.item(0).checkState() else 0
+            i = 0
+            while  self.listWidget.item(i).isHidden():
+                i += 1
+            check = 2 if not self.listWidget.item(i).checkState() else 0
             param = self.listWidget.item(0).param
             paramList = []
             for i in range(self.listWidget.count()):
