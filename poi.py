@@ -4,6 +4,7 @@ import os
 
 
 class Point(QtGui.QGraphicsItemGroup):
+    """La classe parent de tout ce qui est un Point (ou une icone)"""
     def __init__(self, x, y, img='', PEN = QtGui.QPen(QtCore.Qt.red, 2), BRUSH = QtCore.Qt.red, Zvalue = 10, legend='', equipment = None, lat=0, lon=0, decx=0, decy=0):
         super(Point,self).__init__()
         self.equipment = equipment
@@ -41,6 +42,7 @@ class Point(QtGui.QGraphicsItemGroup):
 
 
     def Pos(self):
+        """Permet de renvoyer la position sous forme d'un tuple"""
         return(self.icone.pos().x(), self.icone.pos().y())
 
     def SetPos(self, x, y):
@@ -48,6 +50,7 @@ class Point(QtGui.QGraphicsItemGroup):
 
 
 class Equipement_point(Point):
+    """La classe des points représentant des équipements"""
     def __init__(self,x,y, equipement=None, Zvalue = 10, img='', legend='',decx=0, decy=0):
         super(Equipement_point, self).__init__(x, y, img= img, legend= legend, decx = decx, decy = decy, equipment= equipement, Zvalue= Zvalue)
 
@@ -68,13 +71,16 @@ class Equipment_Group(Point):
         self.exploded = None
 
     def size(self):
+        """Retourne la taille du cluster"""
         return len(self.equipointlist)
 
     def tooltiper(self):
+        """Paramètre l'info bulle"""
         names = [point.equipment.name for point in self.equipointlist]
         self.setToolTip('\n'.join(names))
 
     def digitalize(self):
+        """Ecrit le nombre d'équipement contenu dans le cluster sur le cluster"""
         self.text = QtGui.QGraphicsSimpleTextItem()
         self.text.setZValue(12)
         self.text.setBrush(QtCore.Qt.black)
@@ -87,6 +93,7 @@ class Equipment_Group(Point):
         self.addToGroup(self.text)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
+        """Gère le clic sur un cluster"""
         if self.icone.isUnderMouse():
             QGraphicsSceneMouseEvent.accept()
             self.thescene.clusterclicked(self)
@@ -124,15 +131,18 @@ class BackGroundCluster(QtGui.QGraphicsEllipseItem):
         self.anim = anim  # prevents GC to collect the anim instance
 
     def makebig(self, v):
+        """Sert a faire grossir depuis le centre pour l'animation d'ouverture"""
         self.setPos(self.the_cluster.Pos()[0]+12 - v/2, self.the_cluster.Pos()[1]+12 -v/2)
         self.setRect(0,0,v,v)
 
     def mousePressEvent(self, QGraphicsSceneMouseEvent):
+        """Gère le clic"""
         QGraphicsSceneMouseEvent.accept()
         self.thescene.bgclicked(self)
 
 
 class SelectBackground(QtGui.QGraphicsEllipseItem):
+    """La classe de l'icone de selection d'un equipement"""
     def __init__(self, equipoint):
         super(SelectBackground, self).__init__()
         self.equipoint = equipoint
