@@ -96,7 +96,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.scene.giveEqCoordsSignal.connect(self.take_equipment_coordonnates)
         self.nocover.equipoint_clicked_in_cluster.connect(self.scene.draw_back_equip_select)
         self.graphicsView.updateZoomLevel.connect(self.update_after_zoom)
-        self.graphicsView.updateZoomLevel.connect(self.mouse_simu_move)
+        #self.graphicsView.updateZoomLevel.connect(self.mouse_simu_move)
 
 
     def finish_init_with_datas(self,equipmentList):
@@ -429,7 +429,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.toolBox.setCurrentIndex(self.toolBox.indexOf(self.toolBoxPage3))
 
     def mouse_simu_move(self):
-        """ Permet de ne pas avoir a bouger la souris pour afficher les tuiles apres un changement de niveau de zoom  """
+        """ Permet de ne pas avoir a bouger la souris pour afficher les tuiles apres un changement de niveau de zoom """
         cur = self.MainWindow.cursor()
         pos = cur.pos()
         q = QtCore.QPoint(1, 1)
