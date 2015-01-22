@@ -364,18 +364,39 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
 
     def afficher_params_cache(self):
         """ouvre la boite de dialogue du cache"""
+
+        def maj_taille_cache():
+            """ Met a jour les info sur les caches dans la fenetre """
+            infos = self.cache_size()
+            dialogCache.Label_TailleCacheImage.setText(str(infos[0])[:5] + ' Mo')
+            dialogCache.Label_TailleCacheDonne.update()
+            dialogCache.Label_NombreDeDalles.setText(str(infos[1]))
+            dialogCache.Label_TailleCacheDonne.setText(str(infos[2])[:5] + ' ko')
+
+        def vider_cache_donnes():
+                """supprime le cache des équipements"""
+                if os.path.exists('.cache/equipmentList.cache'):
+                    os.remove('.cache/equipmentList.cache')
+
+        def vider_cache_carte():
+            """supprime les tuiles OSM"""
+            if os.path.exists('.cache_Images'):
+                for fichier in os.listdir('.cache_Images/'):
+                    path = '.cache_Images/' + fichier
+                    os.remove(path)
+                    maj_taille_cache()
+
         self.cacheWindow = wincache.Cache_Dialogue(self)
         dialogCache = cache_info.Ui_Cache()
         dialogCache.setupUi(self.cacheWindow)
         self.cacheWindow.dialog = dialogCache
-        self.maj_taille_cache(dialogCache)
+        maj_taille_cache()
+        dialogCache.VideCache1.clicked.connect(vider_cache_carte)
+        dialogCache.VideCache2.clicked.connect(vider_cache_donnes)
         self.cacheWindow.show()
+        dialogCache.pushButton.clicked.connect(self.cacheWindow.close)
 
-    def maj_taille_cache(self, dialogCache):
-        infos = self.cache_size()
-        dialogCache.Label_TailleCacheImage.setText(str(infos[0])[:5] + ' Mo')
-        dialogCache.Label_NombreDeDalles.setText(str(infos[1]))
-        dialogCache.Label_TailleCacheDonne.setText(str(infos[2])[:5] + ' ko')
+
 
     def regler_proxy(self, infos):
         self.proxy = infos[0]
@@ -386,24 +407,14 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.locator.setproxy(infos)
         self.graphicsView.setproxy(infos)
         self.tisseo.setproxy(infos)
-        print('proxy:',self.proxy,self.port,self.user)
+        print('proxy:', self.proxy, self.port, self.user)
 
     def set_default_proxy_params(self, dialogParams):
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
 
-    def vider_cache_donnes(self):
-        """supprime le cache des équipements"""
-        if os.path.exists('.cache/equipmentList.cache'):
-            os.remove('.cache/equipmentList.cache')
 
-    def vider_cache_carte(self):
-        """supprime les tuiles OSM"""
-        if os.path.exists('.cache_Images'):
-            for fichier in os.listdir('.cache_Images/'):
-                path = '.cache_Images/' + fichier
-                os.remove(path)
 
     def mouse_simu_move(self):
         """ Permet de ne pas avoir a bouger la souris pour afficher les tuiles apres un changement de niveau de zoom  """

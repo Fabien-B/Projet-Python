@@ -113,12 +113,11 @@ class Ui_Cache(object):
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.horizontalLayout_7.addWidget(self.pushButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout_7)
-
         self.retranslateUi(Cache)
         QtCore.QMetaObject.connectSlotsByName(Cache)
 
     def retranslateUi(self, Cache):
-        Cache.setWindowTitle(_translate("Cache", "Paramètres du Proxy", None))
+        Cache.setWindowTitle(_translate("Cache", "Paramètres du Cache", None))
         self.label.setText(_translate("Cache", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:600;\">Cache Image</span></p></body></html>", None))
         self.label_4.setText(_translate("Cache", "Taille du cache :", None))
         self.Label_TailleCacheImage.setText(_translate("Cache", "TextLabel", None))
