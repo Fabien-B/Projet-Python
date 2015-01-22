@@ -36,19 +36,17 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def wheelEvent(self, e):
         """Zoom sur la carte """
-        pos = self.mapToScene(e.x(), e.y())
-        coord = self.get_gps_from_map(pos.x(), pos.y())
         if self.ZoomMode:
             if e.delta() > 0:
                 if self.cur_zoom < 1.5:
                     self.zoom((self.cur_zoom+0.10)/self.cur_zoom)
-                elif self.ZOOM < 19:
+                else:
                     self.reset_zoom()
                     self.zoom_in()
             else:
                 if self.cur_zoom > 0.6:
                     self.zoom((self.cur_zoom-0.10)/self.cur_zoom)
-                elif self.ZOOM > 12:
+                else:
                     self.reset_zoom()
                     self.zoom_out()
         else:
@@ -63,6 +61,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.update_tiles()
 
     def mouseDoubleClickEvent(self, e):
+        """ Zoom d'un niveau de dalle OSM à l'endroit ou on a double cliquer  """
         pos = self.mapToScene(e.x(), e.y())
         (lat, lon) = self.get_gps_from_map(pos.x(), pos.y())
         if self.ZOOM < 19:
@@ -72,6 +71,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.updateZoomLevel.emit()
 
     def mousePressEvent(self, e):
+        """ Ajoute une épingle après un clic droit  """
         super().mousePressEvent(e)
         if e.button() == QtCore.Qt.RightButton:
             pos = self.mapToScene(e.x(), e.y())
@@ -79,6 +79,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.dessiner_pinPoint(lat, lon)
 
     def dessiner_pinPoint(self, lat, lon):
+        """ dessine une épingle """
         point = self.draw_point(lat, lon, img='pin-double-click', legend='click!', Zvalue=20, decx=-18, decy=-66)
         self.signalEmetteur.doubleClickSignal.emit(point)
 
