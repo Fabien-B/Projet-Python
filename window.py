@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Thu Jan 22 21:16:54 2015
+# Created: Thu Jan 22 21:54:12 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 238, 464))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 259, 434))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.ajouterFiltreButton = QtGui.QToolButton(self.toolBoxPage2)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("../../Bureau/Projet-Python/icones/ajouterFiltre.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("icones/ajouterFiltre.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ajouterFiltreButton.setIcon(icon)
         self.ajouterFiltreButton.setObjectName(_fromUtf8("ajouterFiltreButton"))
         self.horizontalLayout_3.addWidget(self.ajouterFiltreButton)
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 238, 464))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 348))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 996, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 996, 30))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFichier = QtGui.QMenu(self.menubar)
         self.menuFichier.setObjectName(_fromUtf8("menuFichier"))
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 330, 701))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 353, 786))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_8 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
@@ -315,7 +315,6 @@ class Ui_MainWindow(object):
         self.toolBar = QtGui.QToolBar(MainWindow)
         self.toolBar.setObjectName(_fromUtf8("toolBar"))
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
-        MainWindow.insertToolBarBreak(self.toolBar)
         self.Quitter = QtGui.QAction(MainWindow)
         self.Quitter.setCheckable(True)
         self.Quitter.setChecked(False)
@@ -351,6 +350,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionZoom_2)
         self.toolBar.addAction(self.actionViderCache)
         self.toolBar.addAction(self.actionProxy)
+
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(-1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

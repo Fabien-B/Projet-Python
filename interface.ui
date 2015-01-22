@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>238</width>
-          <height>464</height>
+          <width>259</width>
+          <height>434</height>
          </rect>
         </property>
         <attribute name="label">
@@ -66,7 +66,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>../../Bureau/Projet-Python/icones/ajouterFiltre.png</normaloff>../../Bureau/Projet-Python/icones/ajouterFiltre.png</iconset>
+               <normaloff>icones/ajouterFiltre.png</normaloff>icones/ajouterFiltre.png</iconset>
              </property>
             </widget>
            </item>
@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>238</width>
-          <height>464</height>
+          <width>277</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -170,7 +170,7 @@ itinéraire:</string>
      <x>0</x>
      <y>0</y>
      <width>996</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -221,8 +221,8 @@ itinéraire:</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>330</width>
-          <height>701</height>
+          <width>353</width>
+          <height>786</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -560,7 +560,7 @@ itinéraire:</string>
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="Quitter"/>
    <addaction name="actionInspecteur"/>
