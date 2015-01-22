@@ -41,6 +41,6 @@ chown $user /home/$user/Bureau/VEST.desktop
 apt-get install python3-PyQt4 -y
 apt-get install python3-pip -y
 pip3 install xlrd
-pip3 install geopy==1.5.0
+pip3 install pygeocoder
 
 echo "done"
