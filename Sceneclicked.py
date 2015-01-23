@@ -1,6 +1,6 @@
 from PyQt4 import QtGui, QtCore
 import poi
-import os
+
 
 class SceneClickable(QtGui.QGraphicsScene):
     """Version de la scène qui envoie des signaux"""

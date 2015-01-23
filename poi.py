@@ -1,5 +1,4 @@
-from PyQt4 import QtCore, QtGui, QtNetwork
-import carte
+from PyQt4 import QtCore, QtGui
 import os
 
 
