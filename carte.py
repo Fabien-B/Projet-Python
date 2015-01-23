@@ -93,6 +93,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.ZOOM += 1
             self.centerOnPosition(lat, lon)
             self.update_tiles()
+            self.centrer_zoom(e)
             self.updateZoomLevel.emit()
 
     def mousePressEvent(self, e):
