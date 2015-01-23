@@ -116,7 +116,6 @@ class Filtre(QtCore.QObject):
                     checkbox.setHidden(True)
                 else:
                     checkbox.setHidden(False)
-        self.updateSignal.emit()
 
     def select_deselect_all(self):
         """Selectionne/désélectionne tous les équipements présents dans le widget"""
