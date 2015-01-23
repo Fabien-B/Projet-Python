@@ -1,4 +1,4 @@
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 import math
 import poi
 

@@ -4,6 +4,12 @@ import re
 
 
 def import_file(filename, equipmentList):
+    """
+    Lit le fichier .xls et extrait les informations dans une liste
+    :param filename: Le nom du fichier
+    :param equipmentList: La liste des equipements
+    :return:
+    """
     wb = xlrd.open_workbook(filename)
     sh = wb.sheet_by_index(0)
     for i in range(1, sh.nrows):
@@ -12,13 +18,22 @@ def import_file(filename, equipmentList):
 
 
 def fill_equipment(sh, nEq, eq_current):
+    """
+    Interprète chaque colonne de la ligne pour
+    remplir les attributs de l'équipement
+    :param sh: Le fichier
+    :param nEq: La ligne considérée
+    :param eq_current: l'équipement correspondant à
+    la ligne considérée
+    :return:
+    """
     eq_current.quartier = set_from_file_quartier(sh.cell_value(nEq, 0))
     eq_current.name = sh.cell_value(nEq, 1)
     eq_current.adresse = sh.cell_value(nEq, 2)
     eq_current.type = set_from_file_type(sh.cell_value(nEq, 3))
     eq_current.activities = set_from_file_activities(sh.cell_value(nEq, 4))
     eq_current.revetement = set_from_file_revetement(sh.cell_value(nEq, 5))
-    eq_current.size=set_from_file_size(sh.cell_value(nEq, 6))
+    eq_current.size = set_from_file_size(sh.cell_value(nEq, 6))
     eq_current.eclairage = set_from_file_eclairage(sh.cell_value(nEq, 7))
     eq_current.arrosage = set_from_file_arrosage(sh.cell_value(nEq, 8))
     eq_current.vestiaire = set_from_file_vestiaire(sh.cell_value(nEq, 9))
@@ -34,11 +49,21 @@ def fill_equipment(sh, nEq, eq_current):
 
 
 def set_from_file_quartier(content):
+    """
+    Extrait le quartier de l'équipement
+    :param content:
+    :return:
+    """
     content = str(content)
     return content.replace(',', '.')
 
 
 def set_from_file_activities(content):
+    """
+    Extrait les activités de l'équipement
+    :param content:
+    :return:
+    """
     if content != '':
         dictionnaire = {}
         last = None
@@ -87,10 +112,20 @@ def set_from_file_activities(content):
 
 
 def set_from_file_type(content):
+    """
+    Extrait le type de l'équipement
+    :param content:
+    :return:
+    """
     return content.capitalize()
 
 
 def set_from_file_revetement(content):
+    """
+    Extrait le revetement de l'équipement
+    :param content:
+    :return:
+    """
     contentList = content.split()
     revetList = []
     for revet in contentList:
@@ -101,17 +136,22 @@ def set_from_file_revetement(content):
 
 
 def set_from_file_size(content):
+    """
+    Extrait la taille de l'équipement
+    :param content:
+    :return:
+    """
     terrainList = content.replace('et', '+').split('+')
     terrainSizes = []
     for terrain in terrainList:
-        terrain = terrain.replace('*','x')
-        terrain = terrain.replace('X','x')
+        terrain = terrain.replace('*', 'x')
+        terrain = terrain.replace('X', 'x')
         sizeStr = terrain.split('x')
         size = []
         for axis in sizeStr:
             longAxe = axis.strip('m ?')
             if longAxe != '':
-                longAxe = longAxe.replace(',','.')
+                longAxe = longAxe.replace(',', '.')
                 try:
                     longAxe = float(longAxe)
                 except ValueError:
@@ -122,6 +162,11 @@ def set_from_file_size(content):
 
 
 def set_from_file_eclairage(content):
+    """
+    Détermine si l'équipement comporte un éclairage
+    :param content:
+    :return:
+    """
     if content.lower().__contains__("oui"):
         return 1
     if content.lower().__contains__("non"):
@@ -131,6 +176,11 @@ def set_from_file_eclairage(content):
 
 
 def set_from_file_arrosage(content):
+    """
+    Détermine si l'équipement comporte un arrosage
+    :param content:
+    :return:
+    """
     if content.lower().__contains__("oui"):
         return 1
     if content.lower().__contains__("non"):
@@ -140,7 +190,12 @@ def set_from_file_arrosage(content):
 
 
 def set_from_file_vestiaire(content):
-    nbJA=str(content).split('(')
+    """
+    Extrait le nombre de vestiaire de l'équipement
+    :param content:
+    :return:
+    """
+    nbJA = str(content).split('(')
     nbVestiaires = []
     for chaine in nbJA:
         chaine = chaine.strip(' )+')
@@ -157,6 +212,11 @@ def set_from_file_vestiaire(content):
 
 
 def set_from_file_sanitaires(content):
+    """
+    Determine si l'équipement est muni de sanitaires
+    :param content:
+    :return:
+    """
     content = str(content).lower()
     if content == '':
         return 0
@@ -167,7 +227,13 @@ def set_from_file_sanitaires(content):
 
 
 def set_from_file_douches(content):
-    content = content.replace('/',',')
+    """
+    Extrait le nombre de douches collectives ou
+    individuelles de l'équipement
+    :param content:
+    :return:
+    """
+    content = content.replace('/', ',')
     content = content.split(',')
     nb = [None, None]
     for indCo in content:
@@ -189,6 +255,11 @@ def set_from_file_douches(content):
 
 
 def set_from_file_capaMax(content):
+    """
+    Extrait la capacité max de l'équipement
+    :param content:
+    :return:
+    """
     digits = ''.join(filter(lambda x: x.isdigit(), str(content)))
     if digits == '':
         return 0
@@ -197,6 +268,12 @@ def set_from_file_capaMax(content):
 
 
 def set_from_file_tribunes(content):
+    """
+    Extrait le nombre de place dans les tribunes
+    de l'équipement
+    :param content:
+    :return:
+    """
     digits = ''.join(filter(lambda x: x.isdigit(), str(content)))
     if digits == '':
         return 0
@@ -205,6 +282,11 @@ def set_from_file_tribunes(content):
 
 
 def set_from_file_clubHouse(content):
+    """
+    Determine si l'équipement est affecté d'un club House
+    :param content:
+    :return:
+    """
     if str(content).lower().__contains__('oui'):
         return 1
     elif str(content).lower().__contains__('non'):
@@ -214,6 +296,11 @@ def set_from_file_clubHouse(content):
 
 
 def set_from_file_categorie(content):
+    """
+    Extrait la catégorie de l'équipement
+    :param content:
+    :return:
+    """
     if content == '':
         return 0
     else:
@@ -221,6 +308,11 @@ def set_from_file_categorie(content):
 
 
 def set_from_file_date(content):
+    """
+    Extrait la date de construction de l'équipement
+    :param content:
+    :return:
+    """
     if content == '' or content == '?':
         return 0
     else:
@@ -228,6 +320,11 @@ def set_from_file_date(content):
 
 
 def set_from_file_accesHand(content):
+    """
+    Determine si l'équipement est muni d'un accès Handicapé
+    :param content:
+    :return:
+    """
     if content == 'O' or content == '1':
         return 1
     elif content == 'N' or content == '0':
@@ -237,6 +334,11 @@ def set_from_file_accesHand(content):
 
 
 def set_from_file_toilettesHand(content):
+    """
+    Determine si l'équipement est affublé de toilettes Handicapé
+    :param content:
+    :return:
+    """
     if content == 'O' or content == '1':
         return 1
     elif content == 'N' or content == '0':

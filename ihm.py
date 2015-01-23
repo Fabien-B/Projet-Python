@@ -1,13 +1,9 @@
-from PyQt4.QtCore import pyqtSlot, Qt
-from PyQt4.QtGui import QWidget, QListWidgetItem
 from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
-from cache_info import Ui_Cache
 import cache_info
 import wincache
 import carte
 import filtres
-import equipement
 import os
 import tisseo
 import Get_GPS
@@ -15,7 +11,7 @@ import Sceneclicked
 import No_More_Horse_Riding as nmhr
 import proxy_params
 import params
-import Cache_use
+import cache_use
 import threading
 
 class Ihm(Ui_MainWindow, QtCore.QObject):
@@ -38,7 +34,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.pointAff = []
         self.mesFiltres = []
         self.nocover = nmhr.No_Covering(self)
-        self.proxycache = Cache_use.Cache('.cache/proxy/')
+        self.proxycache = cache_use.Cache('.cache/proxy/')
         if self.proxycache.isalive('proxy'):
             self.proxy = self.proxycache.rescue('proxy')[0]
             self.port = self.proxycache.rescue('proxy')[1]
@@ -139,6 +135,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         for point in self.pointAff:
             if point in self.scene.items():
                 self.scene.removeItem(point)
+        self.scene.delete_back_equip_select()
         self.pointAff = []
         for equip in setEquipements:
             self.pointAff.append(self.graphicsView.draw_equipment(equip))

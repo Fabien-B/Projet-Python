@@ -1,6 +1,6 @@
 from PyQt4 import QtGui, QtCore
 import poi
-import os
+
 
 class SceneClickable(QtGui.QGraphicsScene):
     """Version de la scène qui envoie des signaux"""
@@ -27,11 +27,19 @@ class SceneClickable(QtGui.QGraphicsScene):
     def draw_back_equip_select(self, equipoint):
         """Dessine l'icone de selection sur le point 'equipoint'"""
         equipoint.selected = True
-        if self.selectbackground:
-            self.removeItem(self.selectbackground)
+        self.delete_back_equip_select()
         self.selectbackground = poi.SelectBackground(equipoint)
         self.addItem(self.selectbackground)
 
     def bgclicked(self, background):
         """Si le background d'un cluster explosé est cliqué, envoie un signal"""
         self.backgroundclicked.emit(background)
+
+    def delete_back_equip_select(self):
+        """
+        Surpprime l'icone de sélection
+        :return:
+        """
+        if self.selectbackground:
+            self.removeItem(self.selectbackground)
+            self.selectbackground = None
