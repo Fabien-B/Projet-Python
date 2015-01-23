@@ -38,7 +38,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         """Zoom sur la carte """
         pos = self.mapToScene(e.x(), e.y())
         coord = self.get_gps_from_map(pos.x(), pos.y())
-        print(pos.x(),pos.y())
         if self.ZoomMode:
             if e.delta() > 0:
                 if self.cur_zoom < 1.5:
@@ -65,13 +64,14 @@ class myQGraphicsView(QtGui.QGraphicsView):
                     self.reset_zoom()
                     self.centerOnPosition(coord[0], coord[1])
                     self.update_tiles()
+                    self.centrer_zoom(e)
             else:
                 if self.ZOOM > 12:
                     self.ZOOM -= 1
                     self.reset_zoom()
                     self.centerOnPosition(coord[0], coord[1])
                     self.update_tiles()
-            self.centrer_zoom(e)
+                    self.centrer_zoom(e)
 
     def centrer_zoom(self,e):
         """recentre correctement la carte pour que le point zoomer se trouve toujours sous la souris."""
