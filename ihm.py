@@ -261,7 +261,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 arrivee = tuple(((arriveenbs[0]+arriveenbs[2])*carte.TILEDIM, (arriveenbs[1]+arriveenbs[3])*carte.TILEDIM))
                 line = QtGui.QGraphicsLineItem(depart[0], depart[1], arrivee[0], arrivee[1])
                 line.setPen(pen)
-                line.setZValue(13)
+                line.setZValue(15)
                 self.tisseopath.addToGroup(line)
                 depart = arrivee
         for i in range(len(pointlist)):
@@ -275,7 +275,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             point.setBrush(brush)
             point.setRect(0, 0, 16, 16)
             point.setPos(xpoint-8, ypoint-8)
-            point.setZValue(14)
+            point.setZValue(20)
             self.tisseopath.addToGroup(point)
         self.scene.addItem(self.tisseopath)
 

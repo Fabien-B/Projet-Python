@@ -254,6 +254,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             (X, Y, ZOOM) = cle
             if X < int(8265*2**(self.ZOOM-self.ZOOM_INIT)) and Y < int(5990*2**(self.ZOOM-self.ZOOM_INIT)) and X > int(8250*2**(self.ZOOM-self.ZOOM_INIT)) and Y > int(5975*2**(self.ZOOM-self.ZOOM_INIT)):
                 tuile = self.maScene.addPixmap(self.m_tilePixmaps[ZOOM][cle][0])
+                tuile.setZValue(-10)
                 self.m_tilePixmaps[ZOOM][cle][1] = 1
                 tuile.setPos(X*TILEDIM, Y*TILEDIM)
 
