@@ -65,13 +65,14 @@ class myQGraphicsView(QtGui.QGraphicsView):
                     self.reset_zoom()
                     self.centerOnPosition(coord[0], coord[1])
                     self.update_tiles()
+                    self.centrer_zoom(e)
             else:
                 if self.ZOOM > 12:
                     self.ZOOM -= 1
                     self.reset_zoom()
                     self.centerOnPosition(coord[0], coord[1])
                     self.update_tiles()
-            self.centrer_zoom(e)
+                    self.centrer_zoom(e)
 
     def centrer_zoom(self,e):
         """recentre correctement la carte pour que le point zoomer se trouve toujours sous la souris."""
@@ -94,6 +95,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.centerOnPosition(lat, lon)
             self.update_tiles()
             self.updateZoomLevel.emit()
+            self.centrer_zoom(e)
 
     def mousePressEvent(self, e):
         """ Ajoute une épingle après un clic droit  """

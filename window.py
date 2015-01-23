@@ -366,7 +366,7 @@ class Ui_MainWindow(object):
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Filtres", None))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Rechercher ( press Enter ) ", None))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Rechercher une addresse ( press Enter ) ", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
         self.label_3.setText(_translate("MainWindow", "Chercher un itinéraire\n"
 "vers l\'équipement:", None))
