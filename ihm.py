@@ -60,6 +60,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionZoom_2.triggered.connect((self.graphicsView.zoom_out))
         self.actionChanger_le_mode_du_zoom.triggered.connect(self.graphicsView.zoom_change)
         self.lineEdit.returnPressed.connect(self.affiche_addresse)
+        self.pushButton_3.pressed.connect(self.affiche_addresse)
         self.pushButton_7.clicked.connect(lambda : self.get_stopArea(1, self.locator.find(self.lineEdit.text(), self.lineEdit.text())))
         self.pushButton.clicked.connect(self.graphicsView.reset_affichage)
         self.pushButton_2.clicked.connect(self.change_toolboxpage)

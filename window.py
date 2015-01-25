@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Sun Jan 25 14:36:31 2015
+# Created: Sun Jan 25 16:06:28 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -69,6 +69,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.pushButton_3 = QtGui.QPushButton(self.toolBoxPage3)
+        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
+        self.horizontalLayout.addWidget(self.pushButton_3)
         self.lineEdit = QtGui.QLineEdit(self.toolBoxPage3)
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.horizontalLayout.addWidget(self.lineEdit)
@@ -373,7 +376,8 @@ class Ui_MainWindow(object):
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Filtres", None))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Rechercher ( press Enter ) ", None))
+        self.pushButton_3.setText(_translate("MainWindow", "Rechercher", None))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "entrer une adresse", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
         self.label_3.setText(_translate("MainWindow", "Chercher un itinéraire\n"
 "vers l\'équipement:", None))
@@ -423,6 +427,6 @@ class Ui_MainWindow(object):
         self.actionZoom_2.setShortcut(_translate("MainWindow", "-", None))
         self.actionChanger_le_mode_du_zoom.setText(_translate("MainWindow", "Zoom progressif", None))
         self.actionOuvrir_l_aide.setText(_translate("MainWindow", "Ouvrir l\'aide", None))
-        self.actionOuvrir_l_aide.setShortcut(_translate("MainWindow", "Ctrl+H", None))
+        self.actionOuvrir_l_aide.setShortcut(_translate("MainWindow", "Ctrl+S", None))
 
 from carte import myQGraphicsView
