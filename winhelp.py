@@ -1,5 +1,4 @@
 from PyQt4 import QtCore, QtGui
-import help
 
 
 class Help(QtGui.QDialog):
@@ -13,6 +12,7 @@ class Help(QtGui.QDialog):
         self.index = 1
 
     def next(self):
+        """ Change l'index de la visionneuse"""
         if self.index < 9:
             self.index += 1
         else:
@@ -20,6 +20,7 @@ class Help(QtGui.QDialog):
         self.changerImageSignal.emit(self.index)
 
     def prec(self):
+        """ Change l'index de la visionneuse"""
         if self.index > 1:
             self.index -= 1
         else:

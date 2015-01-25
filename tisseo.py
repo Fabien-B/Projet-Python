@@ -13,7 +13,7 @@ class Tisseo(QtCore.QObject):
         super(Tisseo,self).__init__()
         self.proxy = None
 
-    def get_closest_sa(self, lat,lon, point = None, isItineraire = False, departurePoint=0):
+    def get_closest_sa(self, lat, lon, point=None, isItineraire = False, departurePoint=0):
         """
         Trouve l'arret Tisseo le plus proche de puis des coordonnés GPS données
         :param lat: Latitude
@@ -34,12 +34,12 @@ class Tisseo(QtCore.QObject):
         self.closetASignal.emit(rep)
 
     def getinfo(self, keyword):
-        url="""https://api.tisseo.fr/v1/places.json?term="{}"&key=a65ccc5d3b7d6d99063240434ef117d54""".format(keyword)
+        url = """https://api.tisseo.fr/v1/places.json?term="{}"&key=a65ccc5d3b7d6d99063240434ef117d54""".format(keyword)
         if self.proxy == None:
             r = requests.get(url)
         else:
             r = requests.get(url, proxies=self.proxy)
-        a=r.json()['placesList']['place']
+        a = r.json()['placesList']['place']
         return a
 
     def gettrail(self, arret1, arret2):
@@ -55,7 +55,7 @@ class Tisseo(QtCore.QObject):
             r = requests.get(url)
         else:
             r = requests.get(url, proxies=self.proxy)
-        a=r.json()
+        a = r.json()
         try:
             a = a['routePlannerResult']['journeys'][0]['journey']['chunks']
         except KeyError:

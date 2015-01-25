@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui
 
+
 class Dialogue(QtGui.QDialog):
 
     finishedSignal = QtCore.pyqtSignal(list)
@@ -15,4 +16,4 @@ class Dialogue(QtGui.QDialog):
         port = self.dialog.lineEditPort.text()
         user = self.dialog.lineEditUser.text()
         password = self.dialog.lineEditPassword.text()
-        self.finishedSignal.emit([proxy,port,user,password])
+        self.finishedSignal.emit([proxy, port, user, password])

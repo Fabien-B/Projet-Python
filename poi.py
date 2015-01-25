@@ -37,9 +37,6 @@ class Point(QtGui.QGraphicsItemGroup):
             self.icone.setToolTip(txtToolTip)
             self.addToGroup(self.icone)
 
-
-
-
     def Pos(self):
         """Permet de renvoyer la position sous forme d'un tuple"""
         return(self.icone.pos().x(), self.icone.pos().y())
@@ -150,7 +147,7 @@ class SelectBackground(QtGui.QGraphicsEllipseItem):
         equipheight = equipoint.boundingRect().height()
         width = equipwitdth + 10
         height = equipheight + 10
-        self.setRect(0,0,width, height)
+        self.setRect(0, 0, width, height)
         self.setPos(equipoint.Pos()[0] - width/2 + equipwitdth/2, equipoint.Pos()[1] - height/2 + equipheight/2)
         self.setBrush(QtCore.Qt.darkBlue)
 
@@ -160,7 +157,7 @@ class SelectBackground(QtGui.QGraphicsEllipseItem):
             def __init__(self, item):
                 super(Adapter, self).__init__()
                 self.item = item
-            fading = QtCore.pyqtProperty(float,lambda s: s.item.opacity(), lambda s, v: s.item.setOpacity(v))
+            fading = QtCore.pyqtProperty(float, lambda s: s.item.opacity(), lambda s, v: s.item.setOpacity(v))
 
         anim = QtCore.QPropertyAnimation(Adapter(self), 'fading')
         anim.setDuration(2500)

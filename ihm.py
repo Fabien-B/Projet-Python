@@ -99,8 +99,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.scene.giveEqCoordsSignal.connect(self.take_equipment_coordonnates)
         self.nocover.equipoint_clicked_in_cluster.connect(self.scene.draw_back_equip_select)
         self.graphicsView.updateZoomLevel.connect(self.update_after_zoom)
-        #self.graphicsView.updateZoomLevel.connect(self.mouse_simu_move)
-
 
     def finish_init_with_datas(self,equipmentList):
         """fin de l'initialisation après l'import des équipements"""
@@ -126,6 +124,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.update_affichage_equipements()
 
     def get_pin(self, point):
+        """ recupere une épingle et enleve la précédente s'il y en a déja une"""
         if self.pinPoint != None:
             self.scene.removeItem(self.pinPoint)
         self.pinPoint = point
@@ -151,6 +150,8 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.nocover.cluster(self.pointAff)
 
     def update_after_zoom(self):
+        """ fonction appelée apres un changement de niveau de zoom OSM qui permet de netoyer
+        tout les point, trajet, arrets afficher et de les mettres sur le nouveau niveau de zoom"""
         self.update_affichage_equipements()
         if self.ptRecherche != None:
             coords = self.ptRecherche.coords
@@ -199,7 +200,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         (nomArret, latArret, lonArret, i, _,_) = infos
         self.arrets[i] = self.graphicsView.draw_point(latArret, lonArret, img='arret_transport_en_commun', legend=nomArret)
 
-    def get_equiStop(self,departurePointIndex):
+    def get_equiStop(self, departurePointIndex):
         if self.nomLineEdit.text() == "":
             self.statusbar.showMessage("Aucun équipement sportif sélectionné")
             return
@@ -222,6 +223,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.get_stopArea(departurePointIndex,coords, True,departurePoint=departurePointIndex)
 
     def draw_stop_point_and_path(self, infos):
+        """ dessin les point de départ et arrivée"""
         self.draw_tisseoStopPoint(infos)
         self.statusbar.clearMessage()
         if infos[4]:        #si c'est un calcul d'itinéraire
@@ -231,17 +233,20 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 self.get_stopArea(0,self.currentEquipmentCoords,True,infos[5])
 
     def get_path(self,indexDeparturePoint):
+        """ recupere le trajet tisseo"""
         answer = self.tisseo.gettrail(self.arrets[indexDeparturePoint].legend, self.arrets[0].legend)
         if answer != None:
             self.draw_path(answer)
             self.print_instructions_path(self.tisseo.extractinstruct(answer))
             self.answer = answer
 
-    def print_instructions_path(self,instructions):
+    def print_instructions_path(self, instructions):
+        """ affiche les intruction pour le trajet tisseo"""
         txt = '\n\n'.join(instructions)
         self.textEdit.setText(txt)
 
     def draw_path(self, answer):
+        """ dessine le trajet tisseo"""
         if self.tisseopath != None:
             self.scene.removeItem(self.tisseopath)
         self.tisseopath = QtGui.QGraphicsItemGroup()
@@ -285,7 +290,8 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         """notifier dans la barre d'état le chargement"""
         self.statusbar.showMessage(infos,2000)
 
-    def take_equipment_coordonnates(self,coords):
+    def take_equipment_coordonnates(self, coords):
+        """ prend les coordonnées et les mets dans l'équipement courrant"""
         self.currentEquipmentCoords = coords
 
     def afficher_inspecteur(self):
@@ -390,6 +396,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.helpWindow.show()
 
         def affiche_image(index):
+            """ definie la bonne image à afficher"""
             path = 'aide/' + str(index) + '.png'
             w_vue, h_vue = fen.graphicsView.width(), fen.graphicsView.height()
             current_image = QtGui.QImage(path)
@@ -399,12 +406,14 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
             view_current(pixmap)
 
         def view_current(pixmap):
+            """ nettoie la scene et affiche la nouvelle image"""
             w_pix, h_pix = pixmap.width(), pixmap.height()
             scene.clear()
             scene.setSceneRect(0, 0, w_pix, h_pix)
             scene.addPixmap(pixmap)
 
         def changer_ratio(index):
+            """ change le radioButton activé suivant l'index ( à refaire avec une liste de radioButton"""
             if index == 1:
                 fen.radioButton_1.setChecked(True)
             if index == 2:
@@ -425,6 +434,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 fen.radioButton_9.setChecked(True)
 
         def set_index():
+            """ Met à jour l'index si on clique sur une radioButton"""
             if fen.radioButton_1.isChecked():
                 affiche_image(1)
                 self.helpWindow.index = 1
@@ -453,7 +463,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
                 affiche_image(9)
                 self.helpWindow.index = 9
 
-        fen.radioButton_1.toggled.connect(set_index)
+        fen.radioButton_1.toggled.connect(set_index) # à refaire avec une liste
         fen.radioButton_2.toggled.connect(set_index)
         fen.radioButton_3.toggled.connect(set_index)
         fen.radioButton_4.toggled.connect(set_index)
@@ -506,6 +516,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         dialogCache.pushButton.clicked.connect(self.cacheWindow.close)
 
     def regler_proxy(self, infos):
+        """ regle le proxy en fonction des informations entrées"""
         self.proxy = infos[0]
         self.port = infos[1]
         self.user = infos[2]
@@ -517,23 +528,14 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         print('proxy:', self.proxy, self.port, self.user)
 
     def set_default_proxy_params(self, dialogParams):
+        """ affiche les information déja entrée pour le proxy s'il y en avais déja auparavant"""
         dialogParams.lineEditProxy.setText(self.proxy)
         dialogParams.lineEditPort.setText(self.port)
         dialogParams.lineEditUser.setText(self.user)
 
     def change_toolboxpage(self):
-        print('hop')
+        """ change la page de la toolbox apres un appui sur le bouton trouver un itinéraire"""
         self.toolBox.setCurrentIndex(self.toolBox.indexOf(self.toolBoxPage3))
-
-    def mouse_simu_move(self):
-        """ Permet de ne pas avoir a bouger la souris pour afficher les tuiles apres un changement de niveau de zoom """
-        cur = self.MainWindow.cursor()
-        pos = cur.pos()
-        q = QtCore.QPoint(1, 1)
-        pos = pos + q
-        cur.setPos(pos)
-        pos = pos - q
-        cur.setPos(pos)
 
     def cache_size(self):
         """retourne la taille du cache image en Mo et du cache des données en ko"""

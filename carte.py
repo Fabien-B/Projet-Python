@@ -130,6 +130,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.centerOn(8257.5*256, 5982.5*256)
 
     def draw_equipment(self, equipment, Zvalue = 10):
+        """ dessine un équipement à la bonne position"""
         try:
             lat = equipment.coords[0]
             lon = equipment.coords[1]
@@ -146,6 +147,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             return point
 
     def draw_img_point(self,lat,lon, img,legend=''):
+        """ dessine un point à une latitude et longitude donnée"""
         (X, Y, resX, resY)=self.get_tile_nbs(lat, lon)
         posX = (X + resX)*TILEDIM
         posY = (Y + resY)*TILEDIM
@@ -273,12 +275,15 @@ class myQGraphicsView(QtGui.QGraphicsView):
                     self.afficher_tuile(cle)    #sinon (la clé est en mémoire): on l'affiche (controle si déja dans la scene dans la fonction)
 
     def reset_zoom(self):
+        """ apres un changement de niveau de dalle OSM remet le scale à 1 et
+        envois un signal pour mettre à jour l'affichage des équipement"""
         self.zoom(1/self.cur_zoom)
         self.cur_zoom = 1
         self.update_tiles()
         self.updateZoomLevel.emit()
 
     def reset_affichage(self):
+        """ Reset l'affichage comme au démarrage du programme"""
         self.ZOOM = self.ZOOM_INIT
         self.reset_zoom()
         self.centerOn(8257.5*256, 5982.5*256)
@@ -295,6 +300,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             print((self.manager.proxy().hostName(), self.manager.proxy().port(), self.manager.proxy().user(), self.manager.proxy().password()))
 
     def zoom_in(self):
+        """Zoom vers l'avant au centre de la carte"""
         pos = self.mapToScene(self.width()/2, self.height()/2)
         coord = self.get_gps_from_map(pos.x(), pos.y())
         if self.ZOOM < 19:
@@ -304,6 +310,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.updateZoomLevel.emit()
 
     def zoom_out(self):
+        """Zoom vers l'arriere au centre de la carte"""
         pos = self.mapToScene(self.width()/2, self.height()/2)
         coord = self.get_gps_from_map(pos.x(), pos.y())
         if self.ZOOM > 12:
@@ -313,6 +320,7 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.updateZoomLevel.emit()
 
     def zoom_change(self):
+        """Change le mode de zoom, 1 = mode progressif, 0 zoom OSM"""
         if self.ZoomMode:
             self.reset_zoom()
         self.ZoomMode = not self.ZoomMode

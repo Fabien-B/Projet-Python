@@ -2,6 +2,7 @@ from PyQt4 import QtGui, QtCore
 from  PyQt4.QtCore import Qt
 import equipement
 
+
 class Filtre(QtCore.QObject):
 
     updateSignal = QtCore.pyqtSignal()
@@ -56,7 +57,6 @@ class Filtre(QtCore.QObject):
         self.retirerFiltreButton.clicked.connect(lambda : self.removeSignal.emit(self.tab))
         self.add_combo_items()
 
-
     def create_set(self, equiplist):
         """Récupère les activités, quartier, revêtement et type des équipements"""
         for equip in equiplist:
@@ -96,12 +96,6 @@ class Filtre(QtCore.QObject):
             if ActiRequestSet & paramSet != set():
                 tempSet.add(equip)
         return tempSet
-
-    def printkey(self):
-        for key in self.activitiesSet:
-            print(key)
-        print('nombre clé :', len(self.activitiesSet))
-
 
     def update_checkbox(self, txt):
         """Ajoute les équipements correspondant au filtre demandé à la liste à afficher, cache ceux qui ne correspondent pas"""
