@@ -35,8 +35,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>259</width>
-          <height>434</height>
+          <width>238</width>
+          <height>464</height>
          </rect>
         </property>
         <attribute name="label">
@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>277</width>
-          <height>348</height>
+          <width>238</width>
+          <height>464</height>
          </rect>
         </property>
         <attribute name="label">
@@ -170,7 +170,7 @@ itinéraire:</string>
      <x>0</x>
      <y>0</y>
      <width>996</width>
-     <height>30</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -200,10 +200,17 @@ itinéraire:</string>
     <addaction name="actionZoom_2"/>
     <addaction name="actionChanger_le_mode_du_zoom"/>
    </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionOuvrir_l_aide"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAffichage"/>
    <addaction name="menuOutils"/>
    <addaction name="menuVue"/>
+   <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_2">
@@ -222,8 +229,8 @@ itinéraire:</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>353</width>
-          <height>786</height>
+          <width>330</width>
+          <height>701</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -570,6 +577,7 @@ itinéraire:</string>
    <addaction name="actionViderCache"/>
    <addaction name="actionProxy"/>
    <addaction name="actionChanger_le_mode_du_zoom"/>
+   <addaction name="actionOuvrir_l_aide"/>
   </widget>
   <action name="Quitter">
    <property name="checkable">
@@ -648,6 +656,14 @@ itinéraire:</string>
    </property>
    <property name="text">
     <string>Zoom progressif</string>
+   </property>
+  </action>
+  <action name="actionOuvrir_l_aide">
+   <property name="text">
+    <string>Ouvrir l'aide</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

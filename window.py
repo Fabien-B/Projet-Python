@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interface.ui'
 #
-# Created: Thu Jan 22 22:13:03 2015
+# Created: Sun Jan 25 14:36:31 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.toolBox.setToolTip(_fromUtf8(""))
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.toolBoxPage2 = QtGui.QWidget()
-        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 259, 434))
+        self.toolBoxPage2.setGeometry(QtCore.QRect(0, 0, 238, 464))
         self.toolBoxPage2.setObjectName(_fromUtf8("toolBoxPage2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.toolBoxPage2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.toolBox.addItem(self.toolBoxPage2, _fromUtf8(""))
         self.toolBoxPage3 = QtGui.QWidget()
-        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 277, 348))
+        self.toolBoxPage3.setGeometry(QtCore.QRect(0, 0, 238, 464))
         self.toolBoxPage3.setObjectName(_fromUtf8("toolBoxPage3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.toolBoxPage3)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 996, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 996, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFichier = QtGui.QMenu(self.menubar)
         self.menuFichier.setObjectName(_fromUtf8("menuFichier"))
@@ -111,6 +111,8 @@ class Ui_MainWindow(object):
         self.menuOutils.setObjectName(_fromUtf8("menuOutils"))
         self.menuVue = QtGui.QMenu(self.menubar)
         self.menuVue.setObjectName(_fromUtf8("menuVue"))
+        self.menuAide = QtGui.QMenu(self.menubar)
+        self.menuAide.setObjectName(_fromUtf8("menuAide"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -125,7 +127,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 353, 786))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 330, 701))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_8 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
@@ -337,6 +339,8 @@ class Ui_MainWindow(object):
         self.actionChanger_le_mode_du_zoom = QtGui.QAction(MainWindow)
         self.actionChanger_le_mode_du_zoom.setCheckable(True)
         self.actionChanger_le_mode_du_zoom.setObjectName(_fromUtf8("actionChanger_le_mode_du_zoom"))
+        self.actionOuvrir_l_aide = QtGui.QAction(MainWindow)
+        self.actionOuvrir_l_aide.setObjectName(_fromUtf8("actionOuvrir_l_aide"))
         self.menuFichier.addAction(self.Quitter)
         self.menuAffichage.addAction(self.actionInspecteur)
         self.menuOutils.addAction(self.actionProxy)
@@ -344,10 +348,12 @@ class Ui_MainWindow(object):
         self.menuVue.addAction(self.actionZoom)
         self.menuVue.addAction(self.actionZoom_2)
         self.menuVue.addAction(self.actionChanger_le_mode_du_zoom)
+        self.menuAide.addAction(self.actionOuvrir_l_aide)
         self.menubar.addAction(self.menuFichier.menuAction())
         self.menubar.addAction(self.menuAffichage.menuAction())
         self.menubar.addAction(self.menuOutils.menuAction())
         self.menubar.addAction(self.menuVue.menuAction())
+        self.menubar.addAction(self.menuAide.menuAction())
         self.toolBar.addAction(self.Quitter)
         self.toolBar.addAction(self.actionInspecteur)
         self.toolBar.addAction(self.actionZoom)
@@ -355,6 +361,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionViderCache)
         self.toolBar.addAction(self.actionProxy)
         self.toolBar.addAction(self.actionChanger_le_mode_du_zoom)
+        self.toolBar.addAction(self.actionOuvrir_l_aide)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(-1)
@@ -366,7 +373,7 @@ class Ui_MainWindow(object):
         self.ajouterFiltreButton.setText(_translate("MainWindow", "...", None))
         self.label_2.setText(_translate("MainWindow", "Ajouter un filtre", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), _translate("MainWindow", "Filtres", None))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Rechercher une addresse ( press Enter ) ", None))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Rechercher ( press Enter ) ", None))
         self.pushButton_7.setText(_translate("MainWindow", "Trouver l\'arrêt le plus proche", None))
         self.label_3.setText(_translate("MainWindow", "Chercher un itinéraire\n"
 "vers l\'équipement:", None))
@@ -380,6 +387,7 @@ class Ui_MainWindow(object):
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage", None))
         self.menuOutils.setTitle(_translate("MainWindow", "Outils", None))
         self.menuVue.setTitle(_translate("MainWindow", "Vue", None))
+        self.menuAide.setTitle(_translate("MainWindow", "Aide", None))
         self.pushButton_2.setText(_translate("MainWindow", "Trouver un itinéraire", None))
         self.label_4.setText(_translate("MainWindow", "Nom:", None))
         self.label_5.setText(_translate("MainWindow", "Type:", None))
@@ -414,5 +422,7 @@ class Ui_MainWindow(object):
         self.actionZoom_2.setText(_translate("MainWindow", "Zoom -", None))
         self.actionZoom_2.setShortcut(_translate("MainWindow", "-", None))
         self.actionChanger_le_mode_du_zoom.setText(_translate("MainWindow", "Zoom progressif", None))
+        self.actionOuvrir_l_aide.setText(_translate("MainWindow", "Ouvrir l\'aide", None))
+        self.actionOuvrir_l_aide.setShortcut(_translate("MainWindow", "Ctrl+H", None))
 
 from carte import myQGraphicsView

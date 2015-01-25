@@ -2,6 +2,8 @@ from PyQt4 import QtCore, QtGui
 from window import Ui_MainWindow
 import cache_info
 import wincache
+import winhelp
+import help
 import carte
 import filtres
 import os
@@ -69,6 +71,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.tisseo.errorSignal.connect(lambda txt: self.statusbar.showMessage(txt, 2000))
         self.graphicsView.signalEmetteur.doubleClickSignal.connect(self.get_pin)
         self.graphicsView.signalEmetteur.coordoneeErrorSignal.connect(lambda txt: self.statusbar.showMessage(txt, 2000))
+        self.actionOuvrir_l_aide.triggered.connect(self.afficher_aide)
         self.Quitter.setIcon(QtGui.QIcon("Toolbar icones/Close.png"))
         self.actionInspecteur.setIcon(QtGui.QIcon("Toolbar icones/info.png"))
         self.actionZoom.setIcon(QtGui.QIcon("Toolbar icones/Zoom in.png"))
@@ -76,6 +79,7 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.actionViderCache.setIcon(QtGui.QIcon("Toolbar icones/Cache.png"))
         self.actionProxy.setIcon(QtGui.QIcon("Toolbar icones/Proxy.png"))
         self.actionChanger_le_mode_du_zoom.setIcon(QtGui.QIcon("Toolbar icones/Zoom mode.png"))
+        self.actionOuvrir_l_aide.setIcon(QtGui.QIcon("Toolbar icones/help.png"))
         self.toolBox.resize(400, 1000)
 
     def build_map(self):
@@ -370,6 +374,101 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         self.set_default_proxy_params(dialogParams)
         self.paramsWindow.show()
 
+    def afficher_aide(self):
+        """ouvre l'aide"""
+
+        self.helpWindow = winhelp.Help(self)
+        fen = help.Ui_Aide()
+        fen.setupUi(self.helpWindow)
+        scene = QtGui.QGraphicsScene()
+        fen.graphicsView.setScene(scene)
+        fen.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        fen.graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        fen.radioButton_1.setChecked(True)
+        self.helpWindow.dialog = fen
+        self.helpWindow.show()
+
+        def affiche_image(index):
+            path = 'aide/' + str(index) + '.png'
+            w_vue, h_vue = fen.graphicsView.width(), fen.graphicsView.height()
+            current_image = QtGui.QImage(path)
+            pixmap = QtGui.QPixmap.fromImage(current_image.scaled(w_vue, h_vue,
+                                    QtCore.Qt.KeepAspectRatio,
+                                    QtCore.Qt.SmoothTransformation))
+            view_current(pixmap)
+
+        def view_current(pixmap):
+            w_pix, h_pix = pixmap.width(), pixmap.height()
+            scene.clear()
+            scene.setSceneRect(0, 0, w_pix, h_pix)
+            scene.addPixmap(pixmap)
+
+        def changer_ratio(index):
+            if index == 1:
+                fen.radioButton_1.setChecked(True)
+            if index == 2:
+                fen.radioButton_2.setChecked(True)
+            if index == 3:
+                fen.radioButton_3.setChecked(True)
+            if index == 4:
+                fen.radioButton_4.setChecked(True)
+            if index == 5:
+                fen.radioButton_5.setChecked(True)
+            if index == 6:
+                fen.radioButton_6.setChecked(True)
+            if index == 7:
+                fen.radioButton_7.setChecked(True)
+            if index == 8:
+                fen.radioButton_8.setChecked(True)
+            if index == 9:
+                fen.radioButton_9.setChecked(True)
+
+        def set_index():
+            if fen.radioButton_1.isChecked():
+                affiche_image(1)
+                self.helpWindow.index = 1
+            if fen.radioButton_2.isChecked():
+                affiche_image(2)
+                self.helpWindow.index = 2
+            if fen.radioButton_3.isChecked():
+                affiche_image(3)
+                self.helpWindow.index = 3
+            if fen.radioButton_4.isChecked():
+                affiche_image(4)
+                self.helpWindow.index = 4
+            if fen.radioButton_5.isChecked():
+                affiche_image(5)
+                self.helpWindow.index = 5
+            if fen.radioButton_6.isChecked():
+                affiche_image(6)
+                self.helpWindow.index = 6
+            if fen.radioButton_7.isChecked():
+                affiche_image(7)
+                self.helpWindow.index = 7
+            if fen.radioButton_8.isChecked():
+                affiche_image(8)
+                self.helpWindow.index = 8
+            if fen.radioButton_9.isChecked():
+                affiche_image(9)
+                self.helpWindow.index = 9
+
+        fen.radioButton_1.toggled.connect(set_index)
+        fen.radioButton_2.toggled.connect(set_index)
+        fen.radioButton_3.toggled.connect(set_index)
+        fen.radioButton_4.toggled.connect(set_index)
+        fen.radioButton_5.toggled.connect(set_index)
+        fen.radioButton_6.toggled.connect(set_index)
+        fen.radioButton_7.toggled.connect(set_index)
+        fen.radioButton_8.toggled.connect(set_index)
+        fen.radioButton_9.toggled.connect(set_index)
+        fen.Next.pressed.connect(self.helpWindow.next)
+        fen.Prec.pressed.connect(self.helpWindow.prec)
+        self.helpWindow.changerImageSignal.connect(affiche_image)
+        self.helpWindow.changerImageSignal.connect(changer_ratio)
+        fen.pushButton.pressed.connect(self.helpWindow.close)
+        affiche_image(self.helpWindow.index)
+        changer_ratio(1)
+
     def afficher_params_cache(self):
         """ouvre la boite de dialogue du cache"""
 
@@ -404,8 +503,6 @@ class Ihm(Ui_MainWindow, QtCore.QObject):
         dialogCache.VideCache2.clicked.connect(vider_cache_donnes)
         self.cacheWindow.show()
         dialogCache.pushButton.clicked.connect(self.cacheWindow.close)
-
-
 
     def regler_proxy(self, infos):
         self.proxy = infos[0]

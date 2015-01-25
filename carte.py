@@ -36,42 +36,38 @@ class myQGraphicsView(QtGui.QGraphicsView):
 
     def wheelEvent(self, e):
         """Zoom sur la carte """
+
+        def sous_zoom():
+            """ sous fonction qui permet d'éviter de recopier ces lignes à chaque fois """
+            self.reset_zoom()
+            self.centerOnPosition(coord[0], coord[1])
+            self.update_tiles()
+            self.centrer_zoom(e)
+
         pos = self.mapToScene(e.x(), e.y())
         coord = self.get_gps_from_map(pos.x(), pos.y())
-        if self.ZoomMode:
-            if e.delta() > 0:
+        if e.delta() > 0:
+            if self.ZoomMode:
                 if self.cur_zoom < 1.5:
                     self.zoom((self.cur_zoom+0.10)/self.cur_zoom)
                 elif self.ZOOM < 19:
                     self.ZOOM += 1
-                    self.reset_zoom()
-                    self.centerOnPosition(coord[0], coord[1])
-                    self.update_tiles()
-                    self.centrer_zoom(e)
+                    sous_zoom()
             else:
+                if self.ZOOM < 19:
+                    self.ZOOM += 1
+                    sous_zoom()
+        else:
+            if self.ZoomMode:
                 if self.cur_zoom > 0.6:
                     self.zoom((self.cur_zoom-0.10)/self.cur_zoom)
                 elif self.ZOOM > 12:
                     self.ZOOM -= 1
-                    self.reset_zoom()
-                    self.centerOnPosition(coord[0], coord[1])
-                    self.update_tiles()
-                    self.centrer_zoom(e)
-        else:
-            if e.delta() > 0:
-                if self.ZOOM < 19:
-                    self.ZOOM += 1
-                    self.reset_zoom()
-                    self.centerOnPosition(coord[0], coord[1])
-                    self.update_tiles()
-                    self.centrer_zoom(e)
+                    sous_zoom()
             else:
                 if self.ZOOM > 12:
                     self.ZOOM -= 1
-                    self.reset_zoom()
-                    self.centerOnPosition(coord[0], coord[1])
-                    self.update_tiles()
-                    self.centrer_zoom(e)
+                    sous_zoom()
 
     def centrer_zoom(self,e):
         """recentre correctement la carte pour que le point zoomer se trouve toujours sous la souris."""
@@ -93,7 +89,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
             self.ZOOM += 1
             self.centerOnPosition(lat, lon)
             self.update_tiles()
-            self.centrer_zoom(e)
             self.updateZoomLevel.emit()
             self.centrer_zoom(e)
 
@@ -282,7 +277,6 @@ class myQGraphicsView(QtGui.QGraphicsView):
         self.cur_zoom = 1
         self.update_tiles()
         self.updateZoomLevel.emit()
-
 
     def reset_affichage(self):
         self.ZOOM = self.ZOOM_INIT
