@@ -1,3 +1,4 @@
+#! /usr/bin/python3.4
 """
 Premier module de la fonction, chargeant tous les parametres
 et lancant l'application
@@ -10,6 +11,11 @@ from PyQt4 import QtGui
 import sys
 import ihm
 import threading
+import os
+
+projectDir = os.path.dirname( __file__ )
+os.chdir(projectDir)
+
 
 FILENAME = 'data/ES2011.xls'
 

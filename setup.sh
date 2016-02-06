@@ -1,13 +1,5 @@
 #!/bin/bash
-echo "entrez le chemin absolu du projet (ex : /home/fabien/Bureau/Projet-Python)"
-read a
-
-echo "entrez votre nom d'utilisateur (ex: fabien )"
-read user
-
-echo "#!/bin/bash
-cd $a
-python3 main.py" > $a/VEST
+path=$(pwd)
 
 echo "[Desktop Entry]
 Type=Application
@@ -15,11 +7,11 @@ Encoding=UTF-8
 Name=VEST
 GenericName=VEST
 Comment=Application de visualisation des équipements sportifs toulousains
-Icon=$a/vesp_ico.png
-Exec='$a/VEST'
+Icon=$path/vesp_ico.png
+Exec='$path/main.py'
 Terminal=true
 StartupNotify=true
-Categories='Application'" > /home/$user/Bureau/VEST.desktop
+Categories='Application'" > /home/$USER/Bureau/VEST.desktop
 
 echo "[Desktop Entry]
 Type=Application
@@ -27,20 +19,21 @@ Encoding=UTF-8
 Name=VEST
 GenericName=VEST
 Comment=Application de visualisation des équipements sportifs toulousains
-Icon=$a/vesp_ico.png
-Exec='$a/VEST'
+Icon=$path/vesp_ico.png
+Exec='$path/main.py'
 Terminal=false
 StartupNotify=true
-Categories='Application'" > /usr/share/applications/VEST.desktop
+Categories='Application'" | sudo tee /usr/share/applications/VEST.desktop
 
-chmod +x $a/VEST
-chmod +x /home/$user/Bureau/VEST.desktop
-chmod +x /usr/share/applications/VEST.desktop
-chown $user /home/$user/Bureau/VEST.desktop
 
-apt-get install python3-PyQt4 -y
-apt-get install python3-pip -y
-pip3 install xlrd
-pip3 install pygeocoder
+chmod +x $path/main.py
+chmod +x /home/$USER/Bureau/VEST.desktop
+sudo chmod +x /usr/share/applications/VEST.desktop
+chown $USER /home/$USER/Bureau/VEST.desktop
+
+sudo apt-get install python3-PyQt4 -y
+sudo apt-get install python3-pip -y
+sudo pip3 install xlrd
+sudo pip3 install pygeocoder
 
 echo "done"
